@@ -1,0 +1,41 @@
+.title{
+  font-family:'Times New Roman', Times, serif;
+  font-weight: bold;
+  color: white;
+  font-size: 3em;
+  text-align: center;
+
+}
+.carousel-item img {
+    object-fit: contain;
+    max-height: 300px;
+    max-width: 100%;
+  }
+
+  .h2-style {
+    font-family: Roboto;
+    font-weight: bold;
+    color: white;
+    font-size: 4em;
+  }
+  .containerCarousel {
+    padding: 1rem; 
+ 
+  }
+  
+
+  
+  
+  
+  
+
+
+  
+
+
+
+ 
+  
+
+
+ 
