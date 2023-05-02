@@ -14,6 +14,7 @@ const UserUpdate = () => {
         email: ""
     };
     const [User, setUser] = useState(initialUserState);
+    const [validPassword, setValidPassword] = useState({});
 
     const getUser = id_username => {
         UserServices.get(id_username)
@@ -36,10 +37,21 @@ const UserUpdate = () => {
         setUser({ ...User, [name]: value });
     };
 
+    //para hacer handleInputblur y validar el password
+    const handleInputblurPassword = (event) => {
+        handleInputChange(event);
+        setValidPassword(validationPassword(User));
 
-    const updateUser = () => {
+    };
 
-        UserServices.update(User.id_username, User)
+
+    const updateUser = (e) => {
+
+        e.preventDefault()
+        setValidPassword(validationPassword(User));
+
+        if (Object.keys(validPassword).length === 0) {
+            UserServices.update(User.id_username, User)
             .then(response => {
                 console.log(response.data);
                 Swal.fire({
@@ -54,9 +66,26 @@ const UserUpdate = () => {
             .catch(e => {
                 console.log(e);
             });
-
+        }
 
     };
+
+     //validar Password
+     const validationPassword = (User) => {
+        let validPassword = {}
+
+        if (
+            User.password.length < 8 ||
+            !/[A-Z]/.test(User.password) ||
+            !/[0-9]/.test(User.password) ||
+            !/[!@#$%^&*]/.test(User.password)
+        ) {
+            validPassword.password =
+                "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial";
+        }
+
+        return validPassword;
+    }
 
 
 
@@ -69,10 +98,9 @@ const UserUpdate = () => {
 
                 <blockquote className="blockquote mb-0 ">
 
-                    <form onSubmit={e => {
-                        e.preventDefault()
-                        updateUser()
-                    }}
+                    <form onSubmit={
+                        updateUser
+                    }
                         className="row g-3 needs-validation my-3  border = 1">
 
                         <div className="col-md-3 position-relative">
@@ -132,18 +160,26 @@ const UserUpdate = () => {
                         </div>
 
                         <div className="col-md-3 position-relative">
-                            <label for="password" className="form-label">Password</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-key"></i>
-                                </span>
-                                <input type="password" className="form-control" id="password"
-                                    value={User.password}
-                                    onChange={handleInputChange}
-                                    name="password" required />
+                                <label for="password" className="form-label">Password</label>
+                                <div className="input-group has-validation">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-key"></i>
+                                    </span>
+                                    <input type="password" className={((validPassword.password) ? "is-invalid" : "") + " form-control"}
+                                        id="password" value={User.password}
+                                        placeholder="Digite una contraseña"
+                                        onBlur={handleInputblurPassword}
+                                        onChange={handleInputChange}
+                                        onKeyUp={handleInputblurPassword}
+                                        name="password" required />
 
+                                    <small className="invalid-feedback" id="helpId">
+                                        <i className="bi bi-exclamation-circle"> {validPassword.password}</i>
+                                    </small>
+
+
+                                </div>
                             </div>
-                        </div>
 
 
                         <div className="col-12">
@@ -152,7 +188,7 @@ const UserUpdate = () => {
                                 <i className="bi bi-gear"> Actualizar</i>
                             </button>
 
-                            <Link className="btn btn-danger" to={"/"}>
+                            <Link className="btn btn-danger" to={"/UserList"}>
                                 <i className="bi bi-x-circle"> Cancelar</i>
                             </Link>
 
