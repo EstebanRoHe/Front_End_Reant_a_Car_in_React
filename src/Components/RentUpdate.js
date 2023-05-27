@@ -6,21 +6,21 @@ import carServices from "../services/carServices";
 import Swal from "sweetalert2";
 
 const RentUpdate = props => {
-    const { id_rent } = useParams();
+    const { idRent } = useParams();
 
     const initialRentState = {
-        id_rent: null,
+        idRent: null,
         username: {},
         car: {},
-        date_rent: ""
+        dateRent: ""
     }
 
     const [Rent, setRent] = useState(initialRentState);
     const [username, setUsername] = useState([]);
     const [car, setCar] = useState([]);
     
-    const getRent = id_rent => {
-        rentServices.get(id_rent)
+    const getRent = idRent => {
+        rentServices.get(idRent)
             .then(response => {
                 setRent(response.data);
             })
@@ -32,9 +32,9 @@ const RentUpdate = props => {
     useEffect(() => {
         getListUser();
         getListCar();
-        if (id_rent)
-            getRent(id_rent);
-    }, [id_rent]);
+        if (idRent)
+            getRent(idRent);
+    }, [idRent]);
 
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -65,7 +65,7 @@ const RentUpdate = props => {
     };
 
     const updateRent = () => {
-        rentServices.update(Rent.id_rent, Rent , Rent.username, Rent.car) 
+        rentServices.update(Rent.idRent, Rent , Rent.username, Rent.car) 
             .then(response => {
                 console.log(response.data);
                 Swal.fire({
@@ -88,7 +88,7 @@ const RentUpdate = props => {
 
 
             <div className="card-body ">
-                <h4>Actualizar Fecha de Alquiler del Id : {Rent.id_rent}</h4>
+                <h4>Actualizar Fecha de Alquiler del Id : {Rent.idRent}</h4>
                 <blockquote className="blockquote mb-0 ">
 
                     <form novalidate onSubmit={e=>{
@@ -137,10 +137,10 @@ const RentUpdate = props => {
                                     onChange={e => {                                    
                                         setRent({...Rent, car : JSON.parse(e.target.value)})
                                     }}>   
-                                     <option value={{...Rent, car}}>{Rent.car.licence_plate}</option>
+                                     <option value={{...Rent, car}}>{Rent.car.licencePlate}</option>
                                 {car && car.map(
                                     (car)=>(
-                                        <option key={car.id_car} value={JSON.stringify(car)}>{car.licence_plate}</option>
+                                        <option key={car.id_car} value={JSON.stringify(car)}>{car.licencePlate}</option>
                                 ))}     
                                 </select>  
 
@@ -151,13 +151,13 @@ const RentUpdate = props => {
                         </div>
 
                         <div className="col-md-3 position-relative">
-                            <label for="date_rent" className="form-label "> <i className="bi bi-calendar-date"> </i> Fecha</label>
+                            <label for="dateRent" className="form-label "> <i className="bi bi-calendar-date"> </i> Fecha</label>
                             <div className="input-group has-validation">
                                 <span className="input-group-text">
                                     <i className="bi bi-pencil-square"></i>
                                 </span>
-                                <input type="date" className="form-control" id="date_rent" value={Rent.date_rent}
-                                    onChange={handleInputChange} name="date_rent" required />
+                                <input type="date" className="form-control" id="dateRent" value={Rent.dateRent}
+                                    onChange={handleInputChange} name="dateRent" required />
                                 <div className="valid-tooltip">
                                     Looks good!
                                 </div>

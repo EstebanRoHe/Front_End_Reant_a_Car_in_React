@@ -7,32 +7,34 @@ import { Link } from 'react-router-dom';
 
 const RentCreate = () => {
     const initialRentState = {
-        id_rent: null,
+        idRent: null,
         username: null,
         car: null,
-        date_rent: ""
+        dateRent: ""
     }
 
     const [Rent, setRent] = useState(initialRentState);
     const [RentArray, setRentRentArray] = useState([]);
     const [Username, setUsername] = useState([]);
-    const [User, setUser] = useState(null);
+    const [UserSelect, setUserSelect] = useState(null);
     const [Car, setCar] = useState([]);
     const [CarSelect, setCarSelect] = useState(null);
     const [Validat, setValidat] = useState(false);
     const [errors, setErrors] = useState({});
+    const [errorsDateAndUser, setErrorsDateAndUser] = useState({});
 
-    const handleInputChange = event => {
+    const handleInputUserAndDate = event => {
         const { name, value } = event.target;
         setRent({ ...Rent, [name]: value });
-        
-    }
+        setErrorsDateAndUser(validationErrorsDateAndUser(UserSelect, { ...Rent, [name]: value }));
+    };
 
-    const handleInputblur = event => {
+
+    const handleInputblurCar = event => {
         setCarSelect(JSON.parse(event.target.value))
-        setErrors(validationErrror(CarSelect,Rent));
-
+        setErrors(validationErrror(CarSelect, Rent));
     }
+
 
     useEffect(() => {
         getListUser();
@@ -80,15 +82,14 @@ const RentCreate = () => {
 
     const createRent = (e) => {
         e.preventDefault();
-        var data = { id_rent: Rent.id_rent, username: User, car: CarSelect, date_rent: Rent.date_rent }
+        var data = { idRent: Rent.idRent, username: UserSelect, car: CarSelect, dateRent: Rent.dateRent }
 
+        setErrorsDateAndUser(validationErrorsDateAndUser(UserSelect))
         setErrors(validationErrror(CarSelect));
-        console.log(errors,"create")
-            if(Object.keys(errors).length===0){
-        
+        if (Object.keys(errors).length === 0 && Object.keys(errorsDateAndUser).length === 0) {
             rentServices.create(data)
                 .then(response => {
-                    setRent({ username: response.data.User, car: response.data.CarSelect, date_rent: response.data.date_rent });
+                    setRent({ username: response.data.User, car: response.data.CarSelect, dateRent: response.data.dateRent });
                     setValidat(true);
                     console.log(response.data);
                     Swal.fire({
@@ -102,7 +103,7 @@ const RentCreate = () => {
                 .catch(e => {
                     console.log(e);
                 })
-            }
+        }
 
     }
 
@@ -114,106 +115,154 @@ const RentCreate = () => {
 
     }
 
+
+
     const validationErrror = (CarSelect) => {
         let errors = {};
-        
-        RentArray.forEach(rent => {
-            if(rent.car.id_car === CarSelect.id_car) {
-                errors.CarSelect = "Vehículo ya alquilado";
-                
-            }
-        })
 
+        RentArray.forEach(rent => {
+            if (rent.car.idCar === CarSelect.idCar) {
+                errors.CarSelect = "Vehículo ya alquilado";
+
+            }
+
+        })
         return errors;
     }
 
+    const validationErrorsDateAndUser = (User) => {
+        let errorsDateAndUser = {};
+
+        RentArray.forEach(rent => {
+            if (rent.username.idUser === User.idUser && rent.dateRent === Rent.dateRent) {
+                errorsDateAndUser.User = "El usuario ya alquiló un vehículo para esta fecha";
+
+            }
+        })
+        return errorsDateAndUser;
+    }
+
     return (
-        <div className="submit-form">
-        <div className="card  ">
+        <div className="submit-form"
+            onMouseUp={handleInputUserAndDate}
+            onMouseOut={handleInputUserAndDate}
+        >
+            <div className="card  "  >
+                <div className="card-body "  >
+                    <h4>Alquilar</h4>
+                    <blockquote className="blockquote mb-0 ">
+
+                        <form onSubmit={createRent}
+                            className="row g-3 needs-validation my-3  border = 1" >
 
 
-            <div className="card-body ">
-                <h4>Alquilar</h4>
-                <blockquote className="blockquote mb-0 ">
-
-                    <form onSubmit={createRent}
-                        className="row g-3 needs-validation my-3  border = 1" >
-
-
-                        <div className="form-group">
-                            <label for="username" className="form-label"> <i className="bi bi-person-add"> </i>Usuario</label>
                             <div className="form-group">
-                                <select className="form-select" name="username" id="username"
-                                    onChange={e=>{
-                                        setUser(JSON.parse(e.target.value));
-                                    }}>
-
-                                    <option selected>Seleccioné un Usuario</option>
-                                    {Username && Username.map(
-                                        (username) => (
-                                            <option value={JSON.stringify(username)}>{username.username}</option>
-                                        ))}
-                                </select>
+                                <label for="username" className="form-label"> <i className="bi bi-person-add"> </i>Usuario</label>
+                                <div className={`input-group has-validation ${ Rent.username !== "Seleccioné un Usuario" && !errorsDateAndUser.User ? "input-success" : ""}`}>
+                                    <select className={((errorsDateAndUser.User) ? "is-invalid" : "") + " form-select"} name="username" id="username"
+                                        onBlur={handleInputUserAndDate}
+                                        onClick={handleInputUserAndDate}
+                                        onChange={e => {
+                                            setUserSelect(JSON.parse(e.target.value));
+                                        }}
+                                        style={{
+                                            borderColor: Rent.username !=="Seleccioné un Usuario" && !errorsDateAndUser.User ? "green" :"",
+                                        }}
+                                        >
+                                        <option selected>Seleccioné un Usuario</option>
+                                        {Username && Username.map(
+                                            (username) => (
+                                                <option value={JSON.stringify(username)}>{username.username}</option>
+                                            ))}
+                                    </select>
+                                    <small className="invalid-feedback" id="helpId" >
+                                        <i className="bi bi-exclamation-circle"> {errorsDateAndUser.User}</i>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
 
 
-                        <div className="form-group">
-                        
-                            <label for="car" className="form-label"> <i className="bi bi-car-front-fill"> </i>Vehículo</label>
                             <div className="form-group">
-                            
-                                <select className={((errors.CarSelect)?"is-invalid":"") +" form-select"} name="car" id="car"
-                                    onBlur={handleInputblur}
-                                    onChange={e=>{
-                                        setCarSelect(JSON.parse(e.target.value));
-                                    }}>
 
-                                    <option selected>Seleccioné un Vehículo</option>
-                                    {Car && Car.map(
-                                        (car) => (
-                                            <option value={JSON.stringify(car)}>{car.licence_plate}</option>
-                                        ))}
-                                </select>
-                                <small className="invalid-feedback" id="helpId" >
-                                <i className="bi bi-exclamation-circle"> {errors.CarSelect}</i>
-                                </small>
+                                <label for="car" className="form-label"> <i className="bi bi-car-front-fill"> </i>Vehículo</label>
+                                <div className="form-group">
+
+                                    <select className={((errors.CarSelect) ? "is-invalid" : "") + " form-select"} name="car" id="car"
+                                        onBlur={handleInputblurCar}
+                                        onClick={handleInputblurCar}
+                                        onChange={e => {
+                                            setCarSelect(JSON.parse(e.target.value));
+                                        }}>
+
+
+                                        <option selected>Seleccioné un Vehículo</option>
+                                        {Car && Car.map(
+                                            (car) => (
+                                                <option value={JSON.stringify(car)}>{car.licencePlate}</option>
+                                            ))}
+                                    </select>
+                                    <small className="invalid-feedback" id="helpId" >
+                                        <i className="bi bi-exclamation-circle"> {errors.CarSelect}</i>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="col-md-3 position-relative">
-                            <label for="date_rent" className="form-label "> <i className="bi bi-calendar-date"> </i> Fecha</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-pencil-square"></i>
-                                </span>
-                                <input type="date" className="form-control" id="date_rent" 
-                                    value={Rent.date_rent}
-                                    onChange={handleInputChange}
-                                    name="date_rent" required />
-                                
+                            <div className="col-md-3 position-relative">
+                                <label htmlFor="dateRent" className="form-label">
+                                    <i className="bi bi-calendar-date"></i> Fecha
+                                </label>
+                                <div className={`input-group has-validation ${Rent.dateRent !== '' && !errorsDateAndUser.User ? 'input-success' : ''}`}>
+                                    <span className="input-group-text">
+                                        <i className="bi bi-pencil-square"></i>
+                                    </span>
+                                    <input
+                                        type="date"
+                                        className={((errorsDateAndUser.User) ? "is-invalid" : "") + " form-control"}
+                                        id="dateRent"
+                                        value={Rent.dateRent}
+                                        onMouseUp={handleInputUserAndDate}
+                                        onMouseOut={handleInputUserAndDate}
+                                        onChange={handleInputUserAndDate}
+                                        onBlur={handleInputUserAndDate}
+                                        name="dateRent"
+                                        required
+                                        style={{
+                                            borderColor: Rent.dateRent !== '' && !errorsDateAndUser.User ? 'green' : '',
+                                        }}
+                                    />
+
+                                    <small className="invalid-feedback" id="helpId">
+                                        <i className="bi bi-exclamation-circle"> {errorsDateAndUser.User}</i>
+                                    </small>
+                                </div>
+
+                                {Rent.dateRent === '' ? (
+                                    <div>
+                                        <i className="text-success fs-5">No se puede alquilar más de un vehículo por persona en las mismas fechas!</i>
+                                    </div>
+                                ) : (
+                                    <div>
+                                    </div>
+                                )}
                             </div>
-                        </div>
+
+                            <div className="col-12">
+                                <button className="btn btn-secondary my-3  mx-2 " type="submit">
+                                    <i className="bi bi-person-plus"> Alquilar</i>
+                                </button>
+                                <Link className="btn btn-danger" to={"/RentList"}>
+                                    <i className="bi bi-x-circle"> Cancelar</i>
+                                </Link>
+                            </div>
+
+                        </form>
 
 
 
-                        <div className="col-12">
-                            <button className="btn btn-secondary my-3  mx-2 " type="submit">
-                                <i className="bi bi-person-plus"> Alquilar</i>
-                            </button>
-                            <Link className="btn btn-danger" to={"/RentList"}>
-                                <i className="bi bi-x-circle"> Cancelar</i>
-                            </Link>
-                        </div>
-
-                    </form>
-
-
-
-                </blockquote>
-            </div>
-        </div>
-        </div>
+                    </blockquote>
+                </div >
+            </div >
+        </div >
     );
 };
 

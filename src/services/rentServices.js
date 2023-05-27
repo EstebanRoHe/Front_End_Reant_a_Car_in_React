@@ -4,20 +4,20 @@ const getAll = () =>{
     return http.get("/Rent");
 };
 
-const get = id_rent =>{
-    return http.get(`/Rent/${id_rent}`);
+const get = idRent =>{
+    return http.get(`/Rent/${idRent}`);
 };
 
 const create = data =>{
     return http.post("/Rent",data);
 };
 
-const update = (id_rent,data) =>{
+const update = (idRent,data) =>{
     return http.put(`/Rent`,data);
 };
 
-const remove = id_rent => {
-    return http.delete(`/Rent/${id_rent}`);
+const remove = idRent => {
+    return http.delete(`/Rent/${idRent}`);
 };
 
 const RentServices = {

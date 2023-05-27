@@ -7,12 +7,12 @@ import Swal from "sweetalert2";
 
 
 const CarUpdate = props => {
-    const { id_car } = useParams();
+    const { idCar } = useParams();
     
 
     const initialCarState = {
-        id_car: null,
-        licence_plate: "",
+        idCar: null,
+        licencePlate: "",
         description: "",
         image: "",
         cylinder_capacity: "",
@@ -26,8 +26,8 @@ const CarUpdate = props => {
     const [TypeCar, setTypeCar] = useState([]);
   
 
-    const getCar = (id_car) => {
-        carServices.get(id_car)
+    const getCar = (idCar) => {
+        carServices.get(idCar)
             .then(response => {
                 setCar(response.data);
                 console.log(response.data);
@@ -39,9 +39,9 @@ const CarUpdate = props => {
 
     useEffect(() => {
         getList();
-        if (id_car)
-            getCar(id_car);
-    }, [id_car]);
+        if (idCar)
+            getCar(idCar);
+    }, [idCar]);
 
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -63,7 +63,7 @@ const CarUpdate = props => {
 
     const updateCar = () => {
         
-        carServices.update(Car.id_car, Car)
+        carServices.update(Car.idCar, Car)
             .then(response => {
                 console.log(response.data);
                 Swal.fire({
@@ -86,7 +86,7 @@ const CarUpdate = props => {
 
 
             <div className="card-body ">
-                <h4>Actualizar Vehículo del Id : {Car.id_car}</h4>
+                <h4>Actualizar Vehículo del Id : {Car.idCar}</h4>
                 <blockquote className="blockquote mb-0 ">
 
                     <form novalidate onSubmit={e => {
@@ -98,13 +98,13 @@ const CarUpdate = props => {
                         className="row g-3 needs-validation my-3  border = 1" >
 
                         <div className="col-md-3 position-relative">
-                            <label for="licence_plate" className="form-label ">Placa</label>
+                            <label for="licencePlate" className="form-label ">Placa</label>
                             <div className="input-group has-validation">
                                 <span className="input-group-text">
                                     <i className="bi bi-pencil-square"></i>
                                 </span>
-                                <input type="text" className="form-control" id="licence_plate" value={Car.licence_plate}
-                                    onChange={handleInputChange} name="licence_plate" required />
+                                <input type="text" className="form-control" id="licencePlate" value={Car.licencePlate}
+                                    onChange={handleInputChange} name="licencePlate" required />
                                 <div className="valid-tooltip">
                                     ""
                                 </div>
@@ -134,7 +134,7 @@ const CarUpdate = props => {
                                     <i className="bi bi-image"></i>
                                 </span>
                                 <input type="text" className="form-control" id="image" value={Car.image}
-                                    onChange={handleInputChange} name="image" required />
+                                    onChange={handleInputChange} name="image"  />
                                 <div className="invalid-tooltip">
                                     ""
                                 </div>

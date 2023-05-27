@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 const UserCreate = () => {
 
     const initialUserState = {
-        id_username: null,
+        idUser: null,
         name: "",
         lastName: "",
         username: "",
@@ -56,7 +56,7 @@ const UserCreate = () => {
     const createUser = (e) => {
         e.preventDefault();
         var data = {
-            id_username: User.id_username, name: User.name, lastName: User.lastName,
+            idUser: User.idUser, name: User.name, lastName: User.lastName,
             username: User.username, password: User.password, email: User.email
         };
         setErrors(validationErrror(User));

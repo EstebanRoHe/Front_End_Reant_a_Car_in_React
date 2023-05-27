@@ -61,16 +61,16 @@ function App() {
         <Route path="/" element={<IndexUNA />} />
         <Route path="/UserList" element={<UserList />} />
         <Route path="/UserCreate" element={<UserCreate />} />
-        <Route path="/UserUpdate/:id_username" element={<UserUpdate />} />
+        <Route path="/UserUpdate/:idUser" element={<UserUpdate />} />
         <Route path="/TypeCarList" element={<TypeCarList />} />
         <Route path="/TypeCarCreate" element={<TypeCarCreate />} />
         <Route path="/TypeCarUpDate/:id_typeCar" element={<TypeCarUpDate />} />
         <Route path="/CarList" element={<CarList />} />
         <Route path="/CarCreate" element={<CarCreate />} />
-        <Route path="/CarUpdate/:id_car" element={<CarUpdate />} />
+        <Route path="/CarUpdate/:idCar" element={<CarUpdate />} />
         <Route path="/RentList" element={<RentList />} />
         <Route path="/RentCreate" element={<RentCreate />} />
-        <Route path="/RentUpdate/:id_rent" element={<RentUpdate />} />
+        <Route path="/RentUpdate/:idRent" element={<RentUpdate />} />
         <Route path="/IndexRent" element={<IndexRent />} />
         <Route path="/IndexUNA" element={<IndexUNA/>} />
       </Routes>

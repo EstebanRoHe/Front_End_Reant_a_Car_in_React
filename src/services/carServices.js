@@ -4,20 +4,20 @@ const getAll = () =>{
     return http.get("/Car");
 };
 
-const get = id_car =>{
-    return http.get(`/Car/${id_car}`);
+const get = idCar =>{
+    return http.get(`/Car/${idCar}`);
 };
 
 const create = data =>{
     return http.post("/Car",data);
 };
 
-const update = (id_car,data) =>{
+const update = (idCar,data) =>{
     return http.put(`/Car`,data);
 };
 
-const remove = id_car => {
-    return http.delete(`/Car/${id_car}`);
+const remove = idCar => {
+    return http.delete(`/Car/${idCar}`);
 };
 
 const CarServices = {

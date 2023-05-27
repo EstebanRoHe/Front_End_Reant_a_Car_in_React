@@ -4,20 +4,20 @@ const getAll = ()=>{
     return http.get("/User")
 }
 
-const get = id_username =>{
-    return http.get(`/User/${id_username}`);
+const get = idUser =>{
+    return http.get(`/User/${idUser}`);
 };
 
 const create = data => {
     return http.post("/User",data);
 };
 
-const update =(id_username, data)=>{
+const update =(idUser, data)=>{
     return http.put(`/User`,data);
 };
 
-const remove = id_username => {
-    return http.delete(`/User/${id_username}`);
+const remove = idUser => {
+    return http.delete(`/User/${idUser}`);
 };
 
 const UserServices = {

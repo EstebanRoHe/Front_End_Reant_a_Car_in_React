@@ -3,10 +3,10 @@ import { useParams, Link } from "react-router-dom";
 import UserServices from "../services/usernameServices";
 import Swal from "sweetalert2";
 const UserUpdate = () => {
-    const { id_username } = useParams();
+    const { idUser } = useParams();
 
     const initialUserState = {
-        id_username: null,
+        idUser: null,
         name: "",
         lastName: "",
         username: "",
@@ -16,8 +16,8 @@ const UserUpdate = () => {
     const [User, setUser] = useState(initialUserState);
     const [validPassword, setValidPassword] = useState({});
 
-    const getUser = id_username => {
-        UserServices.get(id_username)
+    const getUser = idUser => {
+        UserServices.get(idUser)
             .then(response => {
                 setUser(response.data);
             })
@@ -28,9 +28,9 @@ const UserUpdate = () => {
 
     useEffect(() => {
 
-        if (id_username)
-            getUser(id_username);
-    }, [id_username]);
+        if (idUser)
+            getUser(idUser);
+    }, [idUser]);
 
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -51,7 +51,7 @@ const UserUpdate = () => {
         setValidPassword(validationPassword(User));
 
         if (Object.keys(validPassword).length === 0) {
-            UserServices.update(User.id_username, User)
+            UserServices.update(User.idUser, User)
             .then(response => {
                 console.log(response.data);
                 Swal.fire({
@@ -94,7 +94,7 @@ const UserUpdate = () => {
 
             <div className="card-body ">
 
-                <h5>Actualizar Usuario del Id : {User.id_username}</h5>
+                <h5>Actualizar Usuario del Id : {User.idUser}</h5>
 
                 <blockquote className="blockquote mb-0 ">
 

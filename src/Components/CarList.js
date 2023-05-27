@@ -24,7 +24,7 @@ const CarList = () => {
 
     };
 
-    const remove = (id_car) => {
+    const remove = (idCar) => {
 
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
@@ -43,7 +43,7 @@ const CarList = () => {
             reverseButtons: true
           }).then((result) => {
             if (result.isConfirmed) {
-                carServices.remove(id_car)
+                carServices.remove(idCar)
                 .then(response => {
                     console.log(response.data);
                     swalWithBootstrapButtons.fire(
@@ -108,9 +108,9 @@ const CarList = () => {
                         <tbody>
                             {Car && Car.map(
                                 (car) => (
-                                    <tr key={car.id_car}>
-                                        <th scope="row">{car.id_car}</th>
-                                        <td>{car.licence_plate}</td>
+                                    <tr key={car.idCar}>
+                                        <th scope="row">{car.idCar}</th>
+                                        <td>{car.licencePlate}</td>
                                         <td>{car.description}</td>
                                         <td>{car.cylinder_capacity}</td>
                                         <td>{car.capacity}</td>
@@ -120,10 +120,10 @@ const CarList = () => {
 
                                         <td>
                                             <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                <Link className="btn btn-secondary" to={"/CarUpdate/" + car.id_car}>
+                                                <Link className="btn btn-secondary" to={"/CarUpdate/" + car.idCar}>
                                                 <i className="bi bi-gear"> Actualizar</i>
                                             </Link>
-                                            <button className="btn btn-danger" onClick={() => remove(car.id_car)}>
+                                            <button className="btn btn-danger" onClick={() => remove(car.idCar)}>
                                             <i className="bi bi-trash3"> Eliminar</i>
                                            
                                             </button>

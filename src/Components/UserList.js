@@ -23,7 +23,7 @@ const UserList = () => {
 
     };
 
-    const remove = (id_username) => {
+    const remove = (idUser) => {
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-success',
@@ -41,7 +41,7 @@ const UserList = () => {
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                userServices.remove(id_username)
+                userServices.remove(idUser)
                     .then(response => {
                         console.log(response.data);
                         swalWithBootstrapButtons.fire(
@@ -103,8 +103,8 @@ const UserList = () => {
                                 <tbody>
                                     {User && User.map(
                                         (username) => (
-                                            <tr key={username.id_username}>
-                                                <th scope="row">{username.id_username}</th>
+                                            <tr key={username.idUser}>
+                                                <th scope="row">{username.idUser}</th>
                                                 <td>{username.name}</td>
                                                 <td>{username.lastName}</td>
                                                 <td>{username.username}</td>
@@ -112,10 +112,10 @@ const UserList = () => {
 
                                                 <td>
                                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                        <Link className="btn btn-secondary" to={"/UserUpdate/" + username.id_username}>
+                                                        <Link className="btn btn-secondary" to={"/UserUpdate/" + username.idUser}>
                                                             <i className="bi bi-gear"> Actualizar</i>
                                                         </Link>
-                                                        <button className="btn btn-danger" onClick={() => remove(username.id_username)}>
+                                                        <button className="btn btn-danger" onClick={() => remove(username.idUser)}>
                                                             <i className="bi bi-trash3"> Eliminar</i>
                                                         </button>
                                                     </div>

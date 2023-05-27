@@ -9,8 +9,8 @@ const CarCreate = () => {
 
 
     const initialCarState = {
-        id_car: null,
-        licence_plate: "",
+        idCar: null,
+        licencePlate: "",
         description: "",
         image: "",
         cylinder_capacity: "",
@@ -74,7 +74,7 @@ const CarCreate = () => {
     const createCar = (e) => {
         e.preventDefault();
         var date = {
-            id_car: Car.id_car, licence_plate: Car.licence_plate, description: Car.description,
+            idCar: Car.idCar, licencePlate: Car.licencePlate, description: Car.description,
             image: Car.image, cylinder_capacity: Car.cylinder_capacity, capacity: Car.capacity,
             model_year: Car.model_year, typeCar: Type
         }
@@ -86,7 +86,7 @@ const CarCreate = () => {
             carServices.create(date)
                 .then(response => {
                     setCar({
-                        licence_plate: response.data.licence_plate, description: response.data.description,
+                        licencePlate: response.data.licencePlate, description: response.data.description,
                         image: response.data.image, cylinder_capacity: response.data.cylinder_capacity,
                         capacity: response.data.capacity, model_year: response.data.model_year, typeCar: response.data.Type
                     });
@@ -116,8 +116,8 @@ const CarCreate = () => {
         let errors = {}
 
         CarArray.forEach(car => {
-            if (car.licence_plate === Car.licence_plate) {
-                errors.licence_plate = "Este numero de placa ya existe";
+            if (car.licencePlate === Car.licencePlate) {
+                errors.licencePlate = "Este numero de placa ya existe";
             }
         })
 
@@ -139,21 +139,21 @@ const CarCreate = () => {
                             className="row g-3 needs-validation my-3  border = 1" >
 
                             <div className="col-md-3 position-relative">
-                                <label for="licence_plate" className="form-label ">Placa</label>
+                                <label for="licencePlate" className="form-label ">Placa</label>
                                 <div className="input-group has-validation">
                                     <span className="input-group-text">
                                         <i className="bi bi-pencil-square"></i>
                                     </span>
-                                    <input type="text" className={((errors.licence_plate) ? "is-invalid" : "") + " form-control"}
-                                        id="licence_plate"
-                                        value={Car.licence_plate}
+                                    <input type="text" className={((errors.licencePlate) ? "is-invalid" : "") + " form-control"}
+                                        id="licencePlate"
+                                        value={Car.licencePlate}
                                         placeholder="ABC - 1265"
                                         onBlur={handleInputblur}
                                         onKeyUp={handleInputblur}
                                         onChange={handleInputChange}
-                                        name="licence_plate" required />
+                                        name="licencePlate" required />
                                     <small className="invalid-feedback" id="helpId" >
-                                        <i className="bi bi-exclamation-circle"> {errors.licence_plate}</i>
+                                        <i className="bi bi-exclamation-circle"> {errors.licencePlate}</i>
                                     </small>
 
                                 </div>

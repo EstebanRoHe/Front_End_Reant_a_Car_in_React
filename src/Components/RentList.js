@@ -25,7 +25,7 @@ const RentList = () => {
 
     };
 
-    const remove = (id_rent) => {
+    const remove = (idRent) => {
 
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
@@ -44,7 +44,7 @@ const RentList = () => {
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                rentServices.remove(id_rent)
+                rentServices.remove(idRent)
                     .then(response => {
                         console.log(response.data);
 
@@ -107,19 +107,19 @@ const RentList = () => {
                                 <tbody>
                                     {Rent && Rent.map(
                                         (rent) => (
-                                            <tr key={rent.id_rent}>
-                                                <th scope="row">{rent.id_rent}</th>
+                                            <tr key={rent.idRent}>
+                                                <th scope="row">{rent.idRent}</th>
                                                 <td>{rent.username.username}</td>
-                                                <td>{rent.car.licence_plate}</td>
-                                                <td>{rent.date_rent}</td>
+                                                <td>{rent.car.licencePlate}</td>
+                                                <td>{rent.dateRent}</td>
 
                                                 <td>
                                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                        <Link className="btn btn-secondary" to={"/RentUpdate/" + rent.id_rent}>
+                                                        <Link className="btn btn-secondary" to={"/RentUpdate/" + rent.idRent}>
                                                             <i className="bi bi-gear"> Actualizar</i>
                                                         </Link>
 
-                                                        <button className="btn btn-danger" onClick={() => remove(rent.id_rent)}>
+                                                        <button className="btn btn-danger" onClick={() => remove(rent.idRent)}>
                                                             <i className="bi bi-trash3"> Eliminar</i>
                                                         </button>
                                                     </div>
