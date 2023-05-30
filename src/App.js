@@ -57,7 +57,7 @@ function App() {
 </nav>
 
     <div className="container mt-3">
-      <Routes>
+      <Routes >
         <Route path="/" element={<IndexUNA />} />
         <Route path="/UserList" element={<UserList />} />
         <Route path="/UserCreate" element={<UserCreate />} />
@@ -73,10 +73,11 @@ function App() {
         <Route path="/RentUpdate/:idRent" element={<RentUpdate />} />
         <Route path="/IndexRent" element={<IndexRent />} />
         <Route path="/IndexUNA" element={<IndexUNA/>} />
+        
       </Routes>
-     
-      <Footer/>
+    
     </div>
+      <Footer/>
   </div>);
 };
 

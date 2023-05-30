@@ -11,16 +11,18 @@ html, body {
   
   .footer {
     background-color: #191B21;
-    padding: 10px 0;
-    margin-top: auto;
+   
+ 
   }
   
   /* Estilos para dispositivos móviles */
   @media (max-width: 767px) {
     .footer {
-      position: static;
-      margin-top: 0;
+      position: fixed;
+      bottom: 0;
+      left: 0;
       width: 100%;
+      
     }
   }
   

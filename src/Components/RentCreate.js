@@ -158,7 +158,8 @@ const RentCreate = () => {
 
                             <div className="form-group">
                                 <label for="username" className="form-label"> <i className="bi bi-person-add"> </i>Usuario</label>
-                                <div className={`input-group has-validation ${ Rent.username !== "Seleccioné un Usuario" && !errorsDateAndUser.User ? "input-success" : ""}`}>
+                                <div className={`input-group has-validation ${ 
+                                  Rent.username !=null &&   Rent.username !== "Seleccioné un Usuario" && !errorsDateAndUser.User ? "input-success" : ""}`}>
                                     <select className={((errorsDateAndUser.User) ? "is-invalid" : "") + " form-select"} name="username" id="username"
                                         onBlur={handleInputUserAndDate}
                                         onClick={handleInputUserAndDate}
@@ -166,7 +167,7 @@ const RentCreate = () => {
                                             setUserSelect(JSON.parse(e.target.value));
                                         }}
                                         style={{
-                                            borderColor: Rent.username !=="Seleccioné un Usuario" && !errorsDateAndUser.User ? "green" :"",
+                                            borderColor: Rent.username !=null && Rent.username !=="Seleccioné un Usuario" && !errorsDateAndUser.User ? "green" :"",
                                         }}
                                         >
                                         <option selected>Seleccioné un Usuario</option>

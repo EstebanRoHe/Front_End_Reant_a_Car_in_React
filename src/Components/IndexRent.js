@@ -58,7 +58,7 @@ const IndexRent = () => {
                                     <li className="list-group-item"><i className="bi bi-card-text"> </i>Placa : {car.licence_plate}</li>
 
                                 </ul>
-                                <div className="card-body">
+                                <div className="card-body ">
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
 
                                         <Link className="btn btn-success" to={"/RentCreate"}>

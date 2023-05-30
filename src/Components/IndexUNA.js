@@ -80,7 +80,7 @@ const IndexUNA = () => {
                     para disfrutar de un viaje lleno de confort y emoción!"
                 </p>
             </div>
-            <div className="d-flex flex-wrap">
+            <div className="d-flex flex-wrap ">
                 <Link className="btn btn-info" to={"/IndexRent"}
                     style={{ color: 'white', fontFamily: 'Arial, sans-serif' }}>
                     Ver Vehículos
@@ -88,7 +88,7 @@ const IndexUNA = () => {
                 <span style={{ marginRight: '10px' }}></span>
 
                 <Link className="btn btn-danger" to={"/UserCreate"}
-                    style={{ color: 'white', fontFamily: 'Arial, sans-serif' }}>
+                    style={{ color: 'white', fontFamily: 'Arial, sans-serif'}}>
                     Regístrese
                 </Link>
             </div>

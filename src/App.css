@@ -4,3 +4,14 @@ body{
 background: #23272F
 
 }
+
+.container{
+    margin-Bottom:6%;
+}
+
+@media (max-width: 767px) {
+    .container{
+        margin-Bottom:25%;
+      
+    }
+  }
