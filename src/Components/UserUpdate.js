@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import UserServices from "../services/usernameServices";
 import Swal from "sweetalert2";
+import AuthServices from '../services/authServices';
 const UserUpdate = () => {
     const { idUser } = useParams();
 
@@ -17,6 +18,15 @@ const UserUpdate = () => {
     const [validPassword, setValidPassword] = useState({});
 
     const getUser = idUser => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            UserServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         UserServices.get(idUser)
             .then(response => {
                 setUser(response.data);
@@ -48,6 +58,15 @@ const UserUpdate = () => {
     const updateUser = (e) => {
 
         e.preventDefault()
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            UserServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         setValidPassword(validationPassword(User));
 
         if (Object.keys(validPassword).length === 0) {

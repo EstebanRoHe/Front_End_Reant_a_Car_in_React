@@ -2,7 +2,7 @@ import React, { useState,useEffect} from "react";
 import typeCarServices from "../services/typecarServices";
 import { Link } from 'react-router-dom';
 import Swal from "sweetalert2";
-
+import AuthServices from '../services/authServices';
 
 const TypeCarCreate = () => {
     const initialTypeCarState = {
@@ -19,7 +19,15 @@ const TypeCarCreate = () => {
     }
 
     const createTypeCar = () => {
-       
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            typeCarServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         var date = { id_typeCar: TypeCar.id_typeCar, description: TypeCar.description}
         typeCarServices.create(date)
             .then(response => {  

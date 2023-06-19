@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import typeCarServices from "../services/typecarServices";
 import Swal from "sweetalert2";
-
+import AuthServices from '../services/authServices';
 
 const TypeCarUpDate = () => {
+    
     const { id_typeCar } = useParams();
 
     const initialTypeCarState = {
@@ -15,6 +16,17 @@ const TypeCarUpDate = () => {
     const [TypeCar, setTypeCar] = useState(initialTypeCarState);
 
     const getTypeCar = id_typeCar => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            // Agrega el token a los encabezados de la solicitud
+            typeCarServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            // Maneja el caso cuando no hay un token válido
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         typeCarServices.get(id_typeCar)
             .then(response => {
                 setTypeCar(response.data);
@@ -36,6 +48,15 @@ const TypeCarUpDate = () => {
     }
 
     const updateTypeCar = () => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            typeCarServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         typeCarServices.update(TypeCar.id_typeCar, TypeCar)
             .then(response => {
                 console.log(response.data);

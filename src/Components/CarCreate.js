@@ -3,7 +3,7 @@ import carServices from "../services/carServices";
 import typeCarServices from "../services/typecarServices";
 import { Link } from 'react-router-dom';
 import Swal from "sweetalert2";
-
+import AuthServices from '../services/authServices';
 
 const CarCreate = () => {
 
@@ -50,6 +50,15 @@ const CarCreate = () => {
 
 
     const getList = () => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            typeCarServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         typeCarServices.getAll()
             .then(response => {
                 setTypeCar(response.data);
@@ -62,6 +71,15 @@ const CarCreate = () => {
     };
 
     const getCar = () => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            carServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         carServices.getAll()
             .then(response => {
                 setCarArray(response.data);
@@ -73,6 +91,15 @@ const CarCreate = () => {
 
     const createCar = (e) => {
         e.preventDefault();
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            carServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         var date = {
             idCar: Car.idCar, licencePlate: Car.licencePlate, description: Car.description,
             image: Car.image, cylinder_capacity: Car.cylinder_capacity, capacity: Car.capacity,

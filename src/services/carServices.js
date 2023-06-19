@@ -1,23 +1,52 @@
 import http from "../http-common";
+let authToken = null;
 
+const setAuthToken = (token) => {
+  authToken = token;
+};
 const getAll = () =>{
-    return http.get("/Car");
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.get("/Car", config);
 };
 
 const get = idCar =>{
-    return http.get(`/Car/${idCar}`);
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.get(`/Car/${idCar}`, config);
 };
 
 const create = data =>{
-    return http.post("/Car",data);
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.post("/Car",data, config);
 };
 
 const update = (idCar,data) =>{
-    return http.put(`/Car`,data);
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.put(`/Car`,data, config);
 };
 
 const remove = idCar => {
-    return http.delete(`/Car/${idCar}`);
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.delete(`/Car/${idCar}`, config);
 };
 
 const CarServices = {
@@ -25,7 +54,8 @@ const CarServices = {
     get,
     create,
     update,
-    remove
+    remove,
+    setAuthToken,
 };
 
 export default CarServices;

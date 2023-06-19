@@ -3,7 +3,7 @@ import rentServices from "../services/rentServices";
 import Loading from "./Loading"
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
-
+import AuthServices from '../services/authServices';
 const RentList = () => {
     const [Rent, setRent] = useState([]);
     let navigate = useNavigate;
@@ -13,7 +13,15 @@ const RentList = () => {
     }, []);
 
     const getList = () => {
-
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            rentServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         rentServices.getAll()
             .then(response => {
                 setRent(response.data);
@@ -26,7 +34,15 @@ const RentList = () => {
     };
 
     const remove = (idRent) => {
-
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            rentServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-success',

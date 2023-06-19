@@ -3,7 +3,7 @@ import typeCarServices from "../services/typecarServices";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "./Loading"
-
+import AuthServices from '../services/authServices';
 const TypeCarList = () => {
     const [TypeCar, setTypeCar] = useState([]);
     const [validate, setValidate] = useState(false);
@@ -15,6 +15,15 @@ const TypeCarList = () => {
     }, []);
 
     const getList = () => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            typeCarServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         typeCarServices.getAll()
             .then(response => {
                 setTypeCar(response.data);
@@ -27,7 +36,17 @@ const TypeCarList = () => {
     };
 
     const remove = (id_typeCar) => {
-
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            // Agrega el token a los encabezados de la solicitud
+            typeCarServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            // Maneja el caso cuando no hay un token válido
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-success',

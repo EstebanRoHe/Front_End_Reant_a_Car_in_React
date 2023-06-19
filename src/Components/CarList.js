@@ -3,7 +3,7 @@ import carServices from "../services/carServices";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "./Loading"
-
+import AuthServices from '../services/authServices';
 const CarList = () => {
     const [Car, setCar] = useState([]);
     let navigate = useNavigate;
@@ -13,6 +13,15 @@ const CarList = () => {
     }, []);
 
     const getList = () => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            carServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         carServices.getAll()
             .then(response => {
                 setCar(response.data);
@@ -25,7 +34,15 @@ const CarList = () => {
     };
 
     const remove = (idCar) => {
-
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            carServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
               confirmButton: 'btn btn-success',

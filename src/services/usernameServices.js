@@ -1,23 +1,52 @@
 import http from "../http-common";
+let authToken = null;
 
+const setAuthToken = (token) => {
+  authToken = token;
+};
 const getAll = ()=>{
-    return http.get("/User")
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.get("/User", config)
 }
 
 const get = idUser =>{
-    return http.get(`/User/${idUser}`);
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.get(`/User/${idUser}`, config);
 };
 
 const create = data => {
-    return http.post("/User",data);
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.post("/User",data, config);
 };
 
 const update =(idUser, data)=>{
-    return http.put(`/User`,data);
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.put(`/User`,data, config);
 };
 
 const remove = idUser => {
-    return http.delete(`/User/${idUser}`);
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.delete(`/User/${idUser}`, config);
 };
 
 const UserServices = {
@@ -25,6 +54,7 @@ const UserServices = {
     get,
     create,
     update,
-    remove
+    remove,
+    setAuthToken,
 };
 export default UserServices;

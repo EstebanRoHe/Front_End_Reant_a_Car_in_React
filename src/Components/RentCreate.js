@@ -4,7 +4,7 @@ import carServices from "../services/carServices";
 import userServices from "../services/usernameServices";
 import Swal from "sweetalert2";
 import { Link } from 'react-router-dom';
-
+import AuthServices from '../services/authServices';
 const RentCreate = () => {
     const initialRentState = {
         idRent: null,
@@ -45,6 +45,15 @@ const RentCreate = () => {
     }, [Validat]);
 
     const getListUser = () => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            userServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         userServices.getAll()
             .then(response => {
                 setUsername(response.data);
@@ -57,6 +66,15 @@ const RentCreate = () => {
     };
 
     const getListCar = () => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            carServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         carServices.getAll()
             .then(response => {
                 setCar(response.data);
@@ -69,6 +87,15 @@ const RentCreate = () => {
     };
 
     const getListRent = () => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            rentServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         rentServices.getAll()
             .then(response => {
                 setRentRentArray(response.data);
@@ -81,6 +108,15 @@ const RentCreate = () => {
     };
 
     const createRent = (e) => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            rentServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         e.preventDefault();
         var data = { idRent: Rent.idRent, username: UserSelect, car: CarSelect, dateRent: Rent.dateRent }
 

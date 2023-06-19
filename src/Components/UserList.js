@@ -3,6 +3,7 @@ import userServices from "../services/usernameServices";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "./Loading"
+import AuthServices from '../services/authServices';
 const UserList = () => {
     const [User, setUser] = useState([]);
     let navigate = useNavigate;
@@ -12,6 +13,15 @@ const UserList = () => {
     }, []);
 
     const getList = () => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            userServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         userServices.getAll()
             .then(response => {
                 setUser(response.data);
@@ -24,6 +34,15 @@ const UserList = () => {
     };
 
     const remove = (idUser) => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            userServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-success',

@@ -1,23 +1,52 @@
 import http from "../http-common";
+let authToken = null;
 
+const setAuthToken = (token) => {
+  authToken = token;
+}; 
 const getAll = () =>{
-    return http.get("/Rent");
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.get("/Rent", config);
 };
 
 const get = idRent =>{
-    return http.get(`/Rent/${idRent}`);
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.get(`/Rent/${idRent}`, config);
 };
 
 const create = data =>{
-    return http.post("/Rent",data);
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.post("/Rent",data, config);
 };
 
 const update = (idRent,data) =>{
-    return http.put(`/Rent`,data);
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.put(`/Rent`,data, config);
 };
 
 const remove = idRent => {
-    return http.delete(`/Rent/${idRent}`);
+    const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`, 
+        },
+      };
+    return http.delete(`/Rent/${idRent}`, config);
 };
 
 const RentServices = {
@@ -25,7 +54,8 @@ const RentServices = {
     get,
     create,
     update,
-    remove
+    remove,
+    setAuthToken,
 };
 
 export default RentServices;

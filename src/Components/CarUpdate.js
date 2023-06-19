@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import carServices from "../services/carServices";
 import typeCarServices from "../services/typecarServices";
 import Swal from "sweetalert2";
-
+import AuthServices from '../services/authServices';
 
 
 const CarUpdate = props => {
@@ -27,6 +27,15 @@ const CarUpdate = props => {
   
 
     const getCar = (idCar) => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            carServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         carServices.get(idCar)
             .then(response => {
                 setCar(response.data);
@@ -50,6 +59,15 @@ const CarUpdate = props => {
 
 
     const getList = () => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            carServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         typeCarServices.getAll()
             .then(response => {
                 setTypeCar(response.data);
@@ -61,8 +79,17 @@ const CarUpdate = props => {
 
     };
 
-    const updateCar = () => {
-        
+    const updateCar = (e) => {
+        e.preventDefault()
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            carServices.setAuthToken(token);
+            console.log('Token :', token);
+        } else {
+            console.error("No se encontró un token válido");
+            console.log('Token :', token);
+            return;
+        }
         carServices.update(Car.idCar, Car)
             .then(response => {
                 console.log(response.data);
@@ -89,10 +116,9 @@ const CarUpdate = props => {
                 <h4>Actualizar Vehículo del Id : {Car.idCar}</h4>
                 <blockquote className="blockquote mb-0 ">
 
-                    <form novalidate onSubmit={e => {
-                        e.preventDefault()
-                        updateCar()
-                    }}
+                    <form onSubmit={
+                        updateCar
+                    }
 
 
                         className="row g-3 needs-validation my-3  border = 1" >
