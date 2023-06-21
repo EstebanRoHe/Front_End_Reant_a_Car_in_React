@@ -3,23 +3,29 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthServices from '../services/authServices';
 import './Login.css';
 
-function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+function Login({ setIsLoggedIn }) { // Agrega setIsLoggedIn como una propiedad
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-
-        try {
-            const response = await AuthServices.login({ username, password });
-            const token = response.data.token;
-            AuthServices.setAuthToken(token); 
-            navigate('/');
-        } catch (error) {
-            console.error(error);
-        }
-    };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+  
+    try {
+        const response = await AuthServices.login({ username, password });
+        const { token, Role } = response.data;
+        AuthServices.setAuthToken(token);
+        AuthServices.setRole(Role);
+        setIsLoggedIn(true);
+        navigate('/');
+        console.log(`Token: ${token}`);
+        console.log(`Role: ${Role}`);       
+      
+      } catch (error) {
+        console.error(error);
+      }
+      
+  };
 
     return (
 
@@ -52,7 +58,7 @@ function Login() {
                             <span className="input-group-text">
                                 <i className="bi bi-lock"></i>
                             </span>
-                            
+
                             <input type="password"
                                 class="form-control"
                                 id="password"
@@ -63,7 +69,7 @@ function Login() {
                         </div>
                     </div>
                     <button type="submit" class="btn btn-secondary">Iniciar sesión</button>
-
+                  
                 </form>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Link className="btn btn-primary " style={{ marginTop: "5%" }} to={"/UserCreate"}>

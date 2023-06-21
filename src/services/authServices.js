@@ -5,27 +5,36 @@ const login = credentials => {
 };
 
 const setAuthToken = token => {
-  // Aquí puedes almacenar el token en localStorage, sessionStorage o en una cookie
-  // Ejemplo con localStorage:
+
   localStorage.setItem('authToken', token);
 };
 
 const getAuthToken = () => {
-  // Aquí obtienes el token almacenado previamente
-  // Ejemplo con localStorage:
+
   return localStorage.getItem('authToken');
 };
 
-const removeAuthToken = () => {
-  // Aquí remueves el token almacenado
-  // Ejemplo con localStorage:
-  localStorage.removeItem('authToken');
+const setRole = role => {
+  localStorage.setItem('userRole', role);
 };
+
+const getRole = () => {
+  return localStorage.getItem('userRole');
+};
+
+const removeAuthToken = () => {
+
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('userRole');
+};
+
 
 const AuthServices = {
   login,
   setAuthToken,
   getAuthToken,
+  setRole,
+  getRole,
   removeAuthToken
 };
 

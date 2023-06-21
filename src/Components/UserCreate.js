@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import UserServices from "../services/usernameServices";
 import { Link } from 'react-router-dom';
 import Swal from "sweetalert2";
-import AuthServices from '../services/authServices';
 
 const UserCreate = () => {
 
@@ -45,15 +44,6 @@ const UserCreate = () => {
     };
 
     const getList = () => {
-        const token = AuthServices.getAuthToken();
-        if (token) {
-            UserServices.setAuthToken(token);
-            console.log('Token :', token);
-        } else {
-            console.error("No se encontró un token válido");
-            console.log('Token :', token);
-            return;
-        }
         UserServices.getAll()
             .then(response => {
                 setUserArray(response.data);
@@ -65,15 +55,6 @@ const UserCreate = () => {
 
     const createUser = (e) => {
         e.preventDefault();
-        const token = AuthServices.getAuthToken();
-        if (token) {
-            UserServices.setAuthToken(token);
-            console.log('Token :', token);
-        } else {
-            console.error("No se encontró un token válido");
-            console.log('Token :', token);
-            return;
-        }
         var data = {
             idUser: User.idUser, name: User.name, lastName: User.lastName,
             username: User.username, password: User.password, email: User.email
