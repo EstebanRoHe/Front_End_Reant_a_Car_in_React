@@ -179,6 +179,7 @@ const RentCreate = () => {
     }
 
     return (
+        <div className="container ">
         <div className="submit-form"
             onMouseUp={handleInputUserAndDate}
             onMouseOut={handleInputUserAndDate}
@@ -300,6 +301,7 @@ const RentCreate = () => {
                 </div >
             </div >
         </div >
+        </div>
     );
 };
 

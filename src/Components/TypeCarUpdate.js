@@ -74,6 +74,7 @@ const TypeCarUpDate = () => {
     };
 
     return (
+        <div className="container ">
         <div className="card  ">
             <div className="card-body ">
                 <h5>Actualizar Tipo de Vehículo del Id : {TypeCar.id_typeCar}</h5>
@@ -114,6 +115,7 @@ const TypeCarUpDate = () => {
 
                 </blockquote>
             </div>
+        </div>
         </div>
 
     );

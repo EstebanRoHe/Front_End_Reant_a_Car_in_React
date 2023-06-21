@@ -101,7 +101,7 @@ const UserList = () => {
 
     return (
 
-        <div>
+        <div className="container ">
             {User.length === 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Loading />

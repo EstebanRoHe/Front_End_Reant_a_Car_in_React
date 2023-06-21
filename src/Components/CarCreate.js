@@ -154,6 +154,7 @@ const CarCreate = () => {
 
 
     return (
+        <div className="container ">
         <div className="submit-form">
             <div className="card  ">
 
@@ -309,6 +310,7 @@ const CarCreate = () => {
                     </blockquote>
                 </div>
             </div>
+        </div>
         </div>
     );
 };

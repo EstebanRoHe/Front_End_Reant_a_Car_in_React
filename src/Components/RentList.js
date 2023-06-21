@@ -100,7 +100,7 @@ const RentList = () => {
 
     return (
 
-        <div >
+        <div className="container ">
             {Rent.length === 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <Loading />

@@ -54,6 +54,7 @@ const TypeCarCreate = () => {
 
 
     return (
+        <div className="container ">
         <div className="card  ">
 
             <div className="card-body ">
@@ -97,6 +98,7 @@ const TypeCarCreate = () => {
 
                 </blockquote>
             </div>
+        </div>
         </div>
 
     );

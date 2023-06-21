@@ -102,7 +102,7 @@ const TypeCarList = () => {
 
 
     return (
-        <div>
+        <div className="container ">
             {TypeCar.length === 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Loading />

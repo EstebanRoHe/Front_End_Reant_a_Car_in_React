@@ -1,41 +1,72 @@
-.title{
-  font-family:'Times New Roman', Times, serif;
+.title {
+  font-family: 'Times New Roman', Times, serif;
   font-weight: bold;
   color: white;
   font-size: 3em;
   text-align: center;
+  padding-top: 1%;
 
 }
+ 
 .carousel-item img {
-    object-fit: contain;
-    max-height: 300px;
-    max-width: 100%;
+  object-fit: contain;
+  max-height: 350px;
+  max-width: 100%;
+}
+
+.h2-style {
+  font-family: Roboto;
+  font-weight: bold;
+  color: white;
+  font-size: 4em;
+}
+
+.containerCarousel {
+  padding: 2% 0% 3% 0%;
+
+}
+
+.index {
+  flex: 1;
+  width: 100%;
+  margin: 0;
+}
+
+.info {
+  background-color: #212529;
+  padding-bottom: 1%;
+  padding-top: 1%;
+  
+}
+.continfo{
+  padding: 1% 5% 1% 5%;
+}
+.continfobeneficios{
+  padding: 2% 0% 1% 0%;
+}
+
+@media (max-width: 767px) {
+  
+  .index {
+    flex: 1;
+    width: 100%;
+  }
+  
+  .info {
+    background-color: #212529;
+    padding-bottom: 3%;
+    padding-top: 3%;
+    
+    
+  }
+  .continfo{
+    padding: 0%;
+    margin: 0;
+  }
+  .continfobeneficios{
+    padding: 6%;
+    margin: 6;
   }
 
-  .h2-style {
-    font-family: Roboto;
-    font-weight: bold;
-    color: white;
-    font-size: 4em;
-  }
-  .containerCarousel {
-    padding: 1rem; 
- 
-  }
-  
 
-  
-  
-  
-  
-
-
-  
-
-
-
- 
-  
-
-
- 
+}

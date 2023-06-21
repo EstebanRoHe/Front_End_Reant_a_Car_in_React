@@ -108,10 +108,8 @@ const CarUpdate = props => {
 
 
     return (
-
+        <div className="container ">
         <div className="card  ">
-
-
             <div className="card-body ">
                 <h4>Actualizar Vehículo del Id : {Car.idCar}</h4>
                 <blockquote className="blockquote mb-0 ">
@@ -255,6 +253,7 @@ const CarUpdate = props => {
 
                 </blockquote>
             </div>
+        </div>
         </div>
 
 

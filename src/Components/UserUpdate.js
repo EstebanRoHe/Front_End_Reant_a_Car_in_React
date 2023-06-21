@@ -109,6 +109,7 @@ const UserUpdate = () => {
 
 
     return (
+        <div className="container ">
         <div className="card ">
 
             <div className="card-body ">
@@ -220,6 +221,7 @@ const UserUpdate = () => {
             </div>
 
 
+        </div>
         </div>
     );
 };

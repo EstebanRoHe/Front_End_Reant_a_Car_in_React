@@ -128,6 +128,7 @@ const UserCreate = () => {
 
 
     return (
+        <div className="container ">
         <div className="submit-form ">
 
             <div className="card  ">
@@ -248,7 +249,7 @@ const UserCreate = () => {
                 </div>
 
             </div>
-
+            </div>
 
         </div>
     );

@@ -119,7 +119,7 @@ const RentUpdate = props => {
 
 
     return (
-
+        <div className="container ">
         <div className="card  ">
 
 
@@ -218,6 +218,7 @@ const RentUpdate = props => {
 
                 </blockquote>
             </div>
+        </div>
         </div>
 
 

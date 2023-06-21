@@ -99,7 +99,7 @@ const CarList = () => {
     };
 
     return (
-        <div >
+        <div className="container ">
         {Car.length === 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Loading />

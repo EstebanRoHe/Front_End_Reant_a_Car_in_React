@@ -21,6 +21,7 @@ import IndexUNA from './Components/IndexUNA';
 import Footer from './Components/Footer';
 import Login from './Components/Login';
 import AuthServices from './services/authServices';
+import PrivateRoute from './Components/PrivateRoute';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -95,7 +96,7 @@ function App() {
         </div>
       </nav>
 
-      <div className="container mt-3 ">
+      <div className="principal">
         <Routes>
           <Route path="/" element={<IndexUNA />} />
           <Route path="/UserCreate" element={<UserCreate />} />
@@ -124,6 +125,7 @@ function App() {
 
             </>
           )}
+       
 
           {isLoggedIn && role === 'ROLE_ADMIN' || role === 'ROLE_USER' ? (
             <>
@@ -144,11 +146,11 @@ function App() {
           <Route path="/Login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
 
         </Routes>
-        
+
       </div>
       <Footer />
     </div>
-    );
+  );
 };
 
 export default App;

@@ -1,27 +1,17 @@
 import React, { useState, useEffect } from "react";
 import carServices from "../services/carServices";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Loading from "./Loading"
-import Paginate from './Paginate';
-
+import AuthServices from "../services/authServices";
 const IndexRent = () => {
     const [Car, setCar] = useState([]);
-    const [currentPage, setCurrentPage] = useState(0);
-    const itemsPerPage = 10
+
 
     useEffect(() => {
         getList();
 
     }, []);
 
-    const handlePageChange = ({ selected }) => {
-        setCurrentPage(selected);
-    };
-
-    const paginated = Car.slice(
-        currentPage * itemsPerPage,
-        (currentPage + 1) * itemsPerPage
-    );
 
     const getList = () => {
         carServices.getAll()
@@ -34,6 +24,7 @@ const IndexRent = () => {
             });
 
     };
+    const isLoggedIn = AuthServices.getAuthToken();
 
 
     return (
@@ -68,26 +59,28 @@ const IndexRent = () => {
                                     <li className="list-group-item"><i className="bi bi-calendar-date"> </i>Modelo : {car.model_year}</li>
                                     <li className="list-group-item"><i className="bi bi-car-front-fill"> </i>Tipo : {car.typeCar.description}</li>
                                     <li className="list-group-item"><i className="bi bi-card-text"> </i>Placa : {car.licencePlate}</li>
- 
+
                                 </ul>
                                 <div className="card-body ">
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-
-                                        <Link className="btn btn-success" to={"/RentCreate"}>
-                                            <i className="bi bi-plus-circle"> Alquilar</i>
-                                        </Link>
+                                        {isLoggedIn ? (
+                                            <Link className="btn btn-success" to={"/RentCreate"}>
+                                                <i className="bi bi-plus-circle"> Alquilar</i>
+                                            </Link>
+                                        ) : (
+                                            <Link className="btn btn-success" to={"/Login"}>
+                                                <i className="bi bi-person-fill"></i> Alquilar
+                                            </Link>
+                                        )}
 
                                     </div>
                                 </div>
 
-
                             </div>
-
-
 
                         ))}
                 </div>
-                
+
             )}
         </div>
 
