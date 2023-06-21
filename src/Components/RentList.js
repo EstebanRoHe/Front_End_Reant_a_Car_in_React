@@ -4,13 +4,26 @@ import Loading from "./Loading"
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import AuthServices from '../services/authServices';
+import Paginate from './Paginate';
+
 const RentList = () => {
     const [Rent, setRent] = useState([]);
     let navigate = useNavigate;
-
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 10;
+    
     useEffect(() => {
         getList();
     }, []);
+
+    const handlePageChange = ({ selected }) => {
+        setCurrentPage(selected);
+    };
+
+    const paginated = Rent.slice(
+        currentPage * itemsPerPage,
+        (currentPage + 1) * itemsPerPage
+    );
 
     const getList = () => {
         const token = AuthServices.getAuthToken();
@@ -121,7 +134,8 @@ const RentList = () => {
 
                                 </thead>
                                 <tbody>
-                                    {Rent && Rent.map(
+                               
+                                    {Rent && paginated.map(
                                         (rent) => (
                                             <tr key={rent.idRent}>
                                                 <th scope="row">{rent.idRent}</th>
@@ -143,12 +157,14 @@ const RentList = () => {
                                                 </td>
                                             </tr>
 
-                                        )
-                                    )}
+                                        ))}
                                 </tbody>
 
                             </table>
-
+                            <Paginate 
+                                pageCount={Math.ceil(Rent.length / itemsPerPage)}
+                                handlePageChange={handlePageChange}
+                            />
                         </div>
                     </div>
                 </div>

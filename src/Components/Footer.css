@@ -8,31 +8,30 @@ html, body {
     flex-direction: column;
     min-height: 100vh;
   }
-  
+ 
   .footer {
     background-color: #191B21;
-   padding: 10px;
-   margin-top: auto;
- 
+    color: #ffffff;
+    margin-top: 1%;
   }
   
+
   /* Estilos para dispositivos móviles */
   @media (max-width: 767px) {
     .footer {
-      position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      
+      margin-top: 1%; 
     }
   }
   
   /* Estilos para pantallas más grandes */
   @media (min-width: 768px) {
     .footer {
-      position: fixed;
-      bottom: 0;
+      bottom: 0%;
       left: 0;
       width: 100%;
+      margin-top: 1%;
     }
   }

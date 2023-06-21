@@ -46,7 +46,7 @@ function App() {
 
   return (
 
-    <div>
+    <div className="app-container">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <a href="/IndexUNA" className="navbar-brand mx-2"> UNA</a>
@@ -73,12 +73,12 @@ function App() {
               )}
 
               <li className="nav-item">
-                <Link to={"/RentList"} className="nav-item nav-link active" >Rentar</Link>
+                <Link to={"/RentList"} className="nav-item nav-link active">Rentar</Link>
               </li>
             </ul>
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                
+
                 {isLoggedIn ? (
                   <Link to={"/"} className="nav-item nav-link active" onClick={handleLogout}>
                     <i className="bi bi-box-arrow-right"></i> Cerrar sesión
@@ -94,9 +94,9 @@ function App() {
           </div>
         </div>
       </nav>
-      
+
       <div className="container mt-3 ">
-        <Routes >
+        <Routes>
           <Route path="/" element={<IndexUNA />} />
           <Route path="/UserCreate" element={<UserCreate />} />
 
@@ -144,10 +144,11 @@ function App() {
           <Route path="/Login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
 
         </Routes>
-
+        
       </div>
       <Footer />
-    </div>);
+    </div>
+    );
 };
 
 export default App;

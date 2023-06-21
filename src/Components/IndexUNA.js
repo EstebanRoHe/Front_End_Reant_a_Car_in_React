@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const IndexUNA = () => {
     const [Car, setCar] = useState([]);
-    const [messaje, setMessaje] = ("");
+
     let navigate = useNavigate;
 
     useEffect(() => {

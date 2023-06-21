@@ -2,14 +2,26 @@ import React, { useState, useEffect } from "react";
 import carServices from "../services/carServices";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "./Loading"
+import Paginate from './Paginate';
 
 const IndexRent = () => {
     const [Car, setCar] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 10
 
     useEffect(() => {
         getList();
 
     }, []);
+
+    const handlePageChange = ({ selected }) => {
+        setCurrentPage(selected);
+    };
+
+    const paginated = Car.slice(
+        currentPage * itemsPerPage,
+        (currentPage + 1) * itemsPerPage
+    );
 
     const getList = () => {
         carServices.getAll()
@@ -55,8 +67,8 @@ const IndexRent = () => {
                                     <li className="list-group-item"><i className="bi bi-car-front"> </i>Capacidad : {car.capacity} Personas</li>
                                     <li className="list-group-item"><i className="bi bi-calendar-date"> </i>Modelo : {car.model_year}</li>
                                     <li className="list-group-item"><i className="bi bi-car-front-fill"> </i>Tipo : {car.typeCar.description}</li>
-                                    <li className="list-group-item"><i className="bi bi-card-text"> </i>Placa : {car.licence_plate}</li>
-
+                                    <li className="list-group-item"><i className="bi bi-card-text"> </i>Placa : {car.licencePlate}</li>
+ 
                                 </ul>
                                 <div className="card-body ">
                                     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -75,6 +87,7 @@ const IndexRent = () => {
 
                         ))}
                 </div>
+                
             )}
         </div>
 

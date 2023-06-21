@@ -1,14 +1,19 @@
-
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .container {
+    flex: 1;
+  }
 
 body{
-background: #23272F
+background: #23272F;
 
 }
 
-.container{
-   
-    margin-Bottom:6%;
-}
+
 
 @media (max-width: 767px) {
     .container{
@@ -16,3 +21,4 @@ background: #23272F
       
     }
   }
+  

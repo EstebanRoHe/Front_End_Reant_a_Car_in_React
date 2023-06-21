@@ -4,13 +4,25 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "./Loading"
 import AuthServices from '../services/authServices';
+import Paginate from './Paginate';
+
 const UserList = () => {
     const [User, setUser] = useState([]);
     let navigate = useNavigate;
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 10;
 
     useEffect(() => {
         getList();
     }, []);
+    const handlePageChange = ({ selected }) => {
+        setCurrentPage(selected);
+    };
+
+    const paginated = User.slice(
+        currentPage * itemsPerPage,
+        (currentPage + 1) * itemsPerPage
+    );
 
     const getList = () => {
         const token = AuthServices.getAuthToken();
@@ -120,7 +132,7 @@ const UserList = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {User && User.map(
+                                    {User && paginated.map(
                                         (username) => (
                                             <tr key={username.idUser}>
                                                 <th scope="row">{username.idUser}</th>
@@ -147,6 +159,10 @@ const UserList = () => {
                                 </tbody>
 
                             </table>
+                            <Paginate 
+                                pageCount={Math.ceil(User.length / itemsPerPage)}
+                                handlePageChange={handlePageChange}
+                            />
 
                         </div>
                     </div>

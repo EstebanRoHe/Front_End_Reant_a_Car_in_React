@@ -4,13 +4,25 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "./Loading"
 import AuthServices from '../services/authServices';
+import Paginate from './Paginate';
+
 const CarList = () => {
     const [Car, setCar] = useState([]);
     let navigate = useNavigate;
+    const [currentPage, setCurrentPage] = useState(0);
+    const itemsPerPage = 10;
 
     useEffect(() => {
         getList();
     }, []);
+    const handlePageChange = ({ selected }) => {
+        setCurrentPage(selected);
+    };
+
+    const paginated = Car.slice(
+        currentPage * itemsPerPage,
+        (currentPage + 1) * itemsPerPage
+    );
 
     const getList = () => {
         const token = AuthServices.getAuthToken();
@@ -123,7 +135,7 @@ const CarList = () => {
                           
                         </thead>
                         <tbody>
-                            {Car && Car.map(
+                            {Car && paginated.map(
                                 (car) => (
                                     <tr key={car.idCar}>
                                         <th scope="row">{car.idCar}</th>
@@ -154,7 +166,10 @@ const CarList = () => {
                         </tbody>
 
                     </table>
-
+                    <Paginate 
+                                pageCount={Math.ceil(Car.length / itemsPerPage)}
+                                handlePageChange={handlePageChange}
+                            />
                 </div>
             </div>
         </div>
