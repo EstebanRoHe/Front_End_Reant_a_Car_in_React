@@ -9,5 +9,11 @@
   .content {
     text-align: center;
   }
+  .errorSmall{
+    color: red;
+  }
+  .errorDiv{
+      margin-bottom: 5%;
+  }
 
  

@@ -295,7 +295,7 @@ const CarCreate = () => {
 
 
                             <div className="col-12">
-                                <button className="btn btn-secondary my-3  mx-2 " type="submit">
+                                <button className="btn btn-success my-3  mx-2 " type="submit">
                                     <i className="bi bi-person-plus"> Registrar</i>
                                 </button>
                                 <Link className="btn btn-danger" to={"/CarList"}>

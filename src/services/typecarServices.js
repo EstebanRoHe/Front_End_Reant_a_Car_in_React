@@ -50,6 +50,15 @@ const remove = id_typeCar => {
     return http.delete(`/TypeCar/${id_typeCar}`, config);
 };
 
+const getFiltro = description => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authToken}`, 
+    },
+  };
+  return http.get(`/TypeCar/filtro?description=${description}`, config);
+};
+ 
 const TypeCarServices = {
     getAll,
     get,
@@ -57,6 +66,7 @@ const TypeCarServices = {
     update,
     remove,
     setAuthToken,
+    getFiltro,
 };
 
 export default TypeCarServices;

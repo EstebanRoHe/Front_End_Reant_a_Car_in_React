@@ -16,17 +16,20 @@ const RentUpdate = props => {
     }
 
     const [Rent, setRent] = useState(initialRentState);
-    const [username, setUsername] = useState([]);
     const [car, setCar] = useState([]);
-    
+    const [role, setRole] = useState(null);
+    const [errors, setErrors] = useState({});
+    const [errorsDateAndUser, setErrorsDateAndUser] = useState({});
+    const [RentArray, setRentRentArray] = useState([]);
+    const [CarSelect, setCarSelect] = useState(null);
+    const [user, setUser] = useState([]);
+
     const getRent = idRent => {
         const token = AuthServices.getAuthToken();
         if (token) {
             rentServices.setAuthToken(token);
-            console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
-            console.log('Token :', token);
             return;
         }
         rentServices.get(idRent)
@@ -39,8 +42,16 @@ const RentUpdate = props => {
     }
 
     useEffect(() => {
-        getListUser();
+        const roles = AuthServices.getRole();
+        const loggedInUsername = AuthServices.getUsername();
+        setRole(roles);
+        setUser(loggedInUsername);
+        getListRent();
         getListCar();
+        if (roles === 'ROLE_ADMIN')
+            getByUsername(Rent.username)
+        if (roles !== 'ROLE_ADMIN')
+            getByUsername(loggedInUsername)
         if (idRent)
             getRent(idRent);
     }, [idRent]);
@@ -48,29 +59,14 @@ const RentUpdate = props => {
     const handleInputChange = event => {
         const { name, value } = event.target;
         setRent({ ...Rent, [name]: value });
+        setErrorsDateAndUser(validationErrorsDateAndUser(Rent.username, Rent));
     }
 
-
-    const getListUser = () => {
-        const token = AuthServices.getAuthToken();
-        if (token) {
-            userServices.setAuthToken(token);
-            console.log('Token :', token);
-        } else {
-            console.error("No se encontró un token válido");
-            console.log('Token :', token);
-            return;
-        }
-        userServices.getAll()
-            .then(response => {
-                setUsername(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
-
-    };
-
+    const handleInputblurCar = event => {
+        setCarSelect(JSON.parse(event.target.value))
+        setErrors(validationErrror(CarSelect, Rent));
+    }
+  
     const getListCar = () => {
         const token = AuthServices.getAuthToken();
         if (token) {
@@ -78,7 +74,6 @@ const RentUpdate = props => {
             console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
-            console.log('Token :', token);
             return;
         }
         carServices.getAll()
@@ -91,26 +86,17 @@ const RentUpdate = props => {
 
     };
 
-    const updateRent = () => {
+    const getListRent = () => {
         const token = AuthServices.getAuthToken();
         if (token) {
             rentServices.setAuthToken(token);
-            console.log('Token :', token);
         } else {
-            console.error("No se encontró un token válido");
-            console.log('Token :', token);
             return;
         }
-        rentServices.update(Rent.idRent, Rent , Rent.username, Rent.car) 
+        rentServices.getAll()
             .then(response => {
+                setRentRentArray(response.data);
                 console.log(response.data);
-                Swal.fire({
-                    position: 'top-center',
-                    icon: 'success',
-                    title: 'Alquiler Actualizado Correctamente',
-                    showConfirmButton: false,
-                    timer: 2200
-                  })
             })
             .catch(e => {
                 console.log(e);
@@ -118,111 +104,163 @@ const RentUpdate = props => {
     };
 
 
+    const getByUsername = (loggedInUsername) => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            userServices.setAuthToken(token);
+        } else {
+            return;
+        }
+        userServices.getByUsername(loggedInUsername)
+            .then(response => {
+                setUser(response.data);
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+
+    const updateRent = () => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            rentServices.setAuthToken(token);
+        } else {
+            console.error("No se encontró un token válido");
+            return;
+        }
+
+        if (Object.keys(errors).length === 0 && Object.keys(errorsDateAndUser).length === 0) {
+            rentServices.update(Rent.idRent, Rent, Rent.username, Rent.car)
+                .then(response => {
+                    console.log(response.data);
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'success',
+                        title: 'Alquiler Actualizado Correctamente',
+                        showConfirmButton: false,
+                        timer: 2200
+                    })
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
+    };
+
+    const validationErrror = (CarSelect) => {
+        let errors = {};
+        RentArray.forEach(rent => {
+            if (rent.car.idCar === CarSelect.idCar) {
+                errors.CarSelect = "Vehículo ya alquilado";
+            }
+        })
+        return errors;
+    }
+
+    const validationErrorsDateAndUser = (User) => {
+        let errorsDateAndUser = {};
+        RentArray.forEach(rent => {
+            if (rent.username.idUser === User.idUser && rent.dateRent === Rent.dateRent) {
+                errorsDateAndUser.User = "El usuario ya alquiló un vehículo para esta fecha";
+            }
+        })
+        return errorsDateAndUser;
+    }
+
     return (
         <div className="container ">
-        <div className="card  ">
+            <div className="card  ">
+                <div className="card-body ">
+                    <h4>Actualizar Alquiler del Usuario : {Rent.username.username}</h4>
+                    <blockquote className="blockquote mb-0 ">
 
+                        <form novalidate onSubmit={e => {
+                            e.preventDefault()
+                            updateRent()
+                        }}
+                            className="row g-3 needs-validation my-3  border = 1" >
 
-            <div className="card-body ">
-                <h4>Actualizar Fecha de Alquiler del Id : {Rent.idRent}</h4>
-                <blockquote className="blockquote mb-0 ">
+                            <div className="col-md-3 position-relative">
+                                <label for="username" className="form-label">Usuario</label>
+                                <div className="input-group has-validation">
 
-                    <form novalidate onSubmit={e=>{
-                        e.preventDefault()
-                        updateRent()
-                    }}
-
-
-                        className="row g-3 needs-validation my-3  border = 1" >
-
-
-                        <div className="col-md-3 position-relative">
-                            <label for="username" className="form-label">Usuario</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                <i className="bi bi-person-add"> </i>
-                                </span>
-
-                                <select className="form-select" name="username" id="username"
-                                    onChange={e => {                                    
-                                        setRent({...Rent, username : JSON.parse(e.target.value)})
-                                    }}>
-                                     <option value={{...Rent.username}}>{Rent.username.username}</option>
-
-                                 {username && username.map(
-                                    (user)=>(
-                                        <option key={user.id_username} value={JSON.stringify(user)}>{user.username}</option>
-                                 ))}    
-                                 </select>
-
-                                <div className="invalid-tooltip">
-                                    Please provide a valid password.
+                                    <span className="input-group-text">
+                                        <i className="bi bi-person-add"></i>
+                                    </span>
+                                    <span className="input-group-text">
+                                        <label value={{ ...Rent.username }} for="username" >  {Rent.username.username}</label>
+                                    </span>
                                 </div>
                             </div>
-                        </div>
 
+                            <div className="col-md-3 position-relative">
+                                <label for="car" className="form-label">Vehículo</label>
+                                <div className="input-group has-validation">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-car-front-fill"> </i>
+                                    </span>
+                                    <select className={((errors.CarSelect) ? "is-invalid" : "") + " form-select  custom-select-width"}
+                                        name="car"
+                                        id="car"
+                                        onBlur={handleInputblurCar}
+                                        onClick={handleInputblurCar}
+                                        onMouseDown={handleInputblurCar}
+                                        onMouseUp={handleInputblurCar}
+                                        onChange={e => {
+                                            setRent({ ...Rent, car: JSON.parse(e.target.value) })
+                                        }}>
+                                        <option value={{ ...Rent, car }}>{Rent.car.licencePlate}</option>
+                                        {car && car.map(
+                                            (car) => (
+                                                <option key={car.id_car} value={JSON.stringify(car)}>{car.licencePlate}</option>
+                                            ))}
+                                    </select>
 
-                        <div className="col-md-3 position-relative">
-                            <label for="car" className="form-label">Vehículo</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                <i className="bi bi-car-front-fill"> </i>
-                                </span>
-                                
-                                <select className="form-select" name="username" id="username"
-                                    onChange={e => {                                    
-                                        setRent({...Rent, car : JSON.parse(e.target.value)})
-                                    }}>   
-                                     <option value={{...Rent, car}}>{Rent.car.licencePlate}</option>
-                                {car && car.map(
-                                    (car)=>(
-                                        <option key={car.id_car} value={JSON.stringify(car)}>{car.licencePlate}</option>
-                                ))}     
-                                </select>  
-
-                                <div className="invalid-tooltip">
-                                    Please provide a valid password.
+                                    <small className="invalid-feedback" id="helpId" >
+                                        <i className="bi bi-exclamation-circle"> {errors.CarSelect}</i>
+                                    </small>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="col-md-3 position-relative">
-                            <label for="dateRent" className="form-label "> <i className="bi bi-calendar-date"> </i> Fecha</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-pencil-square"></i>
-                                </span>
-                                <input type="date" className="form-control" id="dateRent" value={Rent.dateRent}
-                                    onChange={handleInputChange} name="dateRent" required />
-                                <div className="valid-tooltip">
-                                    Looks good!
+                            <div className="col-md-3 position-relative">
+                                <label for="dateRent" className="form-label "> <i className="bi bi-calendar-date"> </i> Fecha</label>
+                                <div className="input-group has-validation">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-pencil-square"></i>
+                                    </span>
+                                    <input type="date" className={((errorsDateAndUser.User) ? "is-invalid" : "") + " form-control"}
+                                        id="dateRent"
+                                        name="dateRent"
+                                        value={Rent.dateRent}
+                                        onChange={handleInputChange}
+                                        required />
+                                    <small className="invalid-feedback" id="helpId">
+                                        <i className="bi bi-exclamation-circle"> {errorsDateAndUser.User}</i>
+                                    </small>
                                 </div>
                             </div>
-                        </div>
 
+                            <div className="col-12">
+                                <button className="btn btn-secondary my-3  mx-2 " type="submit">
+                                    <i className="bi bi-person-plus"> Actualizar</i>
+                                </button>
+                                {role === 'ROLE_ADMIN' ? (
+                                    <Link className="btn btn-danger" to={"/RentList"}>
+                                        <i className="bi bi-x-circle"> Cancelar</i>
+                                    </Link>
+                                ) : (
+                                    <Link className="btn btn-danger" to={"/"}>
+                                        <i className="bi bi-x-circle"> Cancelar</i>
+                                    </Link>
+                                )}
+                            </div>
 
+                        </form>
 
-
-                        <div className="col-12">
-                            <button className="btn btn-secondary my-3  mx-2 " type="submit">
-                                <i className="bi bi-person-plus"> Actualizar</i>
-                            </button>
-                            <Link className="btn btn-danger" to={"/RentList"}>
-                                <i className="bi bi-x-circle"> Cancelar</i>
-                            </Link>
-                        </div>
-
-                    </form>
-
-
-
-                </blockquote>
+                    </blockquote>
+                </div>
             </div>
         </div>
-        </div>
-
-
-
 
     );
 };

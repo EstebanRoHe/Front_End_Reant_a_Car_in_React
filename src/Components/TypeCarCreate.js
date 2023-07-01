@@ -22,10 +22,8 @@ const TypeCarCreate = () => {
         const token = AuthServices.getAuthToken();
         if (token) {
             typeCarServices.setAuthToken(token);
-            console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
-            console.log('Token :', token);
             return;
         }
         var date = { id_typeCar: TypeCar.id_typeCar, description: TypeCar.description}
@@ -84,7 +82,7 @@ const TypeCarCreate = () => {
 
                         
                         <div className="col-12">
-                            <button className="btn btn-secondary my-3  mx-2 " type="submit">
+                            <button className="btn btn-success my-3  mx-2 " type="submit">
                             <i className="bi bi-person-plus"> Registrar</i>
                             </button>
                             <Link className="btn btn-danger" to={"/TypeCarList"}>

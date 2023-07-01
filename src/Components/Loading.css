@@ -3,13 +3,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10vh; /* Ajusta el valor según tus necesidades */
-    padding-bottom: 20px; /* Ajusta el valor según tus necesidades */
+    margin-top: 10vh; 
+    padding-bottom: 20px; 
 }
 
 @media (max-width: 768px) {
     .loading-container {
-        padding-bottom: 30%; /* Ajusta el valor según tus necesidades */
+        padding-bottom: 30%; 
     }
 }
 .lds-spinner {
@@ -34,6 +34,10 @@
     border-radius: 20%;
     background: #fff;
   }
+  .custom-loading .lds-spinner div:after {
+       background: #212529; 
+  }
+
   .lds-spinner div:nth-child(1) {
     transform: rotate(0deg);
     animation-delay: -1.1s;

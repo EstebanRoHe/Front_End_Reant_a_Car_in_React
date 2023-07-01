@@ -49,6 +49,24 @@ const remove = idRent => {
     return http.delete(`/Rent/${idRent}`, config);
 };
 
+const getFiltro = username => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authToken}`, 
+    },
+  };
+  return http.get(`/Rent/filtro?username=${username}`, config);
+};
+
+const getByUsername = username =>{
+  const config = {
+      headers: {
+        Authorization: `Bearer ${authToken}`, 
+      },
+    };
+  return http.get(`/Rent/username/${username}`, config);
+};
+
 const RentServices = {
     getAll,
     get,
@@ -56,6 +74,8 @@ const RentServices = {
     update,
     remove,
     setAuthToken,
+    getFiltro,
+    getByUsername
 };
 
 export default RentServices;

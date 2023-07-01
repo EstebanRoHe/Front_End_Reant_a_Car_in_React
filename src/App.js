@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, Navigate } from 'react-router-dom';
+import { Offcanvas } from 'react-bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -20,34 +21,90 @@ import IndexRent from './Components/IndexRent';
 import IndexUNA from './Components/IndexUNA';
 import Footer from './Components/Footer';
 import Login from './Components/Login';
+import LogList from './Components/LogList';
 import AuthServices from './services/authServices';
+import userServices from "./services/usernameServices";
+import ModalListRent from './Components/ModalListRent';
 import PrivateRoute from './Components/PrivateRoute';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState("");
+  const [username, setUsername] = useState("");
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const [user, setUser] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOffcanvasClose = () => {
+    setShowOffcanvas(false);
+  };
+
+  const handleShowcanvas = () => {
+    setShowOffcanvas(true);
+  };
+
   const handleLogout = () => {
     AuthServices.removeAuthToken();
     setIsLoggedIn(false);
+    setRole("");
+    setUsername("");
+    handleOffcanvasClose();
   };
 
   useEffect(() => {
     const token = AuthServices.getAuthToken();
     const userRole = AuthServices.getRole();
+    const userToken = AuthServices.getUsername();
+    setUsername(userToken);
     setRole(userRole);
     setIsLoggedIn(!!token);
+    if (userToken != null)
+      getByUsername(userToken);
+    //handleLogout()
   }, []);
 
   useEffect(() => {
     if (isLoggedIn) {
       const userRole = AuthServices.getRole();
       setRole(userRole);
+      const userToken = AuthServices.getUsername();
+      setUsername(userToken);
+      getByUsername(userToken);
     }
   }, [isLoggedIn]);
+
+  const getByUsername = (username) => {
+    const token = AuthServices.getAuthToken();
+    if (token) {
+      userServices.setAuthToken(token);
+    } else {
+      return;
+    }
+    userServices.getByUsername(username)
+      .then(response => {
+        setUser(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const showModalHandler = () => {
+    setShowModal(true);
+  };
+
+
+  const closeModalHandler = () => {
+    setShowModal(false);
+  };
+
+
 
   return (
 
     <div className="app-container">
+
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <a href="/IndexUNA" className="navbar-brand mx-2"> UNA</a>
@@ -57,33 +114,103 @@ function App() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link to={"/IndexRent"} className="nav-item nav-link active">Ver Vehiculos</Link>
+                <Link to={"/IndexRent"} className="nav-item nav-link active">Vehículos</Link>
               </li>
 
               {isLoggedIn && role === 'ROLE_ADMIN' && (
-                <><>
+                <>
                   <li className="nav-item">
                     <Link to={"/UserList"} className="nav-item nav-link active">Usuarios</Link>
                   </li>
                   <li className="nav-item">
                     <Link to={"/TypeCarList"} className="nav-item nav-link active">Tipo de Vehículos</Link>
-                  </li></>
+                  </li>
+
                   <li className="nav-item">
-                    <Link to={"/CarList"} className="nav-item nav-link active">Vehículos</Link>
-                  </li></>
+                    <Link to={"/CarList"} className="nav-item nav-link active">Vehículos admin</Link>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link to={"/RentList"} className="nav-item nav-link active">Rentar</Link>
+                  </li>
+                </>
               )}
 
-              <li className="nav-item">
-                <Link to={"/RentList"} className="nav-item nav-link active">Rentar</Link>
-              </li>
+              {isLoggedIn && role === 'ROLE_USER' && (
+                <li className="nav-item">
+                  <Link to={"/RentCreate/" + null} className="nav-item nav-link active">Rentar</Link>
+                </li>
+              )}
+
+              {!isLoggedIn && (
+                <li className="nav-item">
+                  <Link to={"/Login"} className="nav-item nav-link active">Rentar</Link>
+                </li>
+              )}
+
+              {isLoggedIn && role === 'ROLE_ADMIN' && (
+                <li className="nav-item">
+                  <Link to={"/LogList"} className="nav-item nav-link active">Logs</Link>
+                </li>
+              )}
             </ul>
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-
                 {isLoggedIn ? (
-                  <Link to={"/"} className="nav-item nav-link active" onClick={handleLogout}>
-                    <i className="bi bi-box-arrow-right"></i> Cerrar sesión
-                  </Link>
+                  <>
+                    <li className="nav-item dropdown" >
+                      <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                        onClick={handleShowcanvas}
+                      ><i className="bi bi-person-circle" > </i>
+                        {username}
+                      </a>
+                      <Offcanvas placement="end"
+                        show={showOffcanvas}
+                        onHide={handleOffcanvasClose}
+                        backdrop={false}
+                      >
+                        <Offcanvas.Header closeButton style={{ backgroundColor: "#212529", color: 'white' }}>
+                          <Offcanvas.Title style={{ color: "#8C939A" }}>
+                            <i className="bi bi-person-circle">
+                            </i> {username}</Offcanvas.Title>
+                        </Offcanvas.Header>
+                        <Offcanvas.Body style={{ backgroundColor: '#23272F', color: 'white' }}>
+                          <ul className="navbar-nav">
+
+                            <li className="nav-item" style={{ color: "#8C939A" }}>
+                              <i className="bi bi-person"> </i>
+                              <h7>{user.name} {user.lastName}</h7>
+                            </li>
+                            <li className="nav-item" style={{ color: "#8C939A" }}>
+                              <i className="bi bi-envelope-at"> </i>
+                              <h7>{user.email}</h7>
+                            </li>
+                            <li className="nav-item">
+                              <br />
+                            </li>
+
+                            <li className="nav-item">
+
+                              <Link className="nav-link" onClick={showModalHandler}>
+                                <i className="bi bi-car-front"> </i> <h7>vehículo Alquilados</h7>
+                              </Link>
+
+                            </li>
+
+                            <li className="nav-item">
+                              <hr className="dropdown-divider" />
+                            </li>
+
+                            <li className="nav-item">
+                              <Link to={"/"} className="nav-link" onClick={handleLogout}>
+                                <i className="bi bi-box-arrow-right"></i> Cerrar sesión
+                              </Link>
+                            </li>
+                          </ul>
+                        </Offcanvas.Body>
+                      </Offcanvas>
+                    </li>
+                  </>
                 ) : (
                   <Link to={"/Login"} className="nav-item nav-link active">
                     <i className="bi bi-person-fill"></i> Login
@@ -92,9 +219,11 @@ function App() {
 
               </li>
             </ul>
+
           </div>
         </div>
       </nav>
+
 
       <div className="principal">
         <Routes>
@@ -111,6 +240,7 @@ function App() {
               <Route path="/CarList" element={<CarList />} />
               <Route path="/CarCreate" element={<CarCreate />} />
               <Route path="/CarUpdate/:idCar" element={<CarUpdate />} />
+              <Route path="/LogList" element={<LogList />} />
             </>
           ) : (
             <>
@@ -122,21 +252,21 @@ function App() {
               <Route path="/CarList" element={<Navigate to="/Login" />} />
               <Route path="/CarCreate" element={<Navigate to="/Login" />} />
               <Route path="/CarUpdate/:idCar" element={<Navigate to="/Login" />} />
+              <Route path="/LogList" element={<Navigate to="/Login" />} />
 
             </>
           )}
-       
 
-          {isLoggedIn && role === 'ROLE_ADMIN' || role === 'ROLE_USER' ? (
+          {isLoggedIn && role === 'ROLE_ADMIN' || isLoggedIn && role === 'ROLE_USER' ? (
             <>
               <Route path="/RentList" element={<RentList />} />
-              <Route path="/RentCreate" element={<RentCreate />} />
+              <Route path="/RentCreate/:idCar" element={<RentCreate />} />
               <Route path="/RentUpdate/:idRent" element={<RentUpdate />} />
             </>
           ) : (
             <>
               <Route path="/RentList" element={<Navigate to="/Login" />} />
-              <Route path="/RentCreate" lement={<Navigate to="/Login" />} />
+              <Route path="/RentCreate/:idCar" lement={<Navigate to="/Login" />} />
               <Route path="/RentUpdate" element={<Navigate to="/Login" />} />
             </>
           )}
@@ -146,6 +276,11 @@ function App() {
           <Route path="/Login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
 
         </Routes>
+        {showModal && (
+          <ModalListRent
+            onClose={closeModalHandler}
+          />
+        )}
 
       </div>
       <Footer />

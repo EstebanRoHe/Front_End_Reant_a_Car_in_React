@@ -13,6 +13,24 @@ const getAll = ()=>{
     return http.get("/User", config)
 }
 
+const getAllUsername = ()=>{
+  const config = {
+      headers: {
+        Authorization: `Bearer ${authToken}`, 
+      },
+    };
+  return http.get("/User/username", config)
+}
+
+const getAllEmail = ()=>{
+  const config = {
+      headers: {
+        Authorization: `Bearer ${authToken}`, 
+      },
+    };
+  return http.get("/User/email", config)
+}
+
 const get = idUser =>{
     const config = {
         headers: {
@@ -49,6 +67,24 @@ const remove = idUser => {
     return http.delete(`/User/${idUser}`, config);
 };
 
+const getFiltro = name => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authToken}`, 
+    },
+  };
+  return http.get(`/User/name?name=${name}`, config);
+};
+
+const getByUsername = username =>{
+  const config = {
+      headers: {
+        Authorization: `Bearer ${authToken}`, 
+      },
+    };
+  return http.get(`/User/buscar/${username}`, config);
+};
+ 
 const UserServices = {
     getAll,
     get,
@@ -56,5 +92,10 @@ const UserServices = {
     update,
     remove,
     setAuthToken,
+    getFiltro,
+    getAllUsername,
+    getAllEmail,
+    getByUsername
+
 };
 export default UserServices;

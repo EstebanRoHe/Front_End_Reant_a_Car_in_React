@@ -10,15 +10,28 @@
  
 .carousel-item img {
   object-fit: contain;
-  max-height: 350px;
+  max-height: 320px;
   max-width: 100%;
 }
+
+
 
 .h2-style {
   font-family: Roboto;
   font-weight: bold;
+  /*color: #DA4715;*/
   color: white;
-  font-size: 4em;
+  font-size: 3em;
+  
+}
+
+.rc-section-title{
+  font-family: Roboto;
+  font-weight: bold;
+  color: white;
+}
+.container{
+  margin-bottom: 1%;
 }
 
 .containerCarousel {
@@ -43,6 +56,12 @@
 }
 .continfobeneficios{
   padding: 2% 0% 1% 0%;
+  color: white;
+}
+
+.incoSize{
+  font-size: 30px;
+
 }
 
 @media (max-width: 767px) {
@@ -66,6 +85,8 @@
   .continfobeneficios{
     padding: 6%;
     margin: 6;
+    color: white;
+  
   }
 
 

@@ -37,7 +37,6 @@ const UserUpdate = () => {
     };
 
     useEffect(() => {
-
         if (idUser)
             getUser(idUser);
     }, [idUser]);
@@ -71,26 +70,25 @@ const UserUpdate = () => {
 
         if (Object.keys(validPassword).length === 0) {
             UserServices.update(User.idUser, User)
-            .then(response => {
-                console.log(response.data);
-                Swal.fire({
-                    position: 'top-center',
-                    icon: 'success',
-                    title: 'Usuario Actualizado Correctamente',
-                    showConfirmButton: false,
-                    timer: 2200
-                })
+                .then(response => {
+                    console.log(response.data);
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'success',
+                        title: 'Usuario Actualizado Correctamente',
+                        showConfirmButton: false,
+                        timer: 2200
+                    })
 
-            })
-            .catch(e => {
-                console.log(e);
-            });
+                })
+                .catch(e => {
+                    console.log(e);
+                });
         }
 
     };
 
-     //validar Password
-     const validationPassword = (User) => {
+    const validationPassword = (User) => {
         let validPassword = {}
 
         if (
@@ -110,76 +108,76 @@ const UserUpdate = () => {
 
     return (
         <div className="container ">
-        <div className="card ">
+            <div className="card ">
 
-            <div className="card-body ">
+                <div className="card-body ">
 
-                <h5>Actualizar Usuario del Id : {User.idUser}</h5>
+                    <h5>Actualizar Usuario del Id : {User.idUser}</h5>
 
-                <blockquote className="blockquote mb-0 ">
+                    <blockquote className="blockquote mb-0 ">
 
-                    <form onSubmit={
-                        updateUser
-                    }
-                        className="row g-3 needs-validation my-3  border = 1">
+                        <form onSubmit={
+                            updateUser
+                        }
+                            className="row g-3 needs-validation my-3  border = 1">
 
-                        <div className="col-md-3 position-relative">
-                            <label for="name" className="form-label ">Nombre</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-pencil-square"></i>
-                                </span>
-                                <input type="text" className="form-control" id="name"
-                                    value={User.name}
-                                    onChange={handleInputChange}
-                                    name="name" required />
+                            <div className="col-md-3 position-relative">
+                                <label for="name" className="form-label ">Nombre</label>
+                                <div className="input-group has-validation">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-pencil-square"></i>
+                                    </span>
+                                    <input type="text" className="form-control" id="name"
+                                        value={User.name}
+                                        onChange={handleInputChange}
+                                        name="name" required />
 
 
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="col-md-3 position-relative">
-                            <label for="lastName" className="form-label ">Apellido</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-pencil-square"></i>
-                                </span>
-                                <input type="text" className="form-control" id="lastName"
-                                    value={User.lastName}
-                                    onChange={handleInputChange}
-                                    name="lastName" required />
+                            <div className="col-md-3 position-relative">
+                                <label for="lastName" className="form-label ">Apellido</label>
+                                <div className="input-group has-validation">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-pencil-square"></i>
+                                    </span>
+                                    <input type="text" className="form-control" id="lastName"
+                                        value={User.lastName}
+                                        onChange={handleInputChange}
+                                        name="lastName" required />
 
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="col-md-6 position-relative">
-                            <label for="email" className="form-label ">Email</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-envelope-at"></i>
-                                </span>
-                                <input type="email" className=" form-control" id="email"
-                                    value={User.email}
-                                    onChange={handleInputChange}
-                                    name="email" required />
+                            <div className="col-md-6 position-relative">
+                                <label for="email" className="form-label ">Email</label>
+                                <div className="input-group has-validation">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-envelope-at"></i>
+                                    </span>
+                                    <input type="email" className=" form-control" id="email"
+                                        value={User.email}
+                                        onChange={handleInputChange}
+                                        name="email" required />
+                                </div>
                             </div>
-                        </div>
 
 
-                        <div className="col-md-3 position-relative">
-                            <label for="username" className="form-label">Usuario</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-person"></i>
-                                </span>
-                                <input type="text" className="form-control" id="username"
-                                    value={User.username}
-                                    name="username" required />
-                            </div>        
-                                <p style={{color: 'red' , fontSize:"15px"}}>¡Este campo no se puede modificar por seguridad!</p>
-                        </div>
+                            <div className="col-md-3 position-relative">
+                                <label for="username" className="form-label">Usuario</label>
+                                <div className="input-group has-validation">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-person"></i>
+                                    </span>
+                                    <input type="text" className="form-control" id="username"
+                                        value={User.username}
+                                        name="username" required />
+                                </div>
+                                <p style={{ color: 'red', fontSize: "15px" }}>¡Este campo no se puede modificar por seguridad!</p>
+                            </div>
 
-                        <div className="col-md-3 position-relative">
+                            <div className="col-md-3 position-relative">
                                 <label for="password" className="form-label">Password</label>
                                 <div className="input-group has-validation">
                                     <span className="input-group-text">
@@ -202,26 +200,26 @@ const UserUpdate = () => {
                             </div>
 
 
-                        <div className="col-12">
-                            <button className="btn btn-secondary my-3 mx-2" type="submit" >
+                            <div className="col-12">
+                                <button className="btn btn-secondary my-3 mx-2" type="submit" >
 
-                                <i className="bi bi-gear"> Actualizar</i>
-                            </button>
+                                    <i className="bi bi-gear"> Actualizar</i>
+                                </button>
 
-                            <Link className="btn btn-danger" to={"/UserList"}>
-                                <i className="bi bi-x-circle"> Cancelar</i>
-                            </Link>
+                                <Link className="btn btn-danger" to={"/UserList"}>
+                                    <i className="bi bi-x-circle"> Cancelar</i>
+                                </Link>
 
-                        </div>
-                    </form>
+                            </div>
+                        </form>
 
 
 
-                </blockquote>
+                    </blockquote>
+                </div>
+
+
             </div>
-
-
-        </div>
         </div>
     );
 };

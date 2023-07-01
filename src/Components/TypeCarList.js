@@ -11,6 +11,8 @@ const TypeCarList = () => {
     let navigate = useNavigate;
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 10;
+    const [filtro, setFiltro] = useState("");
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         getList();
@@ -25,24 +27,61 @@ const TypeCarList = () => {
         (currentPage + 1) * itemsPerPage
     );
 
+    const handleFiltroChange = (event) => {
+        setFiltro(event.target.value);
+        filtroDescription();
+    };
+
     const getList = () => {
         const token = AuthServices.getAuthToken();
         if (token) {
             typeCarServices.setAuthToken(token);
-            console.log('Token :', token);
+           
         } else {
             console.error("No se encontró un token válido");
-            console.log('Token :', token);
+            
             return;
         }
-        typeCarServices.getAll()
+        typeCarServices
+            .getAll()
             .then(response => {
-                setTypeCar(response.data);
+                if (filtro) {
+                    const filteredTypeCar = response.data.filter((TypeCar) =>
+                    TypeCar.description.toLowerCase().includes(filtro.toLowerCase())
+                    );
+                    setTypeCar(filteredTypeCar);
+                } else {
+                    setTypeCar(response.data);
+                }
                 console.log(response.data);
             })
             .catch(e => {
                 console.log(e);
             });
+    };
+
+    const filtroDescription = () => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+            typeCarServices.setAuthToken(token);
+        } else {
+            console.error("No se encontró un token válido");
+            return;
+        }
+        if (filtro != null) {
+            typeCarServices.getFiltro(filtro)
+                .then((response) => {
+                    setTypeCar(response.data);
+                    setError(false);
+                    console.log(response.data);
+                })
+                .catch((e) => {
+                    setError(true);
+                    console.log(e);
+                });
+        } else {
+            getList()
+        }
     };
 
     const remove = (id_typeCar) => {
@@ -106,17 +145,38 @@ const TypeCarList = () => {
             {TypeCar.length === 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Loading />
-                    <Link className="btn btn-primary" style={{ marginBottom: "50%" }} to={"/TypeCarCreate"}>
+                    <Link className="btn btn-primary" to={"/TypeCarCreate"}>
                         <i className="bi bi-plus-circle"> Registrar un Tipo de Vehiculo </i>
                     </Link>
                 </div>
             ) : (
                 <div className="card text bg-light mb-3">
-                    <div className="card-header">
-                        <Link className="btn btn-secondary" to={"/TypeCarCreate"}>
+
+                    <div className="card-header d-flex justify-content-between">
+                        <Link className="btn btn-primary"  style={{height:"5vh"}} to={"/TypeCarCreate"}>
                             <i className="bi bi-plus-circle"> Registrar Tipo de Vehiculo </i>
                         </Link>
+                    
+                    <div className="ml-auto d-flex flex-column">
+                        <div className="input-container">
+                            <input
+                                type="text"
+                                className="form-control filtro flex-grow-1"
+                                value={filtro}
+                                onChange={handleFiltroChange}
+                                onBlur={handleFiltroChange}
+                                onKeyUp={handleFiltroChange}
+                                placeholder="Seach for description"
+                            />
+                        </div>
+                        {error && (
+                            <small className="errorSmall" id="helpId" style={{marginTop:"1%"}}>
+                                <i className="bi bi-exclamation-circle"> Descripción no encontrado</i>
+                            </small>
+                        )}
+                      </div>
                     </div>
+
                     <div className="card-body">
                         <div className="table-responsive">
                             <table className="table table-striped border=1">
@@ -127,25 +187,26 @@ const TypeCarList = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {paginatedTypeCars.map((typecar) => (
-                                        <tr key={typecar.id_typeCar}>
-                                            <th scope="row">{typecar.id_typeCar}</th>
-                                            <td>{typecar.description}</td>
-                                            <td>
-                                                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                    <Link className="btn btn-secondary" to={"/TypeCarUpDate/" + typecar.id_typeCar}>
-                                                        <i className="bi bi-gear"> Actualizar</i>
-                                                    </Link>
-                                                    <button className="btn btn-danger" onClick={() => remove(typecar.id_typeCar)}>
-                                                        <i className="bi bi-trash3"> Eliminar</i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                    {TypeCar &&
+                                        paginatedTypeCars.map((typecar) => (
+                                            <tr key={typecar.id_typeCar}>
+                                                <th scope="row">{typecar.id_typeCar}</th>
+                                                <td>{typecar.description}</td>
+                                                <td>
+                                                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                        <Link className="btn btn-secondary" to={"/TypeCarUpDate/" + typecar.id_typeCar}>
+                                                            <i className="bi bi-gear"> Actualizar</i>
+                                                        </Link>
+                                                        <button className="btn btn-danger" onClick={() => remove(typecar.id_typeCar)}>
+                                                            <i className="bi bi-trash3"> Eliminar</i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
                                 </tbody>
                             </table>
-                            <Paginate 
+                            <Paginate
                                 pageCount={Math.ceil(TypeCar.length / itemsPerPage)}
                                 handlePageChange={handlePageChange}
                             />

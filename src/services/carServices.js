@@ -49,6 +49,24 @@ const remove = idCar => {
     return http.delete(`/Car/${idCar}`, config);
 };
 
+const getFiltro = licencePlate => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authToken}`, 
+    },
+  };
+  return http.get(`/Car/filtro?licencePlate=${licencePlate}`, config);
+};
+
+const getFiltroDescription = description => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authToken}`, 
+    },
+  };
+
+  return http.get(`/Car/filtrodescription?description=${description}`, config);
+};
 const CarServices = {
     getAll,
     get,
@@ -56,6 +74,8 @@ const CarServices = {
     update,
     remove,
     setAuthToken,
+    getFiltro,
+    getFiltroDescription
 };
 
 export default CarServices;

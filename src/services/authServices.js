@@ -3,7 +3,7 @@ import http from '../http-common';
 const login = credentials => {
   return http.post('/login', credentials);
 };
-
+ 
 const setAuthToken = token => {
 
   localStorage.setItem('authToken', token);
@@ -20,6 +20,14 @@ const setRole = role => {
 
 const getRole = () => {
   return localStorage.getItem('userRole');
+}; 
+
+const setUsername = username => {
+  localStorage.setItem('username', username);
+};
+
+const getUsername = () => {
+  return localStorage.getItem('username');
 };
 
 const removeAuthToken = () => {
@@ -35,7 +43,9 @@ const AuthServices = {
   getAuthToken,
   setRole,
   getRole,
-  removeAuthToken
+  setUsername,
+  getUsername,
+  removeAuthToken,
 };
 
 export default AuthServices;
