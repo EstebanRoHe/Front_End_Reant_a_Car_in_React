@@ -93,9 +93,7 @@ const TypeCarUpDate = () => {
                                     <i className="bi bi-pencil-square"></i>
                                 </span>
                                 <input type="text" className="form-control" id="description" value={TypeCar.description} onChange={handleInputChange} name="description" required />
-                                <div className="valid-tooltip">
-                                    Looks good!
-                                </div>
+                                
                             </div>
                         </div>
 

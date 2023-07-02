@@ -84,6 +84,16 @@ const getByUsername = username =>{
     };
   return http.get(`/User/buscar/${username}`, config);
 };
+
+const updatePassword = (data) => {
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  };
+  return http.put(`/User/updatePassword`, data, config);
+};
  
 const UserServices = {
     getAll,
@@ -95,7 +105,8 @@ const UserServices = {
     getFiltro,
     getAllUsername,
     getAllEmail,
-    getByUsername
+    getByUsername,
+    updatePassword
 
 };
 export default UserServices;

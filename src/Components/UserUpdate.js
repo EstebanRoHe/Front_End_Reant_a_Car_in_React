@@ -15,16 +15,16 @@ const UserUpdate = () => {
         email: ""
     };
     const [User, setUser] = useState(initialUserState);
-    const [validPassword, setValidPassword] = useState({});
+    const [emailArray, setEmailArray] = useState([]);
+    const [role, setRole] = useState(null);
+    const [errors, setErrors] = useState({});
 
     const getUser = idUser => {
         const token = AuthServices.getAuthToken();
         if (token) {
             UserServices.setAuthToken(token);
-            console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
-            console.log('Token :', token);
             return;
         }
         UserServices.get(idUser)
@@ -37,6 +37,9 @@ const UserUpdate = () => {
     };
 
     useEffect(() => {
+        const roles = AuthServices.getRole();
+        setRole(roles);
+        getListEmail();
         if (idUser)
             getUser(idUser);
     }, [idUser]);
@@ -46,29 +49,32 @@ const UserUpdate = () => {
         setUser({ ...User, [name]: value });
     };
 
-    //para hacer handleInputblur y validar el password
-    const handleInputblurPassword = (event) => {
+    const handleInputblur = (event) => {
         handleInputChange(event);
-        setValidPassword(validationPassword(User));
+        setErrors(validationErrror(User));
 
     };
 
+    const getListEmail = () => {
+        UserServices.getAllEmail()
+            .then(response => {
+                setEmailArray(response.data);
+            }).catch(e => {
+                console.log(e);
+            })
+    }
 
     const updateUser = (e) => {
-
         e.preventDefault()
         const token = AuthServices.getAuthToken();
         if (token) {
             UserServices.setAuthToken(token);
-            console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
-            console.log('Token :', token);
             return;
         }
-        setValidPassword(validationPassword(User));
-
-        if (Object.keys(validPassword).length === 0) {
+      // setErrors(validationErrror(User));
+        if (Object.keys(errors).length === 0) {
             UserServices.update(User.idUser, User)
                 .then(response => {
                     console.log(response.data);
@@ -85,25 +91,18 @@ const UserUpdate = () => {
                     console.log(e);
                 });
         }
-
     };
 
-    const validationPassword = (User) => {
-        let validPassword = {}
-
-        if (
-            User.password.length < 8 ||
-            !/[A-Z]/.test(User.password) ||
-            !/[0-9]/.test(User.password) ||
-            !/[!@#$%^&*]/.test(User.password)
-        ) {
-            validPassword.password =
-                "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial";
-        }
-
-        return validPassword;
+    const validationErrror = (User) => {
+        let errors = {}
+        emailArray.forEach(email => {
+            if (email === User.email) {
+                errors.email = "Email ya resgistrado"
+                console.log("email array : ", errors)
+            }
+        })
+        return errors;
     }
-
 
 
     return (
@@ -111,9 +110,11 @@ const UserUpdate = () => {
             <div className="card ">
 
                 <div className="card-body ">
-
-                    <h5>Actualizar Usuario del Id : {User.idUser}</h5>
-
+                    {role == 'ROLE_ADMIN' ? (
+                        <h5>Actualizar Usuario del Id : {User.idUser}</h5>
+                    ) : (
+                        <h5>Perfil de : {User.username}</h5>
+                    )}
                     <blockquote className="blockquote mb-0 ">
 
                         <form onSubmit={
@@ -122,7 +123,7 @@ const UserUpdate = () => {
                             className="row g-3 needs-validation my-3  border = 1">
 
                             <div className="col-md-3 position-relative">
-                                <label for="name" className="form-label ">Nombre</label>
+                                <label className="form-label ">Nombre</label>
                                 <div className="input-group has-validation">
                                     <span className="input-group-text">
                                         <i className="bi bi-pencil-square"></i>
@@ -137,7 +138,7 @@ const UserUpdate = () => {
                             </div>
 
                             <div className="col-md-3 position-relative">
-                                <label for="lastName" className="form-label ">Apellido</label>
+                                <label className="form-label ">Apellido</label>
                                 <div className="input-group has-validation">
                                     <span className="input-group-text">
                                         <i className="bi bi-pencil-square"></i>
@@ -151,69 +152,62 @@ const UserUpdate = () => {
                             </div>
 
                             <div className="col-md-6 position-relative">
-                                <label for="email" className="form-label ">Email</label>
+                                <label className="form-label ">Email</label>
                                 <div className="input-group has-validation">
                                     <span className="input-group-text">
                                         <i className="bi bi-envelope-at"></i>
                                     </span>
-                                    <input type="email" className=" form-control" id="email"
+                                    <input type="email" className={((errors.email) ? "is-invalid" : "") + " form-control"}
+                                        id="email"
                                         value={User.email}
                                         onChange={handleInputChange}
-                                        name="email" required />
+                                        //onBlur={handleInputblur}
+                                        onKeyUp={handleInputblur}
+                                        name="email"
+                                        required />
+                                    <small className="invalid-feedback" id="helpId" >
+                                        <i className="bi bi-exclamation-circle"> {errors.email}</i>
+                                    </small>
                                 </div>
                             </div>
 
 
                             <div className="col-md-3 position-relative">
-                                <label for="username" className="form-label">Usuario</label>
+                                <label className="form-label">Usuario</label>
                                 <div className="input-group has-validation">
                                     <span className="input-group-text">
                                         <i className="bi bi-person"></i>
                                     </span>
-                                    <input type="text" className="form-control" id="username"
-                                        value={User.username}
-                                        name="username" required />
+                                    <span className="input-group-text">
+                                        <label className="form-label"> {User.username}</label>
+                                    </span>
                                 </div>
                                 <p style={{ color: 'red', fontSize: "15px" }}>¡Este campo no se puede modificar por seguridad!</p>
                             </div>
 
                             <div className="col-md-3 position-relative">
-                                <label for="password" className="form-label">Password</label>
-                                <div className="input-group has-validation">
-                                    <span className="input-group-text">
-                                        <i className="bi bi-key"></i>
-                                    </span>
-                                    <input type="password" className={((validPassword.password) ? "is-invalid" : "") + " form-control"}
-                                        id="password" value={User.password}
-                                        placeholder="Digite una contraseña"
-                                        onBlur={handleInputblurPassword}
-                                        onChange={handleInputChange}
-                                        onKeyUp={handleInputblurPassword}
-                                        name="password" required />
-
-                                    <small className="invalid-feedback" id="helpId">
-                                        <i className="bi bi-exclamation-circle"> {validPassword.password}</i>
-                                    </small>
-
-
-                                </div>
+                                <label className="form-label">Cambiar contraseña</label>
+                                <Link className="btn btn-danger" to={"/PasswordUpdate/" + User.idUser}>
+                                    <i className="bi bi-key"> </i>
+                                    Cambiar contraseña
+                                </Link>
                             </div>
-
 
                             <div className="col-12">
                                 <button className="btn btn-secondary my-3 mx-2" type="submit" >
-
                                     <i className="bi bi-gear"> Actualizar</i>
                                 </button>
-
-                                <Link className="btn btn-danger" to={"/UserList"}>
-                                    <i className="bi bi-x-circle"> Cancelar</i>
-                                </Link>
-
+                                {role == 'ROLE_ADMIN' ? (
+                                    <Link className="btn btn-danger" to={"/UserList"}>
+                                        <i className="bi bi-x-circle"> Cancelar</i>
+                                    </Link>
+                                ) : (
+                                    <Link className="btn btn-danger" to={"/"}>
+                                        <i className="bi bi-x-circle"> Cancelar</i>
+                                    </Link>
+                                )}
                             </div>
                         </form>
-
-
 
                     </blockquote>
                 </div>

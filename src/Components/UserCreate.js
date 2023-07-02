@@ -51,7 +51,6 @@ const UserCreate = () => {
         UserServices.getAllEmail()
             .then(response => {
                 setEmailArray(response.data);
-                console.log(response.data);
             }).catch(e => {
                 console.log(e);
             })
@@ -61,7 +60,6 @@ const UserCreate = () => {
         UserServices.getAllUsername()
             .then(response => {
                 setUsernameArray(response.data);
-                console.log(response.data);
             }).catch(e => {
                 console.log(e);
             })

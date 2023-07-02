@@ -59,14 +59,14 @@ const TypeCarCreate = () => {
             <h4>Registrar Tipo de Vehículo</h4>
                 <blockquote className="blockquote mb-0 ">
 
-                    <form novalidate onSubmit={ e => {
+                    <form onSubmit={ e => {
                         e.preventDefault();
                         createTypeCar();
                     }}
                         className="row g-3 needs-validation my-3  border = 1" >
 
                         <div className="col-md-3 position-relative">
-                            <label for="description" className="form-label ">Descripción</label>
+                            <label  className="form-label ">Descripción</label>
                             <div className="input-group has-validation">
                                 <span className="input-group-text">
                                 <i className="bi bi-pencil-square"></i>

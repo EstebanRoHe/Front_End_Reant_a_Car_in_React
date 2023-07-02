@@ -65,7 +65,7 @@ const ModalListRent = (props) => {
             },
             buttonsStyling: false
         })
-
+ 
         swalWithBootstrapButtons.fire({
             title: 'Deseas eliminar este archivo?',
             icon: 'warning',
@@ -78,7 +78,13 @@ const ModalListRent = (props) => {
                 rentServices.remove(idRent)
                     .then(response => {
                         console.log(response.data);
+                        const updatedRent = Rent.filter(rent => rent.idRent !== idRent);
+                        setRent(updatedRent);
+                        getListByUsername(user);
+                        /*
                         navigate(getListByUsername(user));
+                        getListByUsername(user);
+                        */
                     })
                 swalWithBootstrapButtons.fire(
 

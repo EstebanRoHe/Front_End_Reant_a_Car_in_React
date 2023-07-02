@@ -88,7 +88,7 @@ const IndexUNA = () => {
                     <div className="row">
                         <div className="col-lg-3 col-md-6">
                             <div className="benefit-item">
-                                    <i class="bi bi-cash-coin incoSize" style={{color : "#82CD54"}}></i>
+                                    <i className="bi bi-cash-coin incoSize" style={{color : "#82CD54"}}></i>
                                     <h4>El mejor precio</h4>
                                 <p className="text-justify">
                                     Constantemente presentamos ofertas especiales y descuentos promocionales. Algunas promociones como descuentos por reserva anticipada, tarifas especiales para periodos prolongados o paquetes.

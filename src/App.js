@@ -25,7 +25,7 @@ import LogList from './Components/LogList';
 import AuthServices from './services/authServices';
 import userServices from "./services/usernameServices";
 import ModalListRent from './Components/ModalListRent';
-import PrivateRoute from './Components/PrivateRoute';
+import PasswordUpdate from './Components/PasswordUpdate';
 
 
 function App() {
@@ -51,6 +51,7 @@ function App() {
     setUsername("");
     handleOffcanvasClose();
   };
+
 
   useEffect(() => {
     const token = AuthServices.getAuthToken();
@@ -107,50 +108,51 @@ function App() {
 
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-          <a href="/IndexUNA" className="navbar-brand mx-2"> UNA</a>
+          <a href="/IndexUNA" className="navbar-brand mx-2" onClick={handleOffcanvasClose}> UNA</a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link to={"/IndexRent"} className="nav-item nav-link active">Vehículos</Link>
+                <Link to={"/IndexRent"} className="nav-item nav-link active" onClick={handleOffcanvasClose}>Vehículos</Link>
               </li>
 
               {isLoggedIn && role === 'ROLE_ADMIN' && (
                 <>
                   <li className="nav-item">
-                    <Link to={"/UserList"} className="nav-item nav-link active">Usuarios</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to={"/TypeCarList"} className="nav-item nav-link active">Tipo de Vehículos</Link>
+                    <Link to={"/UserList"} className="nav-item nav-link active" onClick={handleOffcanvasClose}>Usuarios</Link>
                   </li>
 
                   <li className="nav-item">
-                    <Link to={"/CarList"} className="nav-item nav-link active">Vehículos admin</Link>
+                    <Link to={"/TypeCarList"} className="nav-item nav-link active" onClick={handleOffcanvasClose}>Tipo de Vehículos</Link>
                   </li>
 
                   <li className="nav-item">
-                    <Link to={"/RentList"} className="nav-item nav-link active">Rentar</Link>
+                    <Link to={"/CarList"} className="nav-item nav-link active" onClick={handleOffcanvasClose}>Vehículos admin</Link>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link to={"/RentList"} className="nav-item nav-link active" onClick={handleOffcanvasClose}>Rentar</Link>
                   </li>
                 </>
               )}
 
               {isLoggedIn && role === 'ROLE_USER' && (
                 <li className="nav-item">
-                  <Link to={"/RentCreate/" + null} className="nav-item nav-link active">Rentar</Link>
+                  <Link to={"/RentCreate/" + null} className="nav-item nav-link active" onClick={handleOffcanvasClose}>Rentar</Link>
                 </li>
               )}
 
               {!isLoggedIn && (
                 <li className="nav-item">
-                  <Link to={"/Login"} className="nav-item nav-link active">Rentar</Link>
+                  <Link to={"/Login"} className="nav-item nav-link active" onClick={handleOffcanvasClose}>Rentar</Link>
                 </li>
               )}
 
               {isLoggedIn && role === 'ROLE_ADMIN' && (
                 <li className="nav-item">
-                  <Link to={"/LogList"} className="nav-item nav-link active">Logs</Link>
+                  <Link to={"/LogList"} className="nav-item nav-link active" onClick={handleOffcanvasClose}>Logs</Link>
                 </li>
               )}
             </ul>
@@ -161,7 +163,8 @@ function App() {
                     <li className="nav-item dropdown" >
                       <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
                         onClick={handleShowcanvas}
-                      ><i className="bi bi-person-circle" > </i>
+                      >
+                        <i className="bi bi-person-circle" > </i>
                         {username}
                       </a>
                       <Offcanvas placement="end"
@@ -172,29 +175,51 @@ function App() {
                         <Offcanvas.Header closeButton style={{ backgroundColor: "#212529", color: 'white' }}>
                           <Offcanvas.Title style={{ color: "#8C939A" }}>
                             <i className="bi bi-person-circle">
-                            </i> {username}</Offcanvas.Title>
+                            </i> {username}
+                          </Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body style={{ backgroundColor: '#23272F', color: 'white' }}>
+
                           <ul className="navbar-nav">
 
                             <li className="nav-item" style={{ color: "#8C939A" }}>
                               <i className="bi bi-person"> </i>
-                              <h7>{user.name} {user.lastName}</h7>
+                              {user.name} {user.lastName}
                             </li>
                             <li className="nav-item" style={{ color: "#8C939A" }}>
                               <i className="bi bi-envelope-at"> </i>
-                              <h7>{user.email}</h7>
+                              {user.email}
                             </li>
+
+                            <li className="nav-item">
+                              <Link to={"/UserUpdate/" + user.idUser} className="nav-item nav-link active" 
+                                onClick={handleOffcanvasClose}>
+                                <i className="bi bi-eye"> </i>Ver Perfil
+                              </Link>
+                            </li>
+
+                            <li className="nav-item">
+                              <Link className="nav-link" onClick={()=>{
+                                showModalHandler();
+                                handleOffcanvasClose();
+                              }}
+                                >
+                                <i className="bi bi-car-front"></i> vehículo Alquilados
+                              </Link>
+                            </li>
+
+
                             <li className="nav-item">
                               <br />
                             </li>
 
                             <li className="nav-item">
-
-                              <Link className="nav-link" onClick={showModalHandler}>
-                                <i className="bi bi-car-front"> </i> <h7>vehículo Alquilados</h7>
+                              <Link to={"/PasswordUpdate/" + user.idUser} className="nav-item nav-link active" 
+                               onClick={handleOffcanvasClose}
+                              style={{ color: "#BB2D3B" }}>
+                                <i className="bi bi-key"> </i>
+                                Cambiar contraseña
                               </Link>
-
                             </li>
 
                             <li className="nav-item">
@@ -212,7 +237,7 @@ function App() {
                     </li>
                   </>
                 ) : (
-                  <Link to={"/Login"} className="nav-item nav-link active">
+                  <Link to={"/Login"} className="nav-item nav-link active" onClick={handleOffcanvasClose}>
                     <i className="bi bi-person-fill"></i> Login
                   </Link>
                 )}
@@ -233,7 +258,7 @@ function App() {
           {isLoggedIn && role === 'ROLE_ADMIN' ? (
             <>
               <Route path="/UserList" element={<UserList />} />
-              <Route path="/UserUpdate/:idUser" element={<UserUpdate />} />
+
               <Route path="/TypeCarList" element={<TypeCarList />} />
               <Route path="/TypeCarCreate" element={<TypeCarCreate />} />
               <Route path="/TypeCarUpDate/:id_typeCar" element={<TypeCarUpDate />} />
@@ -245,7 +270,7 @@ function App() {
           ) : (
             <>
               <Route path="/UserList" element={<Navigate to="/Login" />} />
-              <Route path="/UserUpdate/:idUser" element={<Navigate to="/Login" />} />
+
               <Route path="/TypeCarList" element={<Navigate to="/Login" />} />
               <Route path="/TypeCarCreate" element={<Navigate to="/Login" />} />
               <Route path="/TypeCarUpDate/:id_typeCar" element={<Navigate to="/Login" />} />
@@ -259,12 +284,16 @@ function App() {
 
           {isLoggedIn && role === 'ROLE_ADMIN' || isLoggedIn && role === 'ROLE_USER' ? (
             <>
+              <Route path="/UserUpdate/:idUser" element={<UserUpdate />} />
+              <Route path="/PasswordUpdate/:idUser" element={<PasswordUpdate />} />
               <Route path="/RentList" element={<RentList />} />
               <Route path="/RentCreate/:idCar" element={<RentCreate />} />
               <Route path="/RentUpdate/:idRent" element={<RentUpdate />} />
             </>
           ) : (
             <>
+              <Route path="/UserUpdate/:idUser" element={<Navigate to="/Login" />} />
+              <Route path="/PasswordUpdate/:idUser" element={<Navigate to="/Login" />} />
               <Route path="/RentList" element={<Navigate to="/Login" />} />
               <Route path="/RentCreate/:idCar" lement={<Navigate to="/Login" />} />
               <Route path="/RentUpdate" element={<Navigate to="/Login" />} />

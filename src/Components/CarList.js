@@ -144,21 +144,38 @@ const CarList = (props) => {
     return (
         <div className="container ">
             {Car.length === 0 ? (
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Loading />
-                    <Link className="btn btn-primary" to={"/CarCreate"}>
-                        <i className="bi bi-plus-circle"> Registrar un Vehiculo </i>
-                    </Link>
-                </div>
+                <>
+                    {!props.hideButtons ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <Loading />
+                            <Link className="btn btn-primary" to={"/CarCreate"}>
+                                <i className="bi bi-plus-circle"> Registrar un Vehiculo </i>
+                            </Link>
+                        </div>
+                    ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <div className=" custom-loading" style={{ marginLeft: "22%" }}>
+                                <Loading />
+
+                            </div>
+                            <i className="bi bi-exclamation-circle"
+                                style={{ color: "red", justifyContent: "center" }}> No hay vehículo disponibles en este momento.
+                            </i>
+
+                        </div>
+
+                    )}
+                </>
+
             ) : (
 
                 <div className="card text bg-light mb-3">
 
                     <div className="card-header d-flex justify-content-between">
-                    {!props.hideButtons && (
-                        <Link className="btn btn-primary" style={{ height: "5vh" }} to={"/CarCreate"}>
-                            <i className="bi bi-plus-circle"> Registrar un Vehiculo </i>
-                        </Link>
+                        {!props.hideButtons && (
+                            <Link className="btn btn-primary" style={{ height: "5vh" }} to={"/CarCreate"}>
+                                <i className="bi bi-plus-circle"> Registrar un Vehiculo </i>
+                            </Link>
                         )}
                         <div className="ml-auto d-flex flex-column">
                             <div className="input-container">
@@ -173,7 +190,7 @@ const CarList = (props) => {
                                 />
                             </div>
                             {error && (
-                                <small className="errorSmall" id="helpId" style={{marginTop:"1%"}}>
+                                <small className="errorSmall" id="helpId" style={{ marginTop: "1%" }}>
                                     <i className="bi bi-exclamation-circle"> Placa no encontrado</i>
                                 </small>
                             )}
@@ -192,8 +209,8 @@ const CarList = (props) => {
                                         <th scope="col">Modelo</th>
                                         <th scope="col">Tipo</th>
                                         {!props.hideButtons ? (
-                                        <th scope="col">Link de Imagen</th>
-                                        ):(<></>)}
+                                            <th scope="col">Link de Imagen</th>
+                                        ) : (<></>)}
                                     </tr>
 
                                 </thead>
@@ -210,33 +227,33 @@ const CarList = (props) => {
                                                     <td>{car.model_year}</td>
                                                     <td>{car.typeCar.description}</td>
                                                     {!props.hideButtons ? (
-                                                    <td>{car.image}</td>
-                                                    ):(<></>)}
+                                                        <td>{car.image}</td>
+                                                    ) : (<></>)}
                                                     <td>
                                                         <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                        {!props.hideButtons ? (
-                                                            <>
-                                                            <Link className="btn btn-secondary" to={"/CarUpdate/" + car.idCar}>
-                                                                <i className="bi bi-gear"> Actualizar</i>
-                                                            </Link>
-                                                            <button className="btn btn-danger" onClick={() => remove(car.idCar)}>
-                                                                <i className="bi bi-trash3"> Eliminar</i>
+                                                            {!props.hideButtons ? (
+                                                                <>
+                                                                    <Link className="btn btn-secondary" to={"/CarUpdate/" + car.idCar}>
+                                                                        <i className="bi bi-gear"> Actualizar</i>
+                                                                    </Link>
+                                                                    <button className="btn btn-danger" onClick={() => remove(car.idCar)}>
+                                                                        <i className="bi bi-trash3"> Eliminar</i>
 
-                                                            </button>
-                                                            </>
-                                                             ) : (
+                                                                    </button>
+                                                                </>
+                                                            ) : (
                                                                 <button
-                                                                className="btn btn-success"
-                                                                onClick={() => {
-                                                                    handleCarSelection(car)
-                                                                }}
-                                                                style={{ height: "10vh" }}
-                                                            >
-                                                                <i className="bi bi-plus-circle"> Agregar</i>
-                                                                
-                                                            </button>
+                                                                    className="btn btn-success"
+                                                                    onClick={() => {
+                                                                        handleCarSelection(car)
+                                                                    }}
+                                                                    style={{ height: "10vh" }}
+                                                                >
+                                                                    <i className="bi bi-plus-circle"> Agregar</i>
 
-                                                        )}
+                                                                </button>
+
+                                                            )}
 
                                                         </div>
 
@@ -257,7 +274,7 @@ const CarList = (props) => {
                 </div>
             )}
         </div>
- 
+
 
 
 

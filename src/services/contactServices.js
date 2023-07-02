@@ -7,12 +7,8 @@ const setAuthToken = (token) => {
 
 
 const create = data =>{
-  const config = {
-    headers: {
-      Authorization: `Bearer ${authToken}`, 
-    },
-  };
-    return http.post("/Email/sendMessage",data,config);
+  
+    return http.post(`/Email/sendMessage`,data);
 };
 
 
