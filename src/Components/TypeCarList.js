@@ -88,10 +88,8 @@ const TypeCarList = () => {
         const token = AuthServices.getAuthToken();
         if (token) {
             typeCarServices.setAuthToken(token);
-            console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
-            console.log('Token :', token);
             return;
         }
         const swalWithBootstrapButtons = Swal.mixin({

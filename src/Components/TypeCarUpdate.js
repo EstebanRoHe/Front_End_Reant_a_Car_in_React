@@ -18,13 +18,10 @@ const TypeCarUpDate = () => {
     const getTypeCar = id_typeCar => {
         const token = AuthServices.getAuthToken();
         if (token) {
-            // Agrega el token a los encabezados de la solicitud
             typeCarServices.setAuthToken(token);
-            console.log('Token :', token);
         } else {
-            // Maneja el caso cuando no hay un token válido
+            
             console.error("No se encontró un token válido");
-            console.log('Token :', token);
             return;
         }
         typeCarServices.get(id_typeCar)
@@ -54,7 +51,6 @@ const TypeCarUpDate = () => {
             console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
-            console.log('Token :', token);
             return;
         }
         typeCarServices.update(TypeCar.id_typeCar, TypeCar)

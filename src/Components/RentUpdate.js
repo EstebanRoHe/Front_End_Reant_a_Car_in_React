@@ -168,7 +168,7 @@ const RentUpdate = props => {
     }
 
     return (
-        <div className="container ">
+        <div className="container " >
             <div className="card  ">
                 <div className="card-body ">
                     <h4>Actualizar Alquiler del Usuario : {Rent.username.username}</h4>
@@ -177,6 +177,7 @@ const RentUpdate = props => {
                         <form novalidate onSubmit={e => {
                             e.preventDefault()
                             updateRent()
+                            
                         }}
                             className="row g-3 needs-validation my-3  border = 1" >
 
@@ -222,7 +223,7 @@ const RentUpdate = props => {
                                 </div>
                             </div>
 
-                            <div className="col-md-3 position-relative">
+                            <div className="col-md-3 position-relative" >
                                 <label for="dateRent" className="form-label "> <i className="bi bi-calendar-date"> </i> Fecha</label>
                                 <div className="input-group has-validation">
                                     <span className="input-group-text">
@@ -232,7 +233,11 @@ const RentUpdate = props => {
                                         id="dateRent"
                                         name="dateRent"
                                         value={Rent.dateRent}
+                                        onMouseOut={handleInputChange}
                                         onChange={handleInputChange}
+                                        onMouseUp={handleInputChange}
+                                        onBlur={handleInputChange}
+                                       
                                         required />
                                     <small className="invalid-feedback" id="helpId">
                                         <i className="bi bi-exclamation-circle"> {errorsDateAndUser.User}</i>
@@ -241,7 +246,7 @@ const RentUpdate = props => {
                             </div>
 
                             <div className="col-12">
-                                <button className="btn btn-secondary my-3  mx-2 " type="submit">
+                                <button className="btn btn-secondary my-3  mx-2 " type="submit" >
                                     <i className="bi bi-person-plus"> Actualizar</i>
                                 </button>
                                 {role === 'ROLE_ADMIN' ? (

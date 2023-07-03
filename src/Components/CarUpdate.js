@@ -30,10 +30,8 @@ const CarUpdate = props => {
         const token = AuthServices.getAuthToken();
         if (token) {
             carServices.setAuthToken(token);
-            console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
-            console.log('Token :', token);
             return;
         }
         carServices.get(idCar)
@@ -65,7 +63,6 @@ const CarUpdate = props => {
             console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
-            console.log('Token :', token);
             return;
         }
         typeCarServices.getAll()
@@ -87,7 +84,6 @@ const CarUpdate = props => {
             console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
-            console.log('Token :', token);
             return;
         }
         carServices.update(Car.idCar, Car)
@@ -150,7 +146,7 @@ const CarUpdate = props => {
                         </div>
 
 
-
+{/*
                         <div className="col-md-3 position-relative">
                             <label for="image" className="form-label ">Imagen</label>
                             <div className="input-group has-validation">
@@ -164,6 +160,7 @@ const CarUpdate = props => {
                                 </div>
                             </div>
                         </div>
+                */}
                         <div className="col-md-3 position-relative">
                             <label for="cylinder_capacity" className="form-label">Cilindraje</label>
                             <div className="input-group has-validation">
