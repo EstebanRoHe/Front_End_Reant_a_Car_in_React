@@ -16,8 +16,7 @@ const IndexRent = () => {
     const isLoggedIn = AuthServices.getAuthToken();
     const offset = currentPage * itemsPerPage;
     const paginatedCars = Car.slice(offset, offset + itemsPerPage);
-    const baseUrl = "http://localhost:8080";
-
+    
     useEffect(() => {
         getList();
     }, []);
@@ -104,7 +103,7 @@ const IndexRent = () => {
                     <div className="d-flex flex-wrap">
                         {paginatedCars && paginatedCars.map((car) => (
                             <div key={car.idCar} className="card col-md-3 col-lg-3 mb-3" style={{ margin: "1%", marginLeft: "6%" }}>
-                                <img src={baseUrl + car.image} className="card-img-top" alt="..." />
+                                <img src={car.image} className="card-img-top" alt="..." />
                                 <div className="card-body">
                                     <h5 className="card-title" key={car.idCar}><i className="bi bi-car-front-fill"> </i>{car.description}</h5>
                                     {car.typeCar.description === "4x4" ? (

@@ -116,8 +116,10 @@ const TypeCarList = () => {
                             'Eliminado',
                             'Tu archivo ha sido eliminado correctamente',
                             'success'
-                        );
-                        navigate(getList());
+                        ).then(() => {
+                            getList()
+                        })
+                        //navigate(getList());
                     })
                     .catch(error => {
                         swalWithBootstrapButtons.fire(
@@ -169,7 +171,7 @@ const TypeCarList = () => {
                         </div>
                         {error && (
                             <small className="errorSmall" id="helpId" style={{marginTop:"1%"}}>
-                                <i className="bi bi-exclamation-circle"> Descripción no encontrado</i>
+                                <i className="bi bi-exclamation-circle"> Descripción no encontrada</i>
                             </small>
                         )}
                       </div>

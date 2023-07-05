@@ -108,15 +108,23 @@ const RentList = () => {
                 rentServices.remove(idRent)
                     .then(response => {
                         console.log(response.data);
+                        swalWithBootstrapButtons.fire(
 
-                        navigate(getList());
+                            'Eliminado!',
+                            'Tu archivo ha sido eliminado',
+                            'Correctamente'
+                        )
+                       // navigate(getList());
+                    }).then(() => {
+                        getList();
                     })
-                swalWithBootstrapButtons.fire(
-
-                    'Eliminado!',
-                    'Tu archivo ha sido eliminado',
-                    'Correctamente'
-                )
+                    .catch(error => {
+                        swalWithBootstrapButtons.fire(
+                            'Error',
+                            'Error al eliminar este archivo',
+                            'error'
+                        );
+                    });
 
             } else if (
 

@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, Navigate } from 'react-router-dom';
-import { Offcanvas } from 'react-bootstrap';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -161,7 +162,7 @@ function App() {
                 {isLoggedIn ? (
                   <>
                     <li className="nav-item dropdown" >
-                      <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                      <a className="nav-link dropdown-toggle" role="button" aria-expanded="false"
                         onClick={handleShowcanvas}
                       >
                         <i className="bi bi-person-circle" > </i>
@@ -318,7 +319,262 @@ function App() {
 };
 
 export default App;
+/*
+import React, { useState, useEffect } from 'react';
+import { Routes, Route, Link, Navigate } from 'react-router-dom';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import './App.css';
+import UserList from './Components/UserList';
+import UserCreate from './Components/UserCreate';
+import UserUpdate from './Components/UserUpdate';
+import TypeCarList from './Components/TypeCarList';
+import TypeCarCreate from './Components/TypeCarCreate';
+import TypeCarUpDate from './Components/TypeCarUpdate';
+import CarList from './Components/CarList';
+import CarCreate from './Components/CarCreate';
+import CarUpdate from './Components/CarUpdate';
+import RentList from './Components/RentList';
+import RentCreate from './Components/RentCreate';
+import RentUpdate from './Components/RentUpdate';
+import IndexRent from './Components/IndexRent';
+import IndexUNA from './Components/IndexUNA';
+import Footer from './Components/Footer';
+import Login from './Components/Login';
+import LogList from './Components/LogList';
+import AuthServices from './services/authServices';
+import userServices from "./services/usernameServices";
+import ModalListRent from './Components/ModalListRent';
+import PasswordUpdate from './Components/PasswordUpdate';
+
+
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState("");
+  const [username, setUsername] = useState("");
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const [user, setUser] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOffcanvasClose = () => {
+    setShowOffcanvas(false);
+  };
+
+  const handleShowcanvas = () => {
+    setShowOffcanvas(true);
+  };
+
+  const handleLogout = () => {
+    AuthServices.removeAuthToken();
+    setIsLoggedIn(false);
+    setRole("");
+    setUsername("");
+    handleOffcanvasClose();
+  };
+
+
+  useEffect(() => {
+    const token = AuthServices.getAuthToken();
+    const userRole = AuthServices.getRole();
+    const userToken = AuthServices.getUsername();
+    setUsername(userToken);
+    setRole(userRole);
+    setIsLoggedIn(!!token);
+    if (userToken != null)
+      getByUsername(userToken);
+    //handleLogout()
+  }, []);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      const userRole = AuthServices.getRole();
+      setRole(userRole);
+      const userToken = AuthServices.getUsername();
+      setUsername(userToken);
+      getByUsername(userToken);
+    }
+  }, [isLoggedIn]);
+
+  const getByUsername = (username) => {
+    const token = AuthServices.getAuthToken();
+    if (token) {
+      userServices.setAuthToken(token);
+    } else {
+      return;
+    }
+    userServices.getByUsername(username)
+      .then(response => {
+        setUser(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const showModalHandler = () => {
+    setShowModal(true);
+  };
+
+
+  const closeModalHandler = () => {
+    setShowModal(false);
+  };
+
+
+
+  return (
+
+    <div className="app-container">
+
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container-fluid">
+          <a href="/IndexUNA" className="navbar-brand mx-2" > UNA</a>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <Link to={"/IndexRent"} className="nav-item nav-link active" >Vehículos</Link>
+              </li>
+
+              {isLoggedIn && role === 'ROLE_ADMIN' && (
+                <>
+                  <li className="nav-item">
+                    <Link to={"/UserList"} className="nav-item nav-link active" >Usuarios</Link>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link to={"/TypeCarList"} className="nav-item nav-link active" >Tipo de Vehículos</Link>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link to={"/CarList"} className="nav-item nav-link active" >Vehículos admin</Link>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link to={"/RentList"} className="nav-item nav-link active" >Rentar</Link>
+                  </li>
+                </>
+              )}
+
+              {isLoggedIn && role === 'ROLE_USER' && (
+                <li className="nav-item">
+                  <Link to={"/RentCreate/" + null} className="nav-item nav-link active" >Rentar</Link>
+                </li>
+              )}
+
+              {!isLoggedIn && (
+                <li className="nav-item">
+                  <Link to={"/Login"} className="nav-item nav-link active" >Rentar</Link>
+                </li>
+              )}
+
+              {isLoggedIn && role === 'ROLE_ADMIN' && (
+                <li className="nav-item">
+                  <Link to={"/LogList"} className="nav-item nav-link active" >Logs</Link>
+                </li>
+              )}
+            </ul>
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item">
+                {isLoggedIn ? (
+                  <>
+                    <li className="nav-item" >
+                      <a className="nav-link"  data-bs-toggle="dropdown" aria-expanded="false"
+                        
+                      >
+                        <i className="bi bi-person-circle" > </i>
+                        {username}
+                      </a>
+                     
+                    </li>
+                  </>
+                ) : (
+                  <Link to={"/Login"} className="nav-item nav-link active" >
+                    <i className="bi bi-person-fill"></i> Login
+                  </Link>
+                )}
+
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </nav>
+
+
+      <div className="principal">
+        <Routes>
+          <Route path="/" element={<IndexUNA />} />
+          <Route path="/UserCreate" element={<UserCreate />} />
+
+          {isLoggedIn && role === 'ROLE_ADMIN' ? (
+            <>
+              <Route path="/UserList" element={<UserList />} />
+
+              <Route path="/TypeCarList" element={<TypeCarList />} />
+              <Route path="/TypeCarCreate" element={<TypeCarCreate />} />
+              <Route path="/TypeCarUpDate/:id_typeCar" element={<TypeCarUpDate />} />
+              <Route path="/CarList" element={<CarList />} />
+              <Route path="/CarCreate" element={<CarCreate />} />
+              <Route path="/CarUpdate/:idCar" element={<CarUpdate />} />
+              <Route path="/LogList" element={<LogList />} />
+            </>
+          ) : (
+            <>
+              <Route path="/UserList" element={<Navigate to="/Login" />} />
+
+              <Route path="/TypeCarList" element={<Navigate to="/Login" />} />
+              <Route path="/TypeCarCreate" element={<Navigate to="/Login" />} />
+              <Route path="/TypeCarUpDate/:id_typeCar" element={<Navigate to="/Login" />} />
+              <Route path="/CarList" element={<Navigate to="/Login" />} />
+              <Route path="/CarCreate" element={<Navigate to="/Login" />} />
+              <Route path="/CarUpdate/:idCar" element={<Navigate to="/Login" />} />
+              <Route path="/LogList" element={<Navigate to="/Login" />} />
+
+            </>
+          )}
+
+          {isLoggedIn && role === 'ROLE_ADMIN' || isLoggedIn && role === 'ROLE_USER' ? (
+            <>
+              <Route path="/UserUpdate/:idUser" element={<UserUpdate />} />
+              <Route path="/PasswordUpdate/:idUser" element={<PasswordUpdate />} />
+              <Route path="/RentList" element={<RentList />} />
+              <Route path="/RentCreate/:idCar" element={<RentCreate />} />
+              <Route path="/RentUpdate/:idRent" element={<RentUpdate />} />
+            </>
+          ) : (
+            <>
+              <Route path="/UserUpdate/:idUser" element={<Navigate to="/Login" />} />
+              <Route path="/PasswordUpdate/:idUser" element={<Navigate to="/Login" />} />
+              <Route path="/RentList" element={<Navigate to="/Login" />} />
+              <Route path="/RentCreate/:idCar" lement={<Navigate to="/Login" />} />
+              <Route path="/RentUpdate" element={<Navigate to="/Login" />} />
+            </>
+          )}
+
+          <Route path="/IndexRent" element={<IndexRent />} />
+          <Route path="/IndexUNA" element={<IndexUNA />} />
+          <Route path="/Login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+
+        </Routes>
+        {showModal && (
+          <ModalListRent
+            onClose={closeModalHandler}
+          />
+        )}
+
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+export default App;
+*/
 
 
 

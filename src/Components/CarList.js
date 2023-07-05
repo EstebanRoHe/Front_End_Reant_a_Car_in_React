@@ -120,13 +120,18 @@ const CarList = (props) => {
                             'Eliminado!',
                             'Tu archivo ha sido eliminado',
                             'Correctamente'
-                        )
-                        navigate(getList());
+                        ).then(() => {
+                            getList()
+                        })
+                       // navigate(getList());
+                    })
+                    .catch(error => {
+                        swalWithBootstrapButtons.fire(
+                            'Error',
+                            'Tu archivo está ligado a otro. Primero elimina el archivo ligado a este correctamente',
+                            'error'
+                        );
                     });
-                swalWithBootstrapButtons.fire(
-                    'Error!',
-                    'Tu archivo esta ligado a otro, Primero elimine el archivo ligado a este Correctamente'
-                )
             } else if (
 
                 result.dismiss === Swal.DismissReason.cancel
@@ -189,7 +194,7 @@ const CarList = (props) => {
                             </div>
                             {error && (
                                 <small className="errorSmall" id="helpId" style={{ marginTop: "1%" }}>
-                                    <i className="bi bi-exclamation-circle"> Placa no encontrado</i>
+                                    <i className="bi bi-exclamation-circle"> Placa no encontrada</i>
                                 </small>
                             )}
                         </div>

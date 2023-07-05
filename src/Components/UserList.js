@@ -126,13 +126,18 @@ const UserList = (props) => {
                             "Eliminado!",
                             "Tu archivo ha sido eliminado",
                             "Correctamente"
+                        ).then(() => {
+                            getList();
+                        })
+                      // navigate(getList());
+                    })
+                    .catch(error => {
+                        swalWithBootstrapButtons.fire(
+                            'Error',
+                            'Tu archivo está ligado a otro. Primero elimina el archivo ligado a este correctamente',
+                            'error'
                         );
-                        navigate(getList());
                     });
-                    swalWithBootstrapButtons.fire(
-                        "Error!",
-                        "Tu archivo esta ligado a otro, Primero elimine el archivo ligado a este Correctamente"
-                    );
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
                         "Cancelado",
@@ -140,7 +145,7 @@ const UserList = (props) => {
                     );
                 }
             });
-    };
+    }; 
 
 
 

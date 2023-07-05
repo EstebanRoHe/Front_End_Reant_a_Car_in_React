@@ -56,17 +56,26 @@ const RentUpdate = props => {
             getRent(idRent);
     }, [idRent]);
 
-    const handleInputChange = event => {
+    /* const handleInputChange = event => {
+         const { name, value } = event.target;
+         setRent({ ...Rent, [name]: value });
+         setErrorsDateAndUser(validationErrorsDateAndUser(Rent.username, Rent));
+     }
+     */
+
+    const handleInputChange = (event) => {
         const { name, value } = event.target;
         setRent({ ...Rent, [name]: value });
         setErrorsDateAndUser(validationErrorsDateAndUser(Rent.username, Rent));
-    }
+    };
+
 
     const handleInputblurCar = event => {
         setCarSelect(JSON.parse(event.target.value))
         setErrors(validationErrror(CarSelect, Rent));
     }
-  
+
+
     const getListCar = () => {
         const token = AuthServices.getAuthToken();
         if (token) {
@@ -130,7 +139,8 @@ const RentUpdate = props => {
         }
 
         if (Object.keys(errors).length === 0 && Object.keys(errorsDateAndUser).length === 0) {
-            rentServices.update(Rent.idRent, Rent, Rent.username, Rent.car)
+            // rentServices.update(Rent.idRent, Rent, Rent.username, Rent.car)
+            rentServices.update(Rent.idRent, Rent)
                 .then(response => {
                     console.log(response.data);
                     Swal.fire({
@@ -150,9 +160,11 @@ const RentUpdate = props => {
     const validationErrror = (CarSelect) => {
         let errors = {};
         RentArray.forEach(rent => {
+           if(rent.car.idCar != null && CarSelect !=null ){ 
             if (rent.car.idCar === CarSelect.idCar) {
                 errors.CarSelect = "Vehículo ya alquilado";
             }
+        } 
         })
         return errors;
     }
@@ -177,7 +189,7 @@ const RentUpdate = props => {
                         <form novalidate onSubmit={e => {
                             e.preventDefault()
                             updateRent()
-                            
+
                         }}
                             className="row g-3 needs-validation my-3  border = 1" >
 
@@ -209,8 +221,12 @@ const RentUpdate = props => {
                                         onMouseUp={handleInputblurCar}
                                         onChange={e => {
                                             setRent({ ...Rent, car: JSON.parse(e.target.value) })
-                                        }}>
-                                        <option value={{ ...Rent, car }}>{Rent.car.licencePlate}</option>
+                                        }}
+                                        >
+                                         {/*<option value={{ ...Rent, JSON.stringify(car) }}>{Rent.car.licencePlate}</option>*/}
+                                         <option value={JSON.stringify({ ...Rent, car: JSON.stringify(car) })}>{Rent.car.licencePlate}</option>
+
+                                        
                                         {car && car.map(
                                             (car) => (
                                                 <option key={car.id_car} value={JSON.stringify(car)}>{car.licencePlate}</option>
@@ -233,11 +249,14 @@ const RentUpdate = props => {
                                         id="dateRent"
                                         name="dateRent"
                                         value={Rent.dateRent}
-                                        onMouseOut={handleInputChange}
+                                       // onMouseOut={handleInputChange}
                                         onChange={handleInputChange}
-                                        onMouseUp={handleInputChange}
+                                        //onMouseUp={handleInputChange}
                                         onBlur={handleInputChange}
-                                       
+                                        onKeyDown={handleInputChange}
+                                        onKeyUp={handleInputChange}
+                                        onClick={handleInputChange}
+
                                         required />
                                     <small className="invalid-feedback" id="helpId">
                                         <i className="bi bi-exclamation-circle"> {errorsDateAndUser.User}</i>
