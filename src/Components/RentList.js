@@ -164,7 +164,7 @@ const RentList = () => {
                 <div className="card text bg-light mb-3">
 
                     <div className="card-header d-flex justify-content-between">
-                        <Link className="btn btn-primary" style={{ height: "5vh" }} to={"/RentCreate/"+null}>
+                        <Link className="btn btn-primary" to={"/RentCreate/"+null}>
                             <i className="bi bi-card-checklist"> Rentar un Vehiculo</i>
                         </Link>
                         <div className="ml-auto d-flex flex-column">

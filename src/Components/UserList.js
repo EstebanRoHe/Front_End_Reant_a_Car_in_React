@@ -174,7 +174,7 @@ const UserList = (props) => {
 
                     <div className="card-header d-flex justify-content-between">
                         {!props.hideButtons && (
-                            <Link className="btn btn-primary " style={{ height: "5vh" }} to={"/UserCreate"}>
+                            <Link className="btn btn-primary "  to={"/UserCreate"}>
                                 <i className="bi bi-person-plus"> Registrar</i>
                             </Link>
                         )}

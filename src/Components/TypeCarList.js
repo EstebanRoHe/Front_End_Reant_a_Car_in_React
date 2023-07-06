@@ -166,7 +166,7 @@ const TypeCarList = () => {
                 <div className="card text bg-light mb-3">
 
                     <div className="card-header d-flex justify-content-between">
-                        <Link className="btn btn-primary"  style={{height:"5vh"}} to={"/TypeCarCreate"}>
+                        <Link className="btn btn-primary"  to={"/TypeCarCreate"}>
                             <i className="bi bi-plus-circle"> Registrar Tipo de Vehiculo </i>
                         </Link>
                     

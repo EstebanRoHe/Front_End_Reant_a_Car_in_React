@@ -155,12 +155,12 @@ const CarList = (props) => {
       };
     return (
         <div className="container ">
-            {Car.length === 0 ? (
+            {Car.length === 0 && showModal === false? (
                 <>
                     {!props.hideButtons ? (
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <Loading />
-                            <Link className="btn btn-primary" to={"/CarCreate"}>
+                            <Link className="btn btn-primary"  to={"/CarCreate"}>
                                 <i className="bi bi-plus-circle"> Registrar un Vehiculo </i>
                             </Link>
                         </div>
@@ -185,7 +185,7 @@ const CarList = (props) => {
 
                     <div className="card-header d-flex justify-content-between">
                         {!props.hideButtons && (
-                            <Link className="btn btn-primary" style={{ height: "5vh" }} to={"/CarCreate"}>
+                            <Link className="btn btn-primary"  to={"/CarCreate"}>
                                 <i className="bi bi-plus-circle"> Registrar un Vehiculo </i>
                             </Link>
                         )}

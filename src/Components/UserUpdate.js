@@ -206,14 +206,18 @@ const UserUpdate = () => {
                                 </div>
                                 <p style={{ color: 'red', fontSize: "15px" }}>¡Este campo no se puede modificar por seguridad!</p>
                             </div>
-
+                            {role === 'ROLE_USER' ?(
                             <div className="col-md-3 position-relative">
                                 <label className="form-label">Cambiar contraseña</label>
-                                <Link className="btn btn-danger" to={"/PasswordUpdate/" + User.idUser}>
-                                    <i className="bi bi-key"> </i>
-                                    Cambiar contraseña
-                                </Link>
+                                     <Link className="btn btn-danger" to={"/PasswordUpdate/" + User.idUser}>
+                                     <i className="bi bi-key"> </i>
+                                     Cambiar contraseña
+                                 </Link>
                             </div>
+                              ):(
+                                <></>
+                            )}
+                           
 
                             <div className="col-12">
                                 <button className="btn btn-secondary my-3 mx-2" type="submit" >

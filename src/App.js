@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Link, Navigate } from 'react-router-dom';
+import { Routes, Route, Link, Navigate,useNavigate } from 'react-router-dom';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-
+import Swal from "sweetalert2";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
@@ -36,6 +36,7 @@ function App() {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [user, setUser] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleOffcanvasClose = () => {
     setShowOffcanvas(false);
@@ -100,7 +101,27 @@ function App() {
     setShowModal(false);
   };
 
-
+  const SHOWModalPassword = () => {
+    Swal.fire({
+      title: '<i class="bi bi-exclamation-triangle-fill"></i>',
+      text:'¡La función de cambio de contraseña para este usuario se ha desactivado temporalmente por precaución! '+ 
+      'Esta medida se ha tomado para evitar que otras personas intenten utilizar este usuario para probar la función ' +
+      'y evitar posibles inconvenientes. Si deseas probar esta función, te sugiero hacerlo con otro usuario. '+
+      '¡Gracias por su comprensión.!',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Registrarse',
+      denyButtonText: `Cambiar usuario`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+          navigate('UserCreate'); 
+      } else if (result.isDenied) {
+        handleLogout();
+        navigate('/Login');
+      }
+    })
+  
+  };
 
   return (
 
@@ -216,12 +237,25 @@ function App() {
                             </li>
 
                             <li className="nav-item">
+                              {role === 'ROLE_USER' ? (
                               <Link to={"/PasswordUpdate/" + user.idUser} className="nav-item nav-link active" 
                                onClick={handleOffcanvasClose}
                               style={{ color: "#BB2D3B" }}>
                                 <i className="bi bi-key"> </i>
                                 Cambiar contraseña
                               </Link>
+                              ):(
+                                <Link to="#" className="nav-item nav-link active" 
+                                onClick={ () => {
+                                  handleOffcanvasClose();
+                                  SHOWModalPassword();
+
+                                }}
+                               style={{ color: "#BB2D3B" }}>
+                                 <i className="bi bi-key"> </i>
+                                 Cambiar contraseña
+                               </Link>
+                              )}
                             </li>
 
                             <li className="nav-item">
