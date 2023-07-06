@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import logServices from "../services/logServices";
-import { Link, useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 import AuthServices from "../services/authServices";
 import Paginate from "./Paginate";
@@ -12,8 +11,10 @@ const LogList = () => {
     const [filtro, setFiltro] = useState("");
     const [error, setError] = useState(false);
 
+    
     useEffect(() => {
         getList();
+    // eslint-disable-next-line
     }, []);
  
     const handlePageChange = ({ selected }) => {

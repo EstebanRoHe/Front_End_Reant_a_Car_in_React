@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a597195e.css",
+    "main.js": "/static/js/main.81217c4d.js",
+    "static/media/Logo.PNG": "/static/media/Logo.4f7547387875e7eecc71.PNG",
+    "static/media/jimny.jpg": "/static/media/jimny.eba1d576bd57b8ba05ef.jpg",
+    "static/media/hyundai.jpg": "/static/media/hyundai.c6439c5f0ca6cbc3aa0c.jpg",
+    "static/media/bootstrap-icons.woff?": "/static/media/bootstrap-icons.6959d0d983ee318f8880.woff",
+    "static/media/prado.jpg": "/static/media/prado.d9c85c9eeb9f62d4079c.jpg",
+    "static/media/bootstrap-icons.woff2?": "/static/media/bootstrap-icons.b2e5aab643c6f0fd2da6.woff2",
+    "index.html": "/index.html",
+    "main.a597195e.css.map": "/static/css/main.a597195e.css.map",
+    "main.81217c4d.js.map": "/static/js/main.81217c4d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a597195e.css",
+    "static/js/main.81217c4d.js"
+  ]
+}

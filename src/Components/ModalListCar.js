@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import CarList from "./CarList";
 import './Modal.css'
 const ModalListCar = (props) => {

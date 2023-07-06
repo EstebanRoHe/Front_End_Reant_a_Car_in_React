@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
 import './ContactoFooter.css';
 import Swal from "sweetalert2";
 import contactServices from "../services/contactServices";

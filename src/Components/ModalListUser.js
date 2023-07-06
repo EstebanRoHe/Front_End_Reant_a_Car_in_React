@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import UserList from "./UserList";
 import './Modal.css'
 const ModalListUser = (props) => {

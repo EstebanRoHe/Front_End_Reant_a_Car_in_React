@@ -51,6 +51,7 @@ const TypeCarUpdate = () => {
         if (id_typeCar){
             getTypeCar(id_typeCar);
         }
+    // eslint-disable-next-line
     }, [id_typeCar]);
 
     const handleInputChange = event => {

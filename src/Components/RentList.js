@@ -15,8 +15,10 @@ const RentList = () => {
     const [error, setError] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
+   
     useEffect(() => {
         getList();
+    // eslint-disable-next-line
     }, []);
 
     const handlePageChange = ({ selected }) => {

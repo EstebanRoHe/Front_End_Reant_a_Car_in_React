@@ -17,6 +17,7 @@ const TypeCarList = () => {
 
     useEffect(() => {
         getList();
+    // eslint-disable-next-line        
     }, []);
 
     const handlePageChange = ({ selected }) => {

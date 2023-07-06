@@ -63,6 +63,7 @@ const CarCreate = () => {
     if (Validat) {
       newCar();
     }
+  // eslint-disable-next-line
   }, [Validat]);
   
   const newCar = () => {
@@ -72,7 +73,6 @@ const CarCreate = () => {
   }
   
   
-
   const getList = () => {
     const token = AuthServices.getAuthToken();
     if (token) {
@@ -147,7 +147,9 @@ const CarCreate = () => {
           console.log(e);
           closeModalHandler();
         })
-    }
+    }else{
+      closeModalHandler();
+  }
   }
 
 

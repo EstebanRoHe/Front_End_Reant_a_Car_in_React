@@ -8,7 +8,7 @@ import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const CarUpdate = props => {
     const { idCar } = useParams();
-    
+
     const initialCarState = {
         idCar: null,
         licencePlate: "",
@@ -33,6 +33,7 @@ const CarUpdate = props => {
         setShowModal(false);
     };
 
+
     const getCar = (idCar) => {
         showModalHandler();
         const token = AuthServices.getAuthToken();
@@ -55,11 +56,13 @@ const CarUpdate = props => {
             })
     }
 
+
     useEffect(() => {
         getList();
-        if (idCar){
+        if (idCar) {
             getCar(idCar);
         }
+        // eslint-disable-next-line
     }, [idCar]);
 
     const handleInputChange = event => {
@@ -120,129 +123,121 @@ const CarUpdate = props => {
 
     return (
         <div className="container ">
-        <div className="card  ">
-            <div className="card-body ">
-                <h4>Actualizar Vehículo del Id : {Car.idCar}</h4>
-                <blockquote className="blockquote mb-0 ">
+            <div className="card  ">
+                <div className="card-body ">
+                    <h4>Actualizar Vehículo del Id : {Car.idCar}</h4>
+                    <blockquote className="blockquote mb-0 ">
 
-                    <form onSubmit={
-                        updateCar
-                    }
-                        className="row g-3 needs-validation my-3  border = 1" >
+                        <form onSubmit={
+                            updateCar
+                        }
+                            className="row g-3 needs-validation my-3  border = 1" >
 
-                        <div className="col-md-3 position-relative">
-                            <label for="licencePlate" className="form-label ">Placa</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-pencil-square"></i>
-                                </span>
-                                <input type="text" className="form-control" id="licencePlate" value={Car.licencePlate}
-                                    onChange={handleInputChange} name="licencePlate" required />
-                                <div className="valid-tooltip">
-                                    ""
-                                </div>
-                            </div>
-                        </div>
+                            <div className="col-md-3 position-relative">
+                                <label for="licencePlate" className="form-label ">Placa</label>
+                                <div className="input-group ">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-pencil-square"></i>
+                                    </span>
+                                    <input type="text" className="form-control" id="licencePlate" value={Car.licencePlate}
+                                        onChange={handleInputChange} name="licencePlate" required />
 
-                        <div className="col-md-3 position-relative">
-                            <label for="description" className="form-label ">Marca</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-pencil-square"></i>
-                                </span>
-                                <input type="text" className="form-control" id="description" value={Car.description}
-                                    onChange={handleInputChange} name="description" required />
-                                <div className="valid-tooltip">
-                                    ""
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-md-3 position-relative">
-                            <label for="cylinder_capacity" className="form-label">Cilindraje</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-gear-wide-connected"></i>
-                                </span>
-                                <input type="text" className="form-control" id="cylinder_capacity" value={Car.cylinder_capacity}
-                                    onChange={handleInputChange} name="cylinder_capacity" required />
-                                <div className="invalid-tooltip">
-                                    ""
                                 </div>
                             </div>
 
-                        </div>
+                            <div className="col-md-3 position-relative">
+                                <label for="description" className="form-label ">Marca</label>
+                                <div className="input-group ">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-pencil-square"></i>
+                                    </span>
+                                    <input type="text" className="form-control" id="description" value={Car.description}
+                                        onChange={handleInputChange} name="description" required />
 
-                        <div className="col-md-3 position-relative">
-                            <label for="capacity" className="form-label">Capacidad</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-car-front"></i>
-                                </span>
-                                <input type="text" className="form-control" id="capacity" value={Car.capacity}
-                                    onChange={handleInputChange} name="capacity" required />
-                                <div className="invalid-tooltip">
-                                    ""
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="col-md-3 position-relative">
-                            <label for="model_year" className="form-label">Modelo</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-calendar-date"></i>
-                                </span>
-                                <input type="text" className="form-control" id="model_year" value={Car.model_year}
-                                    onChange={handleInputChange} name="model_year" required />
-                                <div className="invalid-tooltip">
-                                    ""
+                            <div className="col-md-3 position-relative">
+                                <label for="cylinder_capacity" className="form-label">Cilindraje</label>
+                                <div className="input-group ">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-gear-wide-connected"></i>
+                                    </span>
+                                    <input type="text" className="form-control" id="cylinder_capacity" value={Car.cylinder_capacity}
+                                        onChange={handleInputChange} name="cylinder_capacity" required />
+
+                                </div>
+
+                            </div>
+
+                            <div className="col-md-3 position-relative">
+                                <label for="capacity" className="form-label">Capacidad</label>
+                                <div className="input-group">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-car-front"></i>
+                                    </span>
+                                    <input type="text" className="form-control" id="capacity" value={Car.capacity}
+                                        onChange={handleInputChange} name="capacity" required />
+
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="col-md-3 position-relative">
-                            <label for="typeCar" className="form-label">Tipo</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-car-front-fill"></i>
-                                </span>
-                               
-                                <select className="form-select" name="typeCar" id="typeCar"
-                                    onChange={e => {                                    
-                                        setCar({...Car, typeCar : JSON.parse(e.target.value)})
-                                    }}>
-                                     <option value={{...Car.type}}>{Car.typeCar.description}</option>
-                                    {TypeCar && TypeCar.map(
-                                        (type) => (
-                                            <option key={type.id_typeCar}value={JSON.stringify(type)}>{type.description}</option>
-                                        ))}
-                                </select>
+                            <div className="col-md-3 position-relative">
+                                <label for="model_year" className="form-label">Modelo</label>
+                                <div className="input-group ">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-calendar-date"></i>
+                                    </span>
+                                    <input type="text" className="form-control" id="model_year" value={Car.model_year}
+                                        onChange={handleInputChange} name="model_year" required />
 
-                                <div className="invalid-tooltip">
-                                    ""
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="col-12">
-                            <button className="btn btn-secondary my-3  mx-2 " type="submit">
-                                <i className="bi bi-person-plus"> Actualizar</i>
-                            </button>
-                            <Link className="btn btn-danger" to={"/CarList"}>
-                                <i className="bi bi-x-circle"> Cancelar</i>
-                            </Link>
-                        </div>
+                            <div className="col-md-3 position-relative">
+                                <label for="typeCar" className="form-label">Tipo</label>
+                                <div className="input-group ">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-car-front-fill"></i>
+                                    </span>
 
-                    </form>
+                                    <select className="form-select" name="typeCar" id="typeCar"
 
-                    {showModal && (
+                                        onChange={e => {
+                                            setCar({ ...Car, typeCar: JSON.parse(e.target.value) })
+                                        }}>
+                                        <option value={Car.typeCar ? Car.typeCar.id_typeCar : null}>
+                                            {Car.typeCar ? Car.typeCar.description : ''}
+                                        </option>
+
+                                        {TypeCar && TypeCar.map(
+                                            (type) => (
+                                                <option key={type.id_typeCar} value={JSON.stringify(type)}>{type.description}</option>
+                                            ))}
+                                    </select>
+
+
+                                </div>
+                            </div>
+
+                            <div className="col-12">
+                                <button className="btn btn-secondary my-3  mx-2 " type="submit">
+                                    <i className="bi bi-person-plus"> Actualizar</i>
+                                </button>
+                                <Link className="btn btn-danger" to={"/CarList"}>
+                                    <i className="bi bi-x-circle"> Cancelar</i>
+                                </Link>
+                            </div>
+
+                        </form>
+
+                        {showModal && (
                             <ModalLoadingContacto />
                         )}
 
-                </blockquote>
+                    </blockquote>
+                </div>
             </div>
-        </div>
         </div>
     );
 };

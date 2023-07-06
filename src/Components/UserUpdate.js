@@ -58,6 +58,7 @@ const UserUpdate = () => {
         if (idUser){
             getUser(idUser);
         }
+    // eslint-disable-next-line
     }, [idUser]);
 
     const handleInputChange = event => {
@@ -110,6 +111,8 @@ const UserUpdate = () => {
                     console.log(e);
                     closeModalHandler();
                 });
+        }else{
+            closeModalHandler();
         }
     };
 
@@ -130,7 +133,7 @@ const UserUpdate = () => {
             <div className="card ">
 
                 <div className="card-body ">
-                    {role == 'ROLE_ADMIN' ? (
+                    {role === 'ROLE_ADMIN' ? (
                         <h5>Actualizar Usuario del Id : {User.idUser}</h5>
                     ) : (
                         <h5>Perfil de : {User.username}</h5>
@@ -216,7 +219,7 @@ const UserUpdate = () => {
                                 <button className="btn btn-secondary my-3 mx-2" type="submit" >
                                     <i className="bi bi-gear"> Actualizar</i>
                                 </button>
-                                {role == 'ROLE_ADMIN' ? (
+                                {role === 'ROLE_ADMIN' ? (
                                     <Link className="btn btn-danger" to={"/UserList"}>
                                         <i className="bi bi-x-circle"> Cancelar</i>
                                     </Link>

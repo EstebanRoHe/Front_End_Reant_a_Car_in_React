@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import typeCarServices from "../services/typecarServices";
 import { Link } from 'react-router-dom';
 import Swal from "sweetalert2";

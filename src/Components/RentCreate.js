@@ -37,7 +37,7 @@ const RentCreate = () => {
         setRent({ ...Rent, [name]: value });
         setErrorsDateAndUser(validationErrorsDateAndUser(User, { ...Rent, [name]: value }));
     };
-
+   
     useEffect(() => {
         const loggedInUsername = AuthServices.getUsername();
         const roles = AuthServices.getRole();
@@ -55,6 +55,7 @@ const RentCreate = () => {
         if (roles !== 'ROLE_ADMIN') {
             getByUsername(loggedInUsername)
         }
+  // eslint-disable-next-line
     }, [idCar, Validat]);
 
     const getByUsername = (loggedInUsername) => {
@@ -139,6 +140,8 @@ const RentCreate = () => {
                     console.log(e);
                     closeModalHandlerLoading();
                 })
+        }else{
+            closeModalHandlerLoading();
         }
     }
 

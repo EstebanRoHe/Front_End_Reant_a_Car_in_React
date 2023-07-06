@@ -17,6 +17,7 @@ const UserList = (props) => {
 
     useEffect(() => {
         getList()
+    // eslint-disable-next-line
     }, []);
 
     const [User, setUser] = useState([]);

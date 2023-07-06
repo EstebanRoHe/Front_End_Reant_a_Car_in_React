@@ -1,5 +1,4 @@
 import http from "../http-common";
-import axios from "axios";
 
 let authToken = null;
 
@@ -29,7 +28,6 @@ const get = idCar => {
 const create = (licencePlate, description, cylinder_capacity, capacity, model_year,imagen, typeCar) => {
   const formData = new FormData();
 
-
   formData.append("licencePlate", licencePlate);
   formData.append("description", description);
   formData.append("cylinder_capacity", cylinder_capacity);
@@ -38,28 +36,17 @@ const create = (licencePlate, description, cylinder_capacity, capacity, model_ye
   formData.append("imagen", imagen); 
   formData.append("typeCar", typeCar);
 
-
   const config = {
     headers: {
       Authorization: `Bearer ${authToken}`,
-      "Content-Type": "multipart/form-data",
-      
+      "Content-Type": "multipart/form-data", 
     },
   };
- //return axios.post("http://localhost:8081/Car", formData, config);
+
  return http.post(`/Car`, formData, config);
 };
 
-/*
-const create = data =>{
-    const config = {
-        headers: {
-          Authorization: `Bearer ${authToken}`, 
-        },
-      };
-    return http.post("/Car",data, config);
-};
-*/
+
 const update = (idCar, data) => {
   const config = {
     headers: {

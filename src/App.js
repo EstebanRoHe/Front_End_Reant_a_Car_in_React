@@ -161,6 +161,7 @@ function App() {
                 {isLoggedIn ? (
                   <>
                     <li className="nav-item dropdown" >
+                   {/* eslint-disable-next-line */}
                       <a href="#" className="nav-link dropdown-toggle" role="button" aria-expanded="false"
                         onClick={handleShowcanvas}
                       >

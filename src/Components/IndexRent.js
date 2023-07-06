@@ -17,8 +17,10 @@ const IndexRent = () => {
     const offset = currentPage * itemsPerPage;
     const paginatedCars = Car.slice(offset, offset + itemsPerPage);
     
+    
     useEffect(() => {
         getList();
+    // eslint-disable-next-line
     }, []);
 
     const handlePageChange = ({ selected }) => {

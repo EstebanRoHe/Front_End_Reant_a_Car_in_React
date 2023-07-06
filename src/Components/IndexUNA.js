@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import carServices from "../services/carServices";
+import React from "react";
 import logo from '../assets/img/Logo.PNG';
 import prado from '../assets/img/prado.jpg';
 import hyundai from '../assets/img/hyundai.jpg';

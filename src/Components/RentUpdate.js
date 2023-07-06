@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import rentServices from "../services/rentServices";
-import userServices from "../services/usernameServices";
 import carServices from "../services/carServices";
 import Swal from "sweetalert2";
 import AuthServices from '../services/authServices';
@@ -64,6 +63,7 @@ const RentUpdate = props => {
         if (idRent){
             getRent(idRent);
         }
+    // eslint-disable-next-line
     }, [idRent]);
 
     const handleInputChange = (event) => {
@@ -141,9 +141,11 @@ const RentUpdate = props => {
                     console.log(e);
                     closeModalHandler();
                 });
+        }else{
+            closeModalHandler();
         }
     };
-
+ 
     const validationErrror = (CarSelect) => {
         let errors = {};
         RentArray.forEach(rent => {
@@ -211,9 +213,10 @@ const RentUpdate = props => {
                                         }}
                                         >
                                     
-                                         <option value={JSON.stringify({ ...Rent, car: JSON.stringify(car) })}>{Rent.car.licencePlate}</option>
+                                         <option value={JSON.stringify({ ...Rent, car: JSON.stringify(car) })}>
+                                            {Rent.car.licencePlate}</option>
 
-                                        
+                                    
                                         {car && car.map(
                                             (car) => (
                                                 <option key={car.id_car} value={JSON.stringify(car)}>{car.licencePlate}</option>

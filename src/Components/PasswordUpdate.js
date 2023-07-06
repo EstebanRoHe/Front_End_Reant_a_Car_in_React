@@ -28,6 +28,7 @@ const PasswordUpdate = () => {
     const handleInputblurPassword = (event) => {
         handleInputChange(event);
         setValidPassword(validationPassword(password));
+
     };
 
     const showModalHandler = () => {
@@ -86,6 +87,8 @@ const PasswordUpdate = () => {
                     closeModalHandler();
                     Swal.fire('Digite la actual contraseña correcta')
                 });
+        } else {
+            closeModalHandler();
         }
 
     };
@@ -93,70 +96,77 @@ const PasswordUpdate = () => {
     return (
         <div className="password-container">
             <div className="card">
-            <div className="card-body ">
-                <div className="content">
-                    <h3>Cambiar Contraseña</h3>
-                    <hr className="dropdown-divider" />
-                    <form onSubmit={passwordUpdate}>
-                        <div className="mb-3">
-                            <label className="form-label">Contraseña Actual</label>
-                            <div className="input-group">
-                                <span className="input-group-text">
-                                    <i className="bi bi-key"></i>
-                                </span>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    placeholder="Contraseña Actual"
-                                    id="currentPassword"
-                                    name="currentPassword"
-                                    value={password.currentPassword}
-                                    onChange={handleInputChange}
-                                    required
-                                    style={{ width: '300px' }}
-                                />
+                <div className="card-body ">
+                    <div className="content">
+                        <h3>Cambiar Contraseña</h3>
+                        <hr className="dropdown-divider" />
+                        <form onSubmit={passwordUpdate}>
+                            <div className="mb-3">
+                                <label className="form-label">Contraseña Actual</label>
+                                <div className="input-group">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-key"></i>
+                                    </span>
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        placeholder="Contraseña Actual"
+                                        id="currentPassword"
+                                        name="currentPassword"
+                                        value={password.currentPassword}
+                                        onChange={handleInputChange}
+                                        required
+                                        style={{ width: '300px' }}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Nueva contraseña</label>
-                            <div className={"input-group has-validation " + (validPassword.password ? "is-invalid" : "")}>
-                                <span className="input-group-text">
-                                    <i className="bi bi-lock"></i>
-                                </span>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    id="newPassword"
-                                    name="newPassword"
-                                    placeholder="Ejemplo1*"
-                                    value={password.newPassword}
-                                    onBlur={handleInputblurPassword}
-                                    onChange={handleInputChange}
-                                    onKeyUp={handleInputblurPassword}
-                                    required
-                                />
-                                <small className="invalid-feedback" id="helpId">
-                                    <i className="bi bi-exclamation-circle"> {validPassword.password}</i>
-                                </small>
+                            <div className="mb-3">
+                                <label className="form-label">Nueva contraseña</label>
+                                <div className="input-group has-validation">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-lock"></i>
+                                    </span>
+                                    <input
+                                        type="password"
+                                        className={((validPassword.password) ? "is-invalid" : "") + " form-control"}
+                                        id="newPassword"
+                                        name="newPassword"
+                                        placeholder="Ejemplo1*"
+                                        value={password.newPassword}
+                                        onBlur={handleInputblurPassword}
+                                        onChange={handleInputChange}
+                                        onKeyUp={handleInputblurPassword}
+                                        style={{ maxWidth: '300px' }}
+                                        required
+                                    />
+                                </div>
+                                {validPassword.password &&
+                                    <div className="container mb-3" style={{ maxWidth: '300px' }}>
+                                        <label className="form-label errorSmall">
+                                        <i class="bi bi-exclamation-circle"> {validPassword.password} </i></label>
+                                    </div>
+                                }
                             </div>
-                        </div>
-                        <div className="col-12">
-                            <button className="btn btn-secondary my-3 mx-2" type="submit">
-                                <i className="bi bi-gear"></i> Actualizar
-                            </button>
-                            <Link className="btn btn-danger" to={"/"}>
-                                <i className="bi bi-x-circle"></i> Cancelar
-                            </Link>
-                        </div>
-                    </form>
-                  
-                    {showModal && (
+
+
+                            <div className="col-12">
+
+                                <button className="btn btn-secondary my-3 mx-2" type="submit">
+                                    <i className="bi bi-gear"></i> Actualizar
+                                </button>
+                                <Link className="btn btn-danger" to={"/"}>
+                                    <i className="bi bi-x-circle"></i> Cancelar
+                                </Link>
+                            </div>
+                        </form>
+
+                        {showModal && (
                             <ModalLoadingContacto />
                         )}
+                    </div>
                 </div>
-            </div>
-            </div>
-        </div>
+            </div >
+        </div >
 
 
 

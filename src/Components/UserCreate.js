@@ -47,6 +47,7 @@ const UserCreate = () => {
         if (Validat) {
             newUser();
         }
+    // eslint-disable-next-line
     }, [Validat]);
 
     const getListEmail = () => {
@@ -99,6 +100,8 @@ const UserCreate = () => {
                     console.log(e);
                     closeModalHandler();
                 });
+        }else{
+            closeModalHandler();
         }
     };
 
