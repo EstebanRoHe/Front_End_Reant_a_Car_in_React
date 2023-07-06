@@ -50,11 +50,13 @@ const UserList = (props) => {
     };
 
     const getList = () => {
+        showModalHandler();
         const token = AuthServices.getAuthToken();
         if (token) {
             userServices.setAuthToken(token);
         } else {
             console.error("No se encontró un token válido");
+            closeModalHandler();
             return;
         }
         userServices.getAll()
@@ -64,13 +66,17 @@ const UserList = (props) => {
                         user.name.toLowerCase().includes(filtro.toLowerCase())
                     );
                     setUser(filteredUsers);
+                    closeModalHandler();
                 } else {
                     setUser(response.data);
+                    closeModalHandler();
                 }
                 console.log(response.data);
+                closeModalHandler();
             })
             .catch((e) => {
                 console.log(e);
+                closeModalHandler();
             });
     };
     
@@ -165,6 +171,7 @@ const UserList = (props) => {
             {User.length === 0 ? (
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <Loading />
+                    <i class="bi bi-info-circle" style={{color:"red" , marginBottom :"1%"}}> No se encuentra ningún Usuario Registrado</i>
                     <Link className="btn btn-primary" to={"/UserCreate"}>
                         <i className="bi bi-person-plus"> Registrar</i>
                     </Link>

@@ -48,12 +48,14 @@ const CarList = (props) => {
     };
 
     const getList = () => {
+        showModalHandler();
         const token = AuthServices.getAuthToken();
         if (token) {
             carServices.setAuthToken(token);
             console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
+            closeModalHandler();
             return;
         }
         carServices.getAll()
@@ -63,13 +65,17 @@ const CarList = (props) => {
                         Car.licencePlate.toLowerCase().includes(filtro.toLowerCase())
                     );
                     setCar(filteredCar);
+                    closeModalHandler();
                 } else {
                     setCar(response.data);
+                    closeModalHandler();
                 }
                 console.log(response.data);
+                closeModalHandler();
             })
             .catch(e => {
                 console.log(e);
+                closeModalHandler();
             });
 
     };
@@ -155,13 +161,14 @@ const CarList = (props) => {
       };
     return (
         <div className="container ">
-            {Car.length === 0 && showModal === false? (
+            {Car.length === 0 ? (
                 <>
                     {!props.hideButtons ? (
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <Loading />
+                            <i class="bi bi-info-circle" style={{color:"red" , marginBottom :"1%"}}> No se encuentra ningún Vehículo Registrado</i>
                             <Link className="btn btn-primary"  to={"/CarCreate"}>
-                                <i className="bi bi-plus-circle"> Registrar un Vehiculo </i>
+                                <i className="bi bi-plus-circle"> Registrar un Vehículo </i>
                             </Link>
                         </div>
                     ) : (
@@ -186,7 +193,7 @@ const CarList = (props) => {
                     <div className="card-header d-flex justify-content-between">
                         {!props.hideButtons && (
                             <Link className="btn btn-primary"  to={"/CarCreate"}>
-                                <i className="bi bi-plus-circle"> Registrar un Vehiculo </i>
+                                <i className="bi bi-plus-circle"> Registrar un Vehículo </i>
                             </Link>
                         )}
                         <div className="ml-auto d-flex flex-column">

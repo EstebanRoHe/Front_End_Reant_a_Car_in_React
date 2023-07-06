@@ -43,13 +43,14 @@ const TypeCarList = () => {
     };
 
     const getList = () => {
+        showModalHandler();
         const token = AuthServices.getAuthToken();
         if (token) {
             typeCarServices.setAuthToken(token);
            
         } else {
             console.error("No se encontró un token válido");
-            
+            closeModalHandler();
             return;
         }
         typeCarServices
@@ -60,13 +61,17 @@ const TypeCarList = () => {
                     TypeCar.description.toLowerCase().includes(filtro.toLowerCase())
                     );
                     setTypeCar(filteredTypeCar);
+                    closeModalHandler();
                 } else {
                     setTypeCar(response.data);
+                    closeModalHandler();
                 }
                 console.log(response.data);
+                closeModalHandler();
             })
             .catch(e => {
                 console.log(e);
+                closeModalHandler();
             });
     };
 
@@ -158,8 +163,9 @@ const TypeCarList = () => {
             {TypeCar.length === 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Loading />
+                    <i class="bi bi-info-circle" style={{color:"red" , marginBottom :"1%"}}> No se encuentra ningún Tipo de Vehículo Registrado</i>
                     <Link className="btn btn-primary" to={"/TypeCarCreate"}>
-                        <i className="bi bi-plus-circle"> Registrar un Tipo de Vehiculo </i>
+                        <i className="bi bi-plus-circle"> Registrar un Tipo de Vehículo </i>
                     </Link>
                 </div>
             ) : (
@@ -167,7 +173,7 @@ const TypeCarList = () => {
 
                     <div className="card-header d-flex justify-content-between">
                         <Link className="btn btn-primary"  to={"/TypeCarCreate"}>
-                            <i className="bi bi-plus-circle"> Registrar Tipo de Vehiculo </i>
+                            <i className="bi bi-plus-circle"> Registrar Tipo de Vehículo </i>
                         </Link>
                     
                     <div className="ml-auto d-flex flex-column">

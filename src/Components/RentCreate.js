@@ -59,18 +59,18 @@ const RentCreate = () => {
     }, [idCar, Validat]);
 
     const getByUsername = (loggedInUsername) => {
-        showModalHandler();
+        showModalHandlerLoading();
         const token = AuthServices.getAuthToken();
         if (token) {
             userServices.setAuthToken(token);
         } else {
-            closeModalHandler();
+            closeModalHandlerLoading();
             return;
         }
         userServices.getByUsername(loggedInUsername)
             .then(response => {
                 setUser(response.data);
-                closeModalHandler();
+                closeModalHandlerLoading();
             })
             .catch(e => {
                 console.log(e);

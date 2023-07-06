@@ -44,10 +44,12 @@ const RentList = () => {
     };
 
     const getList = () => {
+        showModalHandler();
         const token = AuthServices.getAuthToken();
         if (token) {
             rentServices.setAuthToken(token);
         } else {
+            closeModalHandler();
             return;
         }
         rentServices.getAll()
@@ -57,15 +59,18 @@ const RentList = () => {
                         Rent.username.toLowerCase().includes(filtro.toLowerCase())
                     );
                     setRent(filteredRent);
+                    closeModalHandler();
                 } else {
                     setRent(response.data);
+                    closeModalHandler();
                 }
                 console.log(response.data);
+                closeModalHandler();
             })
             .catch(e => {
                 console.log(e);
+                closeModalHandler();
             });
-
     };
 
     const filtroUsername = () => {
@@ -154,8 +159,9 @@ const RentList = () => {
             {Rent.length === 0 ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Loading />
+                    <i class="bi bi-info-circle" style={{color:"red" , marginBottom :"1%"}}>No se encuentra ningún Alquiler Registrado</i>
                     <Link className="btn btn-primary" to={"/RentCreate/"+null}>
-                        <i className="bi bi-card-checklist"> Rentar un Vehiculo</i>
+                        <i className="bi bi-card-checklist"> Rentar un Vehículo</i>
                     </Link>
 
                 </div>
@@ -165,7 +171,7 @@ const RentList = () => {
 
                     <div className="card-header d-flex justify-content-between">
                         <Link className="btn btn-primary" to={"/RentCreate/"+null}>
-                            <i className="bi bi-card-checklist"> Rentar un Vehiculo</i>
+                            <i className="bi bi-card-checklist"> Rentar un Vehículo</i>
                         </Link>
                         <div className="ml-auto d-flex flex-column">
                             <div className="input-container">
