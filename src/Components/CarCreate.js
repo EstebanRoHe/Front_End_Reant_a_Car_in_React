@@ -264,7 +264,7 @@ const CarCreate = () => {
                     <span className="input-group-text">
                       <i className="bi bi-car-front"></i>
                     </span>
-                    <input type="text" className="form-control" id="capacity"
+                    <input type="number" className="form-control" id="capacity"
                       value={Car.capacity}
                       placeholder="2, 4, 5, 7, etc..."
                       onChange={handleInputChange}

@@ -22,8 +22,10 @@ const CarUpdate = props => {
     }
 
     const [Car, setCar] = useState(initialCarState);
+    const [CarArray, setCarArray] = useState([]);
     const [TypeCar, setTypeCar] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [errors, setErrors] = useState({});
 
     const showModalHandler = () => {
         setShowModal(true);
@@ -59,6 +61,7 @@ const CarUpdate = props => {
 
     useEffect(() => {
         getList();
+        getListCar();
         if (idCar) {
             getCar(idCar);
         }
@@ -69,6 +72,11 @@ const CarUpdate = props => {
         const { name, value } = event.target;
         setCar({ ...Car, [name]: value });
     }
+
+    const handleInputblur = event => {
+        handleInputChange(event);
+        setErrors(validationError(Car));
+    }  
 
     const getList = () => {
         const token = AuthServices.getAuthToken();
@@ -102,23 +110,57 @@ const CarUpdate = props => {
             closeModalHandler();
             return;
         }
-        carServices.update(Car.idCar, Car)
-            .then(response => {
-                console.log(response.data);
-                closeModalHandler();
-                Swal.fire({
-                    position: 'top-center',
-                    icon: 'success',
-                    title: 'Vehiculo Actualizado Correctamente',
-                    showConfirmButton: false,
-                    timer: 2200
+        
+        if (Object.keys(errors).length === 0) {
+            carServices.update(Car.idCar, Car)
+                .then(response => {
+                    console.log(response.data);
+                    closeModalHandler();
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'success',
+                        title: 'Vehiculo Actualizado Correctamente',
+                        showConfirmButton: false,
+                        timer: 2200
+                    })
                 })
-            })
-            .catch(e => {
-                console.log(e);
-                closeModalHandler();
-            });
+                .catch(e => {
+                    console.log(e);
+                    closeModalHandler();
+                });
+        } else {
+            closeModalHandler();
+        }
     };
+
+    const getListCar = () => {
+        const token = AuthServices.getAuthToken();
+        if (token) {
+          carServices.setAuthToken(token);
+          console.log('Token :', token);
+        } else {
+          console.error("No se encontró un token válido");
+          return;
+        }
+        carServices.getAll()
+          .then(response => {
+            setCarArray(response.data);
+            console(response.data);
+          }).catch(e => {
+            console.log(e);
+          })
+      }
+
+    const validationError = (Car) => {
+        let errors = {}
+        CarArray.forEach(car => {
+          if (car.licencePlate === Car.licencePlate) {
+            errors.licencePlate = "Este numero de placa ya existe";
+          }
+        })
+    
+        return errors;
+      }
 
 
     return (
@@ -139,9 +181,15 @@ const CarUpdate = props => {
                                     <span className="input-group-text">
                                         <i className="bi bi-pencil-square"></i>
                                     </span>
-                                    <input type="text" className="form-control" id="licencePlate" value={Car.licencePlate}
-                                        onChange={handleInputChange} name="licencePlate" required />
-
+                                    <input type="text" className={((errors.licencePlate) ? "is-invalid" : "") + " form-control"} 
+                                     id="licencePlate" value={Car.licencePlate}
+                                        onChange={handleInputChange}
+                                        onBlur={handleInputblur}
+                                        onKeyUp={handleInputblur}
+                                        name="licencePlate" required />
+                                    <small className="invalid-feedback" id="helpId" >
+                                        <i className="bi bi-exclamation-circle"> {errors.licencePlate}</i>
+                                    </small>
                                 </div>
                             </div>
 
@@ -176,8 +224,9 @@ const CarUpdate = props => {
                                     <span className="input-group-text">
                                         <i className="bi bi-car-front"></i>
                                     </span>
-                                    <input type="text" className="form-control" id="capacity" value={Car.capacity}
-                                        onChange={handleInputChange} name="capacity" required />
+                                    <input type="number" className="form-control" id="capacity" value={Car.capacity}
+                                        onChange={handleInputChange} 
+                                        name="capacity" required />
 
                                 </div>
                             </div>
