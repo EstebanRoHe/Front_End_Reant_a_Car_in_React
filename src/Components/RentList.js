@@ -156,7 +156,7 @@ const RentList = () => {
     return (
 
         <div className="container ">
-            {Rent.length === 0 ? (
+            {Rent.length === 0 && showModal === false ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Loading />
                     <i class="bi bi-info-circle" style={{color:"red" , marginBottom :"1%"}}>No se encuentra ningún Alquiler Registrado</i>

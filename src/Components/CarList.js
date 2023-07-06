@@ -161,7 +161,7 @@ const CarList = (props) => {
       };
     return (
         <div className="container ">
-            {Car.length === 0 ? (
+            {Car.length === 0 && showModal === false? (
                 <>
                     {!props.hideButtons ? (
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

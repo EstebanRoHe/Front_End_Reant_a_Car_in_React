@@ -168,7 +168,7 @@ const UserList = (props) => {
 
     return (
         <div className="container">
-            {User.length === 0 ? (
+            {User.length === 0 && showModal === false ? (
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <Loading />
                     <i class="bi bi-info-circle" style={{color:"red" , marginBottom :"1%"}}> No se encuentra ningún Usuario Registrado</i>
