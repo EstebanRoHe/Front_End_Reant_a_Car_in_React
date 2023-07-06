@@ -108,7 +108,7 @@ function App() {
 
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-          <a href="https://main--stunning-chimera-6ffc5e.netlify.app/" className="navbar-brand mx-2" onClick={handleOffcanvasClose}> UNA</a>
+          <a  to={"/"} className="navbar-brand mx-2" onClick={handleOffcanvasClose}> UNA</a>
 
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
