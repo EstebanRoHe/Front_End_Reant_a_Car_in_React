@@ -229,7 +229,7 @@ function App() {
                             </li>
 
                             <li className="nav-item">
-                              <Link to={"https://main--stunning-chimera-6ffc5e.netlify.app/"} className="nav-link" onClick={handleLogout}>
+                              <Link to={"/"} className="nav-link" onClick={handleLogout}>
                                 <i className="bi bi-box-arrow-right"></i> Cerrar sesión
                               </Link>
                             </li>
