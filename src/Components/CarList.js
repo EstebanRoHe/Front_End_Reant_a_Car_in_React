@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import carServices from "../services/carServices";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "./Loading"
 import AuthServices from '../services/authServices';
@@ -9,16 +9,15 @@ import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const CarList = (props) => {
     const [Car, setCar] = useState([]);
-    let navigate = useNavigate;
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 10;
     const [filtro, setFiltro] = useState("");
     const [error, setError] = useState(false);
     const [showModal, setShowModal] = useState(false);
-
+    
     useEffect(() => {
         getList();
-    }, []);
+      }, []);
 
     const handleCarSelection = (car) => {
         props.handleSelectCar(car);
@@ -81,7 +80,7 @@ const CarList = (props) => {
             console.error("No se encontró un token válido");
             return;
         }
-        if (filtro != null) {
+        if (filtro !== null) {
             carServices.getFiltro(filtro)
                 .then((response) => {
                     setCar(response.data);
@@ -98,63 +97,60 @@ const CarList = (props) => {
     };
 
     const remove = (idCar) => {
-       
         const token = AuthServices.getAuthToken();
         if (token) {
-            carServices.setAuthToken(token);
+          carServices.setAuthToken(token);
         } else {
-            console.error("No se encontró un token válido");
-            closeModalHandler();
-            return;
+          console.error("No se encontró un token válido");
+          closeModalHandler();
+          return;
         }
         const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger'
-            },
-            buttonsStyling: false
-        })
-
+          customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+          },
+          buttonsStyling: false
+        });
+    
         swalWithBootstrapButtons.fire({
-            title: 'Deseas eliminar este archivo?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Si, eliminar!',
-            cancelButtonText: 'No, cancelar!',
-            reverseButtons: true
+          title: 'Deseas eliminar este archivo?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Si, eliminar!',
+          cancelButtonText: 'No, cancelar!',
+          reverseButtons: true
         }).then((result) => {
-            showModalHandler();
-            if (result.isConfirmed) {
-                carServices.remove(idCar)
-                    .then(response => {
-                        console.log(response.data);
-                        closeModalHandler();
-                        getList()
-                        swalWithBootstrapButtons.fire(
-                            'Eliminado!',
-                            'Tu archivo ha sido eliminado',
-                            'Correctamente'
-                        )
-                        // navigate(getList());
-                    })
-                    .catch(error => {
-                        closeModalHandler();
-                        swalWithBootstrapButtons.fire(
-                            'Error',
-                            'Tu archivo está ligado a otro. Primero elimina el archivo ligado a este correctamente',
-                            'error'
-                        );
-                    });
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
+          showModalHandler();
+          if (result.isConfirmed) {
+            carServices.remove(idCar)
+              .then(response => {
+                console.log(response.data);
+                closeModalHandler();
+                getList();
+                swalWithBootstrapButtons.fire(
+                  'Eliminado!',
+                  'Tu archivo ha sido eliminado',
+                  'Correctamente'
+                );
+              })
+              .catch(error => {
                 closeModalHandler();
                 swalWithBootstrapButtons.fire(
-                    'Cancelado',
-                    'No se ha eliminado nungun archivo'
-                )
-            }
-        })
-    };
-
+                  'Error',
+                  'Tu archivo está ligado a otro. Primero elimina el archivo ligado a este correctamente',
+                  'error'
+                );
+              });
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            closeModalHandler();
+            swalWithBootstrapButtons.fire(
+              'Cancelado',
+              'No se ha eliminado ningún archivo'
+            );
+          }
+        });
+      };
     return (
         <div className="container ">
             {Car.length === 0 ? (

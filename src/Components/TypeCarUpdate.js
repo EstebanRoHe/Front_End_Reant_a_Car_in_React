@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import AuthServices from '../services/authServices';
 import ModalLoadingContacto from "./ModalLoadingContacto";
 
-const TypeCarUpDate = () => {
+const TypeCarUpdate = () => {
     
     const { id_typeCar } = useParams();
 
@@ -48,8 +48,9 @@ const TypeCarUpDate = () => {
     }
 
     useEffect(() => {
-        if (id_typeCar)
+        if (id_typeCar){
             getTypeCar(id_typeCar);
+        }
     }, [id_typeCar]);
 
     const handleInputChange = event => {
@@ -131,5 +132,5 @@ const TypeCarUpDate = () => {
     );
 };
 
-export default TypeCarUpDate;
+export default TypeCarUpdate;
 

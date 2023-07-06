@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import UserList from "./UserList";
 import './Modal.css'
 const ModalListUser = (props) => {
-    const {  onClose, handleSelectUser } = props;
+    const {  onClose } = props;
     return (
         <div className="modal  modal-right" tabIndex="-1" role="dialog">
             <div className="modal-dialog modal-lg" role="document">

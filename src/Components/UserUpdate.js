@@ -55,8 +55,9 @@ const UserUpdate = () => {
         const roles = AuthServices.getRole();
         setRole(roles);
         getListEmail();
-        if (idUser)
+        if (idUser){
             getUser(idUser);
+        }
     }, [idUser]);
 
     const handleInputChange = event => {
@@ -90,7 +91,7 @@ const UserUpdate = () => {
             closeModalHandler();
             return;
         }
-      // setErrors(validationErrror(User));
+   
         if (Object.keys(errors).length === 0) {
             UserServices.update(User.idUser, User)
                 .then(response => {
@@ -180,7 +181,6 @@ const UserUpdate = () => {
                                         id="email"
                                         value={User.email}
                                         onChange={handleInputChange}
-                                        //onBlur={handleInputblur}
                                         onKeyUp={handleInputblur}
                                         name="email"
                                         required />

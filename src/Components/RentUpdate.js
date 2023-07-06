@@ -24,7 +24,6 @@ const RentUpdate = props => {
     const [errorsDateAndUser, setErrorsDateAndUser] = useState({});
     const [RentArray, setRentRentArray] = useState([]);
     const [CarSelect, setCarSelect] = useState(null);
-    const [user, setUser] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
     const showModalHandler = () => {
@@ -58,25 +57,14 @@ const RentUpdate = props => {
 
     useEffect(() => {
         const roles = AuthServices.getRole();
-        const loggedInUsername = AuthServices.getUsername();
         setRole(roles);
-        setUser(loggedInUsername);
         getListRent();
         getListCar();
-        if (roles === 'ROLE_ADMIN')
-            getByUsername(Rent.username)
-        if (roles !== 'ROLE_ADMIN')
-            getByUsername(loggedInUsername)
-        if (idRent)
+       
+        if (idRent){
             getRent(idRent);
+        }
     }, [idRent]);
-
-    /* const handleInputChange = event => {
-         const { name, value } = event.target;
-         setRent({ ...Rent, [name]: value });
-         setErrorsDateAndUser(validationErrorsDateAndUser(Rent.username, Rent));
-     }
-     */
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -125,23 +113,6 @@ const RentUpdate = props => {
             });
     };
 
-
-    const getByUsername = (loggedInUsername) => {
-        const token = AuthServices.getAuthToken();
-        if (token) {
-            userServices.setAuthToken(token);
-        } else {
-            return;
-        }
-        userServices.getByUsername(loggedInUsername)
-            .then(response => {
-                setUser(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
-
     const updateRent = () => {
         showModalHandler();
         const token = AuthServices.getAuthToken();
@@ -154,7 +125,6 @@ const RentUpdate = props => {
         }
 
         if (Object.keys(errors).length === 0 && Object.keys(errorsDateAndUser).length === 0) {
-            // rentServices.update(Rent.idRent, Rent, Rent.username, Rent.car)
             rentServices.update(Rent.idRent, Rent)
                 .then(response => {
                     console.log(response.data);
@@ -240,7 +210,7 @@ const RentUpdate = props => {
                                             setRent({ ...Rent, car: JSON.parse(e.target.value) })
                                         }}
                                         >
-                                         {/*<option value={{ ...Rent, JSON.stringify(car) }}>{Rent.car.licencePlate}</option>*/}
+                                    
                                          <option value={JSON.stringify({ ...Rent, car: JSON.stringify(car) })}>{Rent.car.licencePlate}</option>
 
                                         
@@ -266,9 +236,7 @@ const RentUpdate = props => {
                                         id="dateRent"
                                         name="dateRent"
                                         value={Rent.dateRent}
-                                       // onMouseOut={handleInputChange}
                                         onChange={handleInputChange}
-                                        //onMouseUp={handleInputChange}
                                         onBlur={handleInputChange}
                                         onKeyDown={handleInputChange}
                                         onKeyUp={handleInputChange}

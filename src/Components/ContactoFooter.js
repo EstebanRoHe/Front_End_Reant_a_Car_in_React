@@ -47,7 +47,6 @@ const ContactoFooter = () => {
       .catch(e => {
         console.log(e);
         closeModalHandler();
-        //newEmail();
       })
   };
 

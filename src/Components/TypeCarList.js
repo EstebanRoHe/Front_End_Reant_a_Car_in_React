@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import typeCarServices from "../services/typecarServices";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "./Loading";
 import AuthServices from '../services/authServices';
@@ -9,7 +9,6 @@ import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const TypeCarList = () => {
     const [TypeCar, setTypeCar] = useState([]);
-    let navigate = useNavigate;
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 10;
     const [filtro, setFiltro] = useState("");
@@ -132,6 +131,7 @@ const TypeCarList = () => {
                         )
                     })
                     .catch(error => {
+                        console.log(error);
                         closeModalHandler();
                         swalWithBootstrapButtons.fire(
                             'Error',

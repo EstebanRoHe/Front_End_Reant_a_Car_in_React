@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import carServices from "../services/carServices";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loading from "./Loading";
 import AuthServices from "../services/authServices";
 import ReactPaginate from 'react-paginate';

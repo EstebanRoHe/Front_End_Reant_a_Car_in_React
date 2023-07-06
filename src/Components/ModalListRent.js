@@ -12,7 +12,6 @@ const ModalListRent = (props) => {
     const { onClose } = props;
     const [Rent, setRent] = useState([]);
     const [user, setUser] = useState([]);
-    let navigate = useNavigate;
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 5;
     const [showModal, setShowModal] = useState(false);
@@ -92,10 +91,6 @@ const ModalListRent = (props) => {
                         const updatedRent = Rent.filter(rent => rent.idRent !== idRent);
                         setRent(updatedRent);
                         getListByUsername(user);
-                        /*
-                        navigate(getListByUsername(user));
-                        getListByUsername(user);
-                        */
                     })
                 closeModalHandler();
                 swalWithBootstrapButtons.fire(

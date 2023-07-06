@@ -60,9 +60,18 @@ const CarCreate = () => {
   useEffect(() => {
     getList();
     getCar();
-    if (Validat)
-      newCar()
+    if (Validat) {
+      newCar();
+    }
   }, [Validat]);
+  
+  const newCar = () => {
+    setCar(initialCarState);
+    setTypeCar([]);
+    setValidat(false);
+  }
+  
+  
 
   const getList = () => {
     const token = AuthServices.getAuthToken();
@@ -141,11 +150,6 @@ const CarCreate = () => {
     }
   }
 
-  const newCar = () => {
-    setCar(initialCarState);
-    setTypeCar([]);
-    setValidat(false);
-  }
 
   const validationError = (Car) => {
     let errors = {}

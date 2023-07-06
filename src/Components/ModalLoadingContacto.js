@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import './Modal.css'
 import Loading from "./Loading";
 const ModalLoadingContacto = (props) => {

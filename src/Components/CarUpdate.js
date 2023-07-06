@@ -57,8 +57,9 @@ const CarUpdate = props => {
 
     useEffect(() => {
         getList();
-        if (idCar)
+        if (idCar){
             getCar(idCar);
+        }
     }, [idCar]);
 
     const handleInputChange = event => {

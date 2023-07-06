@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import rentServices from "../services/rentServices";
 import Loading from "./Loading"
 import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AuthServices from '../services/authServices';
 import Paginate from './Paginate';
 import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const RentList = () => {
     const [Rent, setRent] = useState([]);
-    let navigate = useNavigate;
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 10;
     const [filtro, setFiltro] = useState("");
@@ -127,9 +126,8 @@ const RentList = () => {
                             'Tu archivo ha sido eliminado',
                             'Correctamente'
                         )
-                       // navigate(getList());
                     })
-                    .catch(error => {
+                    .catch(() => {
                         closeModalHandler();
                         swalWithBootstrapButtons.fire(
                             'Error',

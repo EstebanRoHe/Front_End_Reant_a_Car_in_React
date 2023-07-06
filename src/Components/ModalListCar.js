@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CarList from "./CarList";
 import './Modal.css'
 const ModalListCar = (props) => {
-    const {  onClose, handleSelectCar } = props;
+    const {onClose} = props;
 
     return (
         <div className="modal modal-right" tabIndex="-1" role="dialog" style={{ display: "block" }}>

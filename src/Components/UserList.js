@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import userServices from "../services/usernameServices";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "./Loading";
 import AuthServices from "../services/authServices";
@@ -8,18 +8,18 @@ import Paginate from "./Paginate";
 import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const UserList = (props) => {
-    const [User, setUser] = useState([]);
-    let navigate = useNavigate;
+  
     const [currentPage, setCurrentPage] = useState(0);
-    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const itemsPerPage=10
     const [filtro, setFiltro] = useState("");
     const [error, setError] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        getList();
+        getList()
     }, []);
 
+    const [User, setUser] = useState([]);
 
     const handleUserSelection = (username) => {
         props.handleSelectUser(username);
@@ -52,14 +52,11 @@ const UserList = (props) => {
         const token = AuthServices.getAuthToken();
         if (token) {
             userServices.setAuthToken(token);
-
         } else {
             console.error("No se encontró un token válido");
-
             return;
         }
-        userServices
-            .getAll()
+        userServices.getAll()
             .then((response) => {
                 if (filtro) {
                     const filteredUsers = response.data.filter((user) =>
@@ -75,7 +72,7 @@ const UserList = (props) => {
                 console.log(e);
             });
     };
-
+    
 
     const filtroName = () => {
         const token = AuthServices.getAuthToken();
@@ -140,9 +137,9 @@ const UserList = (props) => {
                             "Tu archivo ha sido eliminado",
                             "Correctamente"
                         )
-                      // navigate(getList());
                     })
                     .catch(error => {
+                        console.log(error);
                         closeModalHandler();
                         swalWithBootstrapButtons.fire(
                             'Error',
@@ -159,6 +156,8 @@ const UserList = (props) => {
                 }
             });
     }; 
+
+ 
 
     return (
         <div className="container">
