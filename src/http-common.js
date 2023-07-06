@@ -1,11 +1,15 @@
-import axios from "axios";
+import axios from 'axios';
 
-export default axios.create({
-baseURL:"https://back-end-rent-a-car-in-spring-boot.onrender.com/",
-headers: {
-"Content-type": "application/json"
-}
+const api = axios.create({
+  baseURL: 'https://back-end-rent-a-car-in-spring-boot.onrender.com/',
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*' 
+  }
 });
+
+export default api;
+
 
 
 
