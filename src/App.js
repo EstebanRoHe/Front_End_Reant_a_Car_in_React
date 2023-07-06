@@ -229,7 +229,7 @@ function App() {
                             </li>
 
                             <li className="nav-item">
-                              <Link to={"/"} className="nav-link" onClick={handleLogout}>
+                              <Link to={"https://main--stunning-chimera-6ffc5e.netlify.app/"} className="nav-link" onClick={handleLogout}>
                                 <i className="bi bi-box-arrow-right"></i> Cerrar sesión
                               </Link>
                             </li>
@@ -254,7 +254,7 @@ function App() {
 
       <div className="principal">
         <Routes>
-          <Route path="/" element={<IndexUNA />} />
+          <Route path="https://main--stunning-chimera-6ffc5e.netlify.app/" element={<IndexUNA />} />
           <Route path="/UserCreate" element={<UserCreate />} />
 
           {isLoggedIn && role === 'ROLE_ADMIN' ? (

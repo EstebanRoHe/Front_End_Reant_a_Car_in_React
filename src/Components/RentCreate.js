@@ -330,7 +330,7 @@ const RentCreate = () => {
                                         <i className="bi bi-x-circle"> Cancelar</i>
                                     </Link>
                                 ) : (
-                                    <Link className="btn btn-danger" to={"/"}>
+                                    <Link className="btn btn-danger" to={"https://main--stunning-chimera-6ffc5e.netlify.app/"}>
                                         <i className="bi bi-x-circle"> Cancelar</i>
                                     </Link>
                                 )}

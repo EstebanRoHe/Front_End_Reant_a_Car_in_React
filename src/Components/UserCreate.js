@@ -249,7 +249,7 @@ const UserCreate = () => {
                                     <button className="btn btn-success my-3  mx-2 " type="submit">
                                         <i className="bi bi-person-plus"> Registrar</i>
                                     </button>
-                                    <Link className="btn btn-danger" to={"/"}>
+                                    <Link className="btn btn-danger" to={"https://main--stunning-chimera-6ffc5e.netlify.app/"}>
                                         <i className="bi bi-x-circle"> Cancelar</i>
                                     </Link>
                                 </div>

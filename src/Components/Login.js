@@ -23,7 +23,7 @@ function Login({ setIsLoggedIn }) {
       setIsLoggedIn(true);
       setErrors(false);
       closeModalHandler();
-      navigate('/');
+      navigate('https://main--stunning-chimera-6ffc5e.netlify.app/');
     } catch (error) {
       setErrors(true);
       console.error(error);
