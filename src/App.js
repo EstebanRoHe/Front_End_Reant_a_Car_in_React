@@ -254,7 +254,7 @@ function App() {
 
       <div className="principal">
         <Routes>
-          <Route path="https://main--stunning-chimera-6ffc5e.netlify.app/" element={<IndexUNA />} />
+          <Route path="/" element={<IndexUNA />} />
           <Route path="/UserCreate" element={<UserCreate />} />
 
           {isLoggedIn && role === 'ROLE_ADMIN' ? (
