@@ -160,7 +160,7 @@ const TypeCarList = () => {
 
     return (
         <div className="container ">
-            {TypeCar.length === 0 ? (
+            {TypeCar.length === 0 && showModal === false ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Loading />
                     <i class="bi bi-info-circle" style={{color:"red" , marginBottom :"1%"}}> No se encuentra ningún Tipo de Vehículo Registrado</i>
