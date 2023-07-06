@@ -3,6 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import UserServices from "../services/usernameServices";
 import Swal from "sweetalert2";
 import AuthServices from '../services/authServices';
+import ModalLoadingContacto from "./ModalLoadingContacto";
+
 const UserUpdate = () => {
     const { idUser } = useParams();
 
@@ -18,21 +20,34 @@ const UserUpdate = () => {
     const [emailArray, setEmailArray] = useState([]);
     const [role, setRole] = useState(null);
     const [errors, setErrors] = useState({});
+    const [showModal, setShowModal] = useState(false);
+
+    const showModalHandler = () => {
+        setShowModal(true);
+    };
+
+    const closeModalHandler = () => {
+        setShowModal(false);
+    };
 
     const getUser = idUser => {
+        showModalHandler()
         const token = AuthServices.getAuthToken();
         if (token) {
             UserServices.setAuthToken(token);
         } else {
             console.error("No se encontró un token válido");
+            closeModalHandler();
             return;
         }
         UserServices.get(idUser)
             .then(response => {
                 setUser(response.data);
+                closeModalHandler();
             })
             .catch(e => {
                 console.log(e);
+                closeModalHandler();
             });
     };
 
@@ -65,12 +80,14 @@ const UserUpdate = () => {
     }
 
     const updateUser = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        showModalHandler();
         const token = AuthServices.getAuthToken();
         if (token) {
             UserServices.setAuthToken(token);
         } else {
             console.error("No se encontró un token válido");
+            closeModalHandler();
             return;
         }
       // setErrors(validationErrror(User));
@@ -78,6 +95,7 @@ const UserUpdate = () => {
             UserServices.update(User.idUser, User)
                 .then(response => {
                     console.log(response.data);
+                    closeModalHandler();
                     Swal.fire({
                         position: 'top-center',
                         icon: 'success',
@@ -89,6 +107,7 @@ const UserUpdate = () => {
                 })
                 .catch(e => {
                     console.log(e);
+                    closeModalHandler();
                 });
         }
     };
@@ -208,7 +227,9 @@ const UserUpdate = () => {
                                 )}
                             </div>
                         </form>
-
+                        {showModal && (
+                            <ModalLoadingContacto />
+                        )}
                     </blockquote>
                 </div>
 

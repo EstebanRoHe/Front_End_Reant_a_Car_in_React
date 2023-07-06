@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import Loading from "./Loading";
 import AuthServices from "../services/authServices";
 import Paginate from "./Paginate";
+import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const UserList = (props) => {
     const [User, setUser] = useState([]);
@@ -13,6 +14,7 @@ const UserList = (props) => {
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [filtro, setFiltro] = useState("");
     const [error, setError] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         getList();
@@ -36,6 +38,14 @@ const UserList = (props) => {
     const handleFiltroChange = (event) => {
         setFiltro(event.target.value);
         filtroName();
+    };
+
+    const showModalHandler = () => {
+        setShowModal(true);
+    };
+
+    const closeModalHandler = () => {
+        setShowModal(false);
     };
 
     const getList = () => {
@@ -119,19 +129,21 @@ const UserList = (props) => {
                 reverseButtons: true,
             })
             .then((result) => {
+                showModalHandler();
                 if (result.isConfirmed) {
                     userServices.remove(idUser).then((response) => {
                         console.log(response.data);
+                        getList();
+                        closeModalHandler();
                         swalWithBootstrapButtons.fire(
                             "Eliminado!",
                             "Tu archivo ha sido eliminado",
                             "Correctamente"
-                        ).then(() => {
-                            getList();
-                        })
+                        )
                       // navigate(getList());
                     })
                     .catch(error => {
+                        closeModalHandler();
                         swalWithBootstrapButtons.fire(
                             'Error',
                             'Tu archivo está ligado a otro. Primero elimina el archivo ligado a este correctamente',
@@ -139,6 +151,7 @@ const UserList = (props) => {
                         );
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    closeModalHandler();
                     swalWithBootstrapButtons.fire(
                         "Cancelado",
                         "No se ha eliminado nungun archivo"
@@ -146,8 +159,6 @@ const UserList = (props) => {
                 }
             });
     }; 
-
-
 
     return (
         <div className="container">
@@ -238,18 +249,17 @@ const UserList = (props) => {
                                         ))}
                                 </tbody>
                             </table>
-
                             <Paginate
                                 pageCount={Math.ceil(User.length / itemsPerPage)}
                                 handlePageChange={handlePageChange}
-
                             />
-
                         </div>
                     </div>
+                    {showModal && (
+                        <ModalLoadingContacto />
+                    )}
                 </div>
-            )
-            }
+            )}
         </div >
     );
 };

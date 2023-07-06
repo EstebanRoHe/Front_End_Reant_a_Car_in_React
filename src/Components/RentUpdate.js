@@ -5,6 +5,8 @@ import userServices from "../services/usernameServices";
 import carServices from "../services/carServices";
 import Swal from "sweetalert2";
 import AuthServices from '../services/authServices';
+import ModalLoadingContacto from "./ModalLoadingContacto";
+
 const RentUpdate = props => {
     const { idRent } = useParams();
 
@@ -23,21 +25,34 @@ const RentUpdate = props => {
     const [RentArray, setRentRentArray] = useState([]);
     const [CarSelect, setCarSelect] = useState(null);
     const [user, setUser] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+
+    const showModalHandler = () => {
+        setShowModal(true);
+    };
+
+    const closeModalHandler = () => {
+        setShowModal(false);
+    };
 
     const getRent = idRent => {
+        showModalHandler();
         const token = AuthServices.getAuthToken();
         if (token) {
             rentServices.setAuthToken(token);
         } else {
             console.error("No se encontró un token válido");
+            closeModalHandler();
             return;
         }
         rentServices.get(idRent)
             .then(response => {
                 setRent(response.data);
+                closeModalHandler();
             })
             .catch(e => {
                 console.log(e);
+                closeModalHandler();
             })
     }
 
@@ -69,12 +84,10 @@ const RentUpdate = props => {
         setErrorsDateAndUser(validationErrorsDateAndUser(Rent.username, Rent));
     };
 
-
     const handleInputblurCar = event => {
         setCarSelect(JSON.parse(event.target.value))
         setErrors(validationErrror(CarSelect, Rent));
     }
-
 
     const getListCar = () => {
         const token = AuthServices.getAuthToken();
@@ -130,11 +143,13 @@ const RentUpdate = props => {
     };
 
     const updateRent = () => {
+        showModalHandler();
         const token = AuthServices.getAuthToken();
         if (token) {
             rentServices.setAuthToken(token);
         } else {
             console.error("No se encontró un token válido");
+            closeModalHandler();
             return;
         }
 
@@ -143,6 +158,7 @@ const RentUpdate = props => {
             rentServices.update(Rent.idRent, Rent)
                 .then(response => {
                     console.log(response.data);
+                    closeModalHandler();
                     Swal.fire({
                         position: 'top-center',
                         icon: 'success',
@@ -153,6 +169,7 @@ const RentUpdate = props => {
                 })
                 .catch(e => {
                     console.log(e);
+                    closeModalHandler();
                 });
         }
     };
@@ -280,7 +297,9 @@ const RentUpdate = props => {
                             </div>
 
                         </form>
-
+                        {showModal && (
+                            <ModalLoadingContacto />
+                        )}
                     </blockquote>
                 </div>
             </div>

@@ -4,12 +4,11 @@ import carServices from "../services/carServices";
 import typeCarServices from "../services/typecarServices";
 import Swal from "sweetalert2";
 import AuthServices from '../services/authServices';
-
+import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const CarUpdate = props => {
     const { idCar } = useParams();
     
-
     const initialCarState = {
         idCar: null,
         licencePlate: "",
@@ -24,23 +23,35 @@ const CarUpdate = props => {
 
     const [Car, setCar] = useState(initialCarState);
     const [TypeCar, setTypeCar] = useState([]);
-  
+    const [showModal, setShowModal] = useState(false);
+
+    const showModalHandler = () => {
+        setShowModal(true);
+    };
+
+    const closeModalHandler = () => {
+        setShowModal(false);
+    };
 
     const getCar = (idCar) => {
+        showModalHandler();
         const token = AuthServices.getAuthToken();
         if (token) {
             carServices.setAuthToken(token);
         } else {
             console.error("No se encontró un token válido");
+            closeModalHandler();
             return;
         }
         carServices.get(idCar)
             .then(response => {
                 setCar(response.data);
                 console.log(response.data);
+                closeModalHandler();
             })
             .catch(e => {
                 console.log(e);
+                closeModalHandler();
             })
     }
 
@@ -54,7 +65,6 @@ const CarUpdate = props => {
         const { name, value } = event.target;
         setCar({ ...Car, [name]: value });
     }
-
 
     const getList = () => {
         const token = AuthServices.getAuthToken();
@@ -77,18 +87,21 @@ const CarUpdate = props => {
     };
 
     const updateCar = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        showModalHandler();
         const token = AuthServices.getAuthToken();
         if (token) {
             carServices.setAuthToken(token);
             console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
+            closeModalHandler();
             return;
         }
         carServices.update(Car.idCar, Car)
             .then(response => {
                 console.log(response.data);
+                closeModalHandler();
                 Swal.fire({
                     position: 'top-center',
                     icon: 'success',
@@ -99,6 +112,7 @@ const CarUpdate = props => {
             })
             .catch(e => {
                 console.log(e);
+                closeModalHandler();
             });
     };
 
@@ -113,8 +127,6 @@ const CarUpdate = props => {
                     <form onSubmit={
                         updateCar
                     }
-
-
                         className="row g-3 needs-validation my-3  border = 1" >
 
                         <div className="col-md-3 position-relative">
@@ -145,22 +157,6 @@ const CarUpdate = props => {
                             </div>
                         </div>
 
-
-{/*
-                        <div className="col-md-3 position-relative">
-                            <label for="image" className="form-label ">Imagen</label>
-                            <div className="input-group has-validation">
-                                <span className="input-group-text">
-                                    <i className="bi bi-image"></i>
-                                </span>
-                                <input type="text" className="form-control" id="image" value={Car.image}
-                                    onChange={handleInputChange} name="image"  />
-                                <div className="invalid-tooltip">
-                                    ""
-                                </div>
-                            </div>
-                        </div>
-                */}
                         <div className="col-md-3 position-relative">
                             <label for="cylinder_capacity" className="form-label">Cilindraje</label>
                             <div className="input-group has-validation">
@@ -176,8 +172,6 @@ const CarUpdate = props => {
 
                         </div>
 
-
-
                         <div className="col-md-3 position-relative">
                             <label for="capacity" className="form-label">Capacidad</label>
                             <div className="input-group has-validation">
@@ -191,7 +185,6 @@ const CarUpdate = props => {
                                 </div>
                             </div>
                         </div>
-
 
                         <div className="col-md-3 position-relative">
                             <label for="model_year" className="form-label">Modelo</label>
@@ -214,7 +207,6 @@ const CarUpdate = props => {
                                     <i className="bi bi-car-front-fill"></i>
                                 </span>
                                
-
                                 <select className="form-select" name="typeCar" id="typeCar"
                                     onChange={e => {                                    
                                         setCar({...Car, typeCar : JSON.parse(e.target.value)})
@@ -226,14 +218,11 @@ const CarUpdate = props => {
                                         ))}
                                 </select>
 
-
-
                                 <div className="invalid-tooltip">
                                     ""
                                 </div>
                             </div>
                         </div>
-
 
                         <div className="col-12">
                             <button className="btn btn-secondary my-3  mx-2 " type="submit">
@@ -246,16 +235,14 @@ const CarUpdate = props => {
 
                     </form>
 
-
+                    {showModal && (
+                            <ModalLoadingContacto />
+                        )}
 
                 </blockquote>
             </div>
         </div>
         </div>
-
-
-
-
     );
 };
 

@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthServices from '../services/authServices';
 import './Login.css';
+import ModalLoadingContacto from "./ModalLoadingContacto";
 
 function Login({ setIsLoggedIn }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    showModalHandler();
     try {
       const response = await AuthServices.login({ username, password });
       const { token, Role, Username } = response.data;
@@ -20,11 +22,22 @@ function Login({ setIsLoggedIn }) {
       AuthServices.setUsername(Username);
       setIsLoggedIn(true);
       setErrors(false);
+      closeModalHandler();
       navigate('/');
     } catch (error) {
       setErrors(true);
       console.error(error);
+      closeModalHandler();
     }
+  };
+
+
+  const showModalHandler = () => {
+    setShowModal(true);
+  };
+
+  const closeModalHandler = () => {
+    setShowModal(false);
   };
 
   return (
@@ -81,6 +94,11 @@ function Login({ setIsLoggedIn }) {
             <i className="bi bi-person-plus"> Registrarse</i>
           </Link>
         </div>
+
+        {showModal && (
+          <ModalLoadingContacto />
+        )}
+
       </div>
     </div>
   );

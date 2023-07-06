@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import AuthServices from '../services/authServices';
 import Paginate from './Paginate';
+import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const RentList = () => {
     const [Rent, setRent] = useState([]);
@@ -13,6 +14,7 @@ const RentList = () => {
     const itemsPerPage = 10;
     const [filtro, setFiltro] = useState("");
     const [error, setError] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         getList();
@@ -30,6 +32,14 @@ const RentList = () => {
     const handleFiltroChange = (event) => {
         setFiltro(event.target.value);
         filtroUsername();
+    };
+
+    const showModalHandler = () => {
+        setShowModal(true);
+    };
+
+    const closeModalHandler = () => {
+        setShowModal(false);
     };
 
     const getList = () => {
@@ -104,10 +114,13 @@ const RentList = () => {
             cancelButtonText: 'No, cancelar!',
             reverseButtons: true
         }).then((result) => {
+            showModalHandler();
             if (result.isConfirmed) {
                 rentServices.remove(idRent)
                     .then(response => {
                         console.log(response.data);
+                        getList();
+                        closeModalHandler();
                         swalWithBootstrapButtons.fire(
 
                             'Eliminado!',
@@ -115,10 +128,9 @@ const RentList = () => {
                             'Correctamente'
                         )
                        // navigate(getList());
-                    }).then(() => {
-                        getList();
                     })
                     .catch(error => {
+                        closeModalHandler();
                         swalWithBootstrapButtons.fire(
                             'Error',
                             'Error al eliminar este archivo',
@@ -126,10 +138,8 @@ const RentList = () => {
                         );
                     });
 
-            } else if (
-
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                closeModalHandler();
                 swalWithBootstrapButtons.fire(
                     'Cancelado',
                     'No se ha eliminado nungun archivo'
@@ -226,6 +236,9 @@ const RentList = () => {
                             />
                         </div>
                     </div>
+                    {showModal && (
+                        <ModalLoadingContacto />
+                    )}
                 </div>
             )}
         </div>

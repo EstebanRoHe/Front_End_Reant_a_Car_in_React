@@ -24,7 +24,7 @@ const ContactoFooter = () => {
       setEmail({ ...email, [name]: value });
     }
   };
-
+ 
   const createEmail = () => {
     console.log("enviando... ");
     showModalHandler();

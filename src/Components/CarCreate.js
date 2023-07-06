@@ -4,7 +4,8 @@ import typeCarServices from "../services/typecarServices";
 import { Link } from 'react-router-dom';
 import Swal from "sweetalert2";
 import AuthServices from '../services/authServices';
-
+import ModalLoadingContacto from "./ModalLoadingContacto";
+ 
 const CarCreate = () => {
 
   const initialCarState = {
@@ -24,6 +25,7 @@ const CarCreate = () => {
   const [errorType, setErrorType] = useState({});
   const [CarArray, setCarArray] = useState([]);
   const [Validat, setValidat] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -40,14 +42,19 @@ const CarCreate = () => {
     setErrorType(validationTypeCar(Car));
   }
 
-  
-
-
   const handleImageChange = (files) => {
     if (files.length > 0) {
       const file = files[0];
       setCar({ ...Car, imagen: file });
     }
+  };
+
+  const showModalHandler = () => {
+    setShowModal(true);
+  };
+
+  const closeModalHandler = () => {
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -56,8 +63,6 @@ const CarCreate = () => {
     if (Validat)
       newCar()
   }, [Validat]);
-
-
 
   const getList = () => {
     const token = AuthServices.getAuthToken();
@@ -99,17 +104,18 @@ const CarCreate = () => {
 
   const createCar = (e) => {
     e.preventDefault();
+    showModalHandler();
     const token = AuthServices.getAuthToken();
     if (token) {
       carServices.setAuthToken(token);
     } else {
       console.error("No se encontró un token válido");
+      closeModalHandler();
       return;
     }
-  
     setErrors(validationError(Car));
     setErrorType(validationTypeCar(Car));
-    if (Object.keys(errors).length === 0  && Object.keys(errorType).length === 0 ) {
+    if (Object.keys(errors).length === 0 && Object.keys(errorType).length === 0) {
       carServices.create(Car.licencePlate, Car.description, Car.cylinder_capacity, Car.capacity, Car.model_year, Car.imagen, Type.id_typeCar)
         .then(response => {
           setCar({
@@ -119,6 +125,7 @@ const CarCreate = () => {
           });
           setValidat(true);
           console.log(response.data);
+          closeModalHandler();
           Swal.fire({
             position: 'top-center',
             icon: 'success',
@@ -129,6 +136,7 @@ const CarCreate = () => {
         })
         .catch(e => {
           console.log(e);
+          closeModalHandler();
         })
     }
   }
@@ -153,9 +161,9 @@ const CarCreate = () => {
 
   const validationTypeCar = (Car) => {
     let errors = {}
-      if (Car.typeCar === "") {
-        errors.typeCar = "Seleccione un tipo de vehículo";
-      }
+    if (Car.typeCar === "") {
+      errors.typeCar = "Seleccione un tipo de vehículo";
+    }
     return errors;
   }
 
@@ -282,7 +290,7 @@ const CarCreate = () => {
                   <div className="form-group">
 
                     <select className={((errorType.typeCar) ? "is-invalid" : "") + " form-select"}
-                     name="typeCar" id="typeCar"
+                      name="typeCar" id="typeCar"
                       onClick={handleInputType}
                       onBlur={handleInputType}
                       onMouseDown={handleInputType}
@@ -292,7 +300,7 @@ const CarCreate = () => {
                         setType(JSON.parse(e.target.value))
                       }
                       }
-                      style={{ width: '24%'}}
+                      style={{ width: '24%' }}
                       required>
 
                       <option selected required>Seleccioné un Tipo de Vehículo</option>
@@ -318,6 +326,9 @@ const CarCreate = () => {
 
               </form>
 
+              {showModal && (
+                <ModalLoadingContacto />
+              )}
             </blockquote>
           </div>
         </div>

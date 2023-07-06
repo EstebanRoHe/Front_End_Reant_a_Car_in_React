@@ -4,6 +4,8 @@ import UserServices from "../services/usernameServices";
 import Swal from "sweetalert2";
 import AuthServices from '../services/authServices';
 import './PasswordUpdate.css'
+import ModalLoadingContacto from "./ModalLoadingContacto";
+
 const PasswordUpdate = () => {
     const navigate = useNavigate();
     const { idUser } = useParams();
@@ -16,6 +18,7 @@ const PasswordUpdate = () => {
 
     const [password, setPassword] = useState(initialPasswordState);
     const [validPassword, setValidPassword] = useState({});
+    const [showModal, setShowModal] = useState(false);
 
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -27,6 +30,13 @@ const PasswordUpdate = () => {
         setValidPassword(validationPassword(password));
     };
 
+    const showModalHandler = () => {
+        setShowModal(true);
+    };
+
+    const closeModalHandler = () => {
+        setShowModal(false);
+    };
 
     const validationPassword = (password) => {
         let validPassword = {}
@@ -45,13 +55,14 @@ const PasswordUpdate = () => {
     }
 
     const passwordUpdate = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        showModalHandler();
         const token = AuthServices.getAuthToken();
         if (token) {
             UserServices.setAuthToken(token);
-
         } else {
             console.error("No se encontró un token válido");
+            closeModalHandler();
             return;
         }
         setValidPassword(validationPassword(password));
@@ -59,6 +70,7 @@ const PasswordUpdate = () => {
             UserServices.updatePassword(password)
                 .then(response => {
                     console.log(response.data);
+                    closeModalHandler();
                     Swal.fire({
                         position: 'top-center',
                         icon: 'success',
@@ -71,12 +83,12 @@ const PasswordUpdate = () => {
                 })
                 .catch(e => {
                     console.log(e);
+                    closeModalHandler();
                     Swal.fire('Digite la actual contraseña correcta')
                 });
         }
 
     };
-
 
     return (
         <div className="password-container">
@@ -138,6 +150,9 @@ const PasswordUpdate = () => {
                         </div>
                     </form>
                   
+                    {showModal && (
+                            <ModalLoadingContacto />
+                        )}
                 </div>
             </div>
             </div>

@@ -8,6 +8,7 @@ import AuthServices from '../services/authServices';
 import './RentCreate.css'
 import Modal from "./ModalListUser";
 import ModalListCar from "./ModalListCar";
+import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const RentCreate = () => {
     const { idCar } = useParams();
@@ -27,9 +28,9 @@ const RentCreate = () => {
     const [role, setRole] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [showModalCar, setShowModalCar] = useState(false);
-
     const [Car, setCar] = useState(null);
     const [User, setUser] = useState(null);
+    const [showModalLoading, setShowModalLoading] = useState(false);
 
     const handleInputUserAndDate = event => {
         const { name, value } = event.target;
@@ -107,10 +108,12 @@ const RentCreate = () => {
     };
 
     const createRent = (e) => {
+        showModalHandlerLoading();
         const token = AuthServices.getAuthToken();
         if (token) {
             rentServices.setAuthToken(token);
         } else {
+            closeModalHandlerLoading();
             return;
         }
         e.preventDefault();
@@ -123,16 +126,18 @@ const RentCreate = () => {
                     setRent({ username: response.data.User, car: response.data.Car, dateRent: response.data.dateRent });
                     setValidat(true);
                     console.log(response.data);
+                    closeModalHandlerLoading();
                     Swal.fire({
                         position: 'top-center',
                         icon: 'success',
-                        title: 'Se Rento el Vehiculo Correctamente',
+                        title: 'Se Alquiló el Vehículo Correctamente',
                         showConfirmButton: false,
                         timer: 2200
                     })
                 })
                 .catch(e => {
                     console.log(e);
+                    closeModalHandlerLoading();
                 })
         }
     }
@@ -190,6 +195,15 @@ const RentCreate = () => {
     const handleSelectCar = (car) => {
         setErrors(validationErrror(car, Rent));
         setCar(car);
+    };
+
+
+    const showModalHandlerLoading = () => {
+        setShowModalLoading(true);
+    };
+
+    const closeModalHandlerLoading = () => {
+        setShowModalLoading(false);
     };
 
     return (
@@ -333,6 +347,10 @@ const RentCreate = () => {
                                 onClose={closeModalCarHandler}
                                 handleSelectCar={handleSelectCar}
                             />
+                        )}
+
+                        {showModalLoading && (
+                            <ModalLoadingContacto />
                         )}
 
                     </div >

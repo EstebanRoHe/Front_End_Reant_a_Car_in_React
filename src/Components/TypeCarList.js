@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import Loading from "./Loading";
 import AuthServices from '../services/authServices';
 import Paginate from './Paginate';
+import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const TypeCarList = () => {
     const [TypeCar, setTypeCar] = useState([]);
@@ -13,6 +14,7 @@ const TypeCarList = () => {
     const itemsPerPage = 10;
     const [filtro, setFiltro] = useState("");
     const [error, setError] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         getList();
@@ -30,6 +32,14 @@ const TypeCarList = () => {
     const handleFiltroChange = (event) => {
         setFiltro(event.target.value);
         filtroDescription();
+    };
+
+    const showModalHandler = () => {
+        setShowModal(true);
+    };
+
+    const closeModalHandler = () => {
+        setShowModal(false);
     };
 
     const getList = () => {
@@ -108,20 +118,21 @@ const TypeCarList = () => {
             cancelButtonText: 'No, cancelar',
             reverseButtons: true
         }).then((result) => {
+            showModalHandler();
             if (result.isConfirmed) {
                 typeCarServices.remove(id_typeCar)
                     .then(response => {
                         console.log(response.data);
+                        getList();
+                        closeModalHandler();
                         swalWithBootstrapButtons.fire(
                             'Eliminado',
                             'Tu archivo ha sido eliminado correctamente',
                             'success'
-                        ).then(() => {
-                            getList()
-                        })
-                        //navigate(getList());
+                        )
                     })
                     .catch(error => {
+                        closeModalHandler();
                         swalWithBootstrapButtons.fire(
                             'Error',
                             'Tu archivo está ligado a otro. Primero elimina el archivo ligado a este correctamente',
@@ -129,6 +140,7 @@ const TypeCarList = () => {
                         );
                     });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
+                closeModalHandler();
                 swalWithBootstrapButtons.fire(
                     'Cancelado',
                     'No se ha eliminado ningún archivo',
@@ -212,6 +224,9 @@ const TypeCarList = () => {
                             />
                         </div>
                     </div>
+                    {showModal && (
+                        <ModalLoadingContacto />
+                    )}
                 </div>
             )}
         </div>

@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import typeCarServices from "../services/typecarServices";
 import Swal from "sweetalert2";
 import AuthServices from '../services/authServices';
+import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const TypeCarUpDate = () => {
     
@@ -14,23 +15,35 @@ const TypeCarUpDate = () => {
     }
 
     const [TypeCar, setTypeCar] = useState(initialTypeCarState);
+    const [showModal, setShowModal] = useState(false);
+
+    const showModalHandler = () => {
+        setShowModal(true);
+    };
+
+    const closeModalHandler = () => {
+        setShowModal(false);
+    };
 
     const getTypeCar = id_typeCar => {
+        showModalHandler();
         const token = AuthServices.getAuthToken();
         if (token) {
             typeCarServices.setAuthToken(token);
         } else {
-            
             console.error("No se encontró un token válido");
+            closeModalHandler();
             return;
         }
         typeCarServices.get(id_typeCar)
             .then(response => {
                 setTypeCar(response.data);
                 console.log(response.data);
+                closeModalHandler();
             })
             .catch(e => {
                 console.log(e);
+                closeModalHandler();
             })
     }
 
@@ -45,17 +58,20 @@ const TypeCarUpDate = () => {
     }
 
     const updateTypeCar = () => {
+        showModalHandler();
         const token = AuthServices.getAuthToken();
         if (token) {
             typeCarServices.setAuthToken(token);
             console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
+            closeModalHandler();
             return;
         }
         typeCarServices.update(TypeCar.id_typeCar, TypeCar)
             .then(response => {
                 console.log(response.data);
+                closeModalHandler();
                 Swal.fire({
                     position: 'top-center',
                     icon: 'success',
@@ -66,6 +82,7 @@ const TypeCarUpDate = () => {
             })
             .catch(e => {
                 console.log(e);
+                closeModalHandler();
             });
     };
 
@@ -93,7 +110,6 @@ const TypeCarUpDate = () => {
                             </div>
                         </div>
 
-
                         <div className="col-12">
                             <button className="btn btn-secondary my-3 mx-2" type="submit">
                                 <i className="bi bi-gear"> Actualizar</i>
@@ -104,9 +120,9 @@ const TypeCarUpDate = () => {
                         </div>
 
                     </form>
-
-
-
+                    {showModal && (
+                            <ModalLoadingContacto />
+                        )}
                 </blockquote>
             </div>
         </div>

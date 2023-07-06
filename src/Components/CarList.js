@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import Loading from "./Loading"
 import AuthServices from '../services/authServices';
 import Paginate from './Paginate';
+import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const CarList = (props) => {
     const [Car, setCar] = useState([]);
@@ -13,6 +14,7 @@ const CarList = (props) => {
     const itemsPerPage = 10;
     const [filtro, setFiltro] = useState("");
     const [error, setError] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         getList();
@@ -34,6 +36,14 @@ const CarList = (props) => {
     const handleFiltroChange = (event) => {
         setFiltro(event.target.value);
         filtroLicencePlate();
+    };
+
+    const showModalHandler = () => {
+        setShowModal(true);
+    };
+
+    const closeModalHandler = () => {
+        setShowModal(false);
     };
 
     const getList = () => {
@@ -88,12 +98,13 @@ const CarList = (props) => {
     };
 
     const remove = (idCar) => {
+       
         const token = AuthServices.getAuthToken();
         if (token) {
             carServices.setAuthToken(token);
-            console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
+            closeModalHandler();
             return;
         }
         const swalWithBootstrapButtons = Swal.mixin({
@@ -112,30 +123,30 @@ const CarList = (props) => {
             cancelButtonText: 'No, cancelar!',
             reverseButtons: true
         }).then((result) => {
+            showModalHandler();
             if (result.isConfirmed) {
                 carServices.remove(idCar)
                     .then(response => {
                         console.log(response.data);
+                        closeModalHandler();
+                        getList()
                         swalWithBootstrapButtons.fire(
                             'Eliminado!',
                             'Tu archivo ha sido eliminado',
                             'Correctamente'
-                        ).then(() => {
-                            getList()
-                        })
-                       // navigate(getList());
+                        )
+                        // navigate(getList());
                     })
                     .catch(error => {
+                        closeModalHandler();
                         swalWithBootstrapButtons.fire(
                             'Error',
                             'Tu archivo está ligado a otro. Primero elimina el archivo ligado a este correctamente',
                             'error'
                         );
                     });
-            } else if (
-
-                result.dismiss === Swal.DismissReason.cancel
-            ) {
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                closeModalHandler();
                 swalWithBootstrapButtons.fire(
                     'Cancelado',
                     'No se ha eliminado nungun archivo'
@@ -274,6 +285,9 @@ const CarList = (props) => {
                             />
                         </div>
                     </div>
+                    {showModal && (
+                        <ModalLoadingContacto />
+                    )}
                 </div>
             )}
         </div>

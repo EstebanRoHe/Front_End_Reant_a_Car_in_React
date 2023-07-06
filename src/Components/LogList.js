@@ -79,8 +79,7 @@ const LogList = () => {
             getList()
         }
     };
-
-  
+ 
 
     return (
         <div className="container">

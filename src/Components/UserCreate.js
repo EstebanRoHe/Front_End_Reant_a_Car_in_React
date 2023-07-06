@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import UserServices from "../services/usernameServices";
 import { Link } from 'react-router-dom';
 import Swal from "sweetalert2";
+import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const UserCreate = () => {
 
@@ -20,6 +21,7 @@ const UserCreate = () => {
     const [errors, setErrors] = useState({});
     const [validPassword, setValidPassword] = useState({});
     const [Validat, setValidat] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -67,6 +69,7 @@ const UserCreate = () => {
 
     const createUser = (e) => {
         e.preventDefault();
+        showModalHandler();
         var data = {
             idUser: User.idUser, name: User.name, lastName: User.lastName,
             username: User.username, password: User.password, email: User.email
@@ -83,6 +86,7 @@ const UserCreate = () => {
                     });
                     setValidat(true);
                     console.log(response.data);
+                    closeModalHandler();
                     Swal.fire({
                         position: 'top-center',
                         icon: 'success',
@@ -93,6 +97,7 @@ const UserCreate = () => {
                 })
                 .catch(e => {
                     console.log(e);
+                    closeModalHandler();
                 });
         }
     };
@@ -131,6 +136,14 @@ const UserCreate = () => {
         }
         return validPassword;
     }
+
+    const showModalHandler = () => {
+        setShowModal(true);
+    };
+
+    const closeModalHandler = () => {
+        setShowModal(false);
+    };
 
 
 
@@ -239,6 +252,9 @@ const UserCreate = () => {
                                 </div>
 
                             </form>
+                            {showModal && (
+                                <ModalLoadingContacto />
+                            )}
 
                         </blockquote>
                     </div>

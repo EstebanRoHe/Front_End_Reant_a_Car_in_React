@@ -46,8 +46,8 @@ const create = (licencePlate, description, cylinder_capacity, capacity, model_ye
       
     },
   };
- return axios.post("http://localhost:8081/Car", formData, config);
- //return axios.post("https://back-end-rent-a-car-in-spring-boot.onrender.com/Car", formData, config);
+ //return axios.post("http://localhost:8081/Car", formData, config);
+ return http.post(`/Car`, formData, config);
 };
 
 /*
