@@ -167,7 +167,7 @@ const CarUpdate = props => {
         <div className="container ">
             <div className="card  ">
                 <div className="card-body ">
-                    <h4>Actualizar Vehículo del Id : {Car.idCar}</h4>
+                    <h4><i class="bi bi-gear"> Actualizar Vehículo : {Car.idCar}</i></h4>
                     <blockquote className="blockquote mb-0 ">
 
                         <form onSubmit={

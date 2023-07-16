@@ -1,6 +1,7 @@
 html, body {
     height: 100%;
     margin: 0;
+    color:#8C939A;
   }
   
   .app-container {
@@ -11,8 +12,7 @@ html, body {
  
   .footer {
     background-color: #191B21;
-    color: #ffffff;
-   
+    margin: 0;
   }
   
 
@@ -22,7 +22,7 @@ html, body {
       bottom: 0;
       left: 0;
       width: 100%;
-   ; 
+   
     }
   }
   
@@ -32,6 +32,6 @@ html, body {
       bottom: 0%;
       left: 0;
       width: 100%;
-     
     }
   }
+ 

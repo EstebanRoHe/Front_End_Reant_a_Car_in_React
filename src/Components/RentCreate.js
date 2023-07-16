@@ -10,6 +10,7 @@ import Modal from "./ModalListUser";
 import ModalListCar from "./ModalListCar";
 import ModalLoadingContacto from "./ModalLoadingContacto";
 
+
 const RentCreate = () => {
     const { idCar } = useParams();
 
@@ -37,7 +38,7 @@ const RentCreate = () => {
         setRent({ ...Rent, [name]: value });
         setErrorsDateAndUser(validationErrorsDateAndUser(User, { ...Rent, [name]: value }));
     };
-   
+
     useEffect(() => {
         const loggedInUsername = AuthServices.getUsername();
         const roles = AuthServices.getRole();
@@ -55,7 +56,7 @@ const RentCreate = () => {
         if (roles !== 'ROLE_ADMIN') {
             getByUsername(loggedInUsername)
         }
-  // eslint-disable-next-line
+        // eslint-disable-next-line
     }, [idCar, Validat]);
 
     const getByUsername = (loggedInUsername) => {
@@ -143,7 +144,7 @@ const RentCreate = () => {
                     console.log(e);
                     closeModalHandlerLoading();
                 })
-        }else{
+        } else {
             closeModalHandlerLoading();
         }
     }
@@ -213,15 +214,17 @@ const RentCreate = () => {
     };
 
     return (
-        <div className="container ">
+        <div className="container" >
             <div className="submit-form"
                 onMouseUp={handleInputUserAndDate}
                 onMouseOut={handleInputUserAndDate}
             >
-                <div className="card">
-                    <div className="card-body ">
-                        <h4>Rentar</h4>
-                        <form onSubmit={createRent} className="row g-3 needs-validation my-3  border = 1">
+                <div className="card" >
+                    <div className="card-body " >
+                        <h4><i class="bi bi-car-front"> Alquiler de vehículos</i></h4>
+                        <form onSubmit={createRent} className="row g-3 needs-validation my-3  border = 1"
+                        
+                        >
 
                             {role === 'ROLE_ADMIN' ? (
                                 <>
@@ -352,6 +355,7 @@ const RentCreate = () => {
                             <ModalListCar
                                 onClose={closeModalCarHandler}
                                 handleSelectCar={handleSelectCar}
+                                errors={errors}
                             />
                         )}
 

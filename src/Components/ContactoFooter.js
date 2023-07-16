@@ -62,7 +62,7 @@ const ContactoFooter = () => {
   };
 
   return (
-
+ 
     <div className="contactoFooter">
 
       <div className="container">
@@ -70,7 +70,7 @@ const ContactoFooter = () => {
           <div className="col-lg-4 col-md-6">
             <div className="aboutFooter">
 
-              <h3>ABOUT US</h3>
+              <h3 className="negritas">ABOUT US</h3>
               <hr className="linea" />
               <p>
                 Somos una empresa de alquiler de autos dedicada a brindar un servicio confiable y de calidad. Nos
@@ -95,7 +95,7 @@ const ContactoFooter = () => {
           </div>
           <div className="col-lg-4 col-md-6">
             <div className="adressFooter">
-              <h3>ADDRESS</h3>
+              <h3 className="negritas">ADDRESS</h3>
               <hr className="linea" />
               <p>
                 <i className="bi bi-geo-alt-fill"></i> Alajuela, Costa Rica.
@@ -111,7 +111,7 @@ const ContactoFooter = () => {
 
           <div className="col-lg-4 col-md-12">
             <div className="menssageFooter">
-              <h3>CONTACT US</h3>
+              <h3 className="negritas">CONTACT US</h3>
               <hr className="linea" />
               <form onSubmit={e => {
                 e.preventDefault();

@@ -134,9 +134,9 @@ const UserUpdate = () => {
 
                 <div className="card-body ">
                     {role === 'ROLE_ADMIN' ? (
-                        <h5>Actualizar Usuario del Id : {User.idUser}</h5>
+                        <h5> <i class="bi bi-person-fill-gear"> Actualizar Usuario : {User.idUser} </i></h5>
                     ) : (
-                        <h5>Perfil de : {User.username}</h5>
+                        <h5> <i class="bi bi-person-fill-gear"> Perfil de : {User.username}</i></h5>
                     )}
                     <blockquote className="blockquote mb-0 ">
 

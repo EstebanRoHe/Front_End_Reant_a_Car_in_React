@@ -92,7 +92,7 @@ const TypeCarUpdate = () => {
         <div className="container ">
         <div className="card  ">
             <div className="card-body ">
-                <h5>Actualizar Tipo de Vehículo del Id : {TypeCar.id_typeCar}</h5>
+                <h5><i class="bi bi-gear"> Actualizar Tipo de Vehículo : {TypeCar.id_typeCar}</i></h5>
                 <blockquote className="blockquote mb-0 ">
 
                     <form novalidate onSubmit={e=>{

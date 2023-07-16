@@ -8,6 +8,7 @@ const ModalListUser = (props) => {
             <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
+                        <h4><i class="bi bi-card-list"> Usuarios</i></h4>
                         <button
                             type="button"
                             className="close"

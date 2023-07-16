@@ -5,8 +5,8 @@ const Footer = () => {
 
     <footer className="footer">
 
-      <div className="text-center py-3">
-        <span className="text-muted">© 2023 Go-Tico Car Rentals. Todos los derechos reservados.</span>
+      <div className="text-center py-3" >
+        <span className="text">© 2023 Go-Tico Car Rentals. Todos los derechos reservados.</span>
       </div>
     </footer>
 

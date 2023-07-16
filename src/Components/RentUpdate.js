@@ -172,7 +172,7 @@ const RentUpdate = props => {
         <div className="container " >
             <div className="card  ">
                 <div className="card-body ">
-                    <h4>Actualizar Alquiler del Usuario : {Rent.username.username}</h4>
+                    <h4><i class="bi bi-gear"> Actualizar Alquiler del Usuario : {Rent.username.username}</i></h4>
                     <blockquote className="blockquote mb-0 ">
 
                         <form novalidate onSubmit={e => {

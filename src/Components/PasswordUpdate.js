@@ -98,7 +98,7 @@ const PasswordUpdate = () => {
             <div className="card">
                 <div className="card-body ">
                     <div className="content">
-                        <h3>Cambiar Contraseña</h3>
+                        <h3> <i class="bi bi-exclamation-triangle"> Cambiar Contraseña</i></h3>
                         <hr className="dropdown-divider" />
                         <form onSubmit={passwordUpdate}>
                             <div className="mb-3">

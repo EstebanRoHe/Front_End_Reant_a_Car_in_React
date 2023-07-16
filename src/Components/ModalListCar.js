@@ -3,12 +3,13 @@ import CarList from "./CarList";
 import './Modal.css'
 const ModalListCar = (props) => {
     const {onClose} = props;
-
+ 
     return (
         <div className="modal modal-right" tabIndex="-1" role="dialog" style={{ display: "block" }}>
             <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
+                 <h4><i class="bi bi-card-checklist negrita"> Vehículos</i></h4>
                         <button
                             type="button"
                             className="close"
@@ -24,6 +25,7 @@ const ModalListCar = (props) => {
                         <CarList
                             hideButtons={true}
                             handleSelectCar={props.handleSelectCar}   
+                            errors={props.errors}
                         />
                     </div>
                     <div className="modal-footer">

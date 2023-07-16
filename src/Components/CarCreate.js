@@ -182,7 +182,7 @@ const CarCreate = () => {
 
 
           <div className="card-body ">
-            <h4>Registrar Vehículo</h4>
+            <h4><i class="bi bi-plus-circle"> Registrar Vehículo</i></h4>
             <blockquote className="blockquote mb-0 ">
 
               <form onSubmit={createCar}

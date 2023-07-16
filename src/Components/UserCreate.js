@@ -157,7 +157,7 @@ const UserCreate = () => {
                 <div className="card  ">
 
                     <div className="card-body ">
-                        <h4>Registrar</h4>
+                        <h4><i class="bi bi-person-fill-add"> Registrar</i></h4>
                         <blockquote className="blockquote mb-0 ">
 
                             <form onSubmit={createUser}

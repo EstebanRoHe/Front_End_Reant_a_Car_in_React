@@ -115,6 +115,7 @@ const ModalListRent = (props) => {
             <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
+                        <h4 style={{color:"black"}}><i class="bi bi-card-checklist"> Vehículos Alquilados</i> </h4>
                         <button
                             type="button"
                             className="close"

@@ -8,21 +8,32 @@ import Paginate from './Paginate';
 import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const CarList = (props) => {
+
     const [Car, setCar] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const itemsPerPage = 10;
     const [filtro, setFiltro] = useState("");
     const [error, setError] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    
-    
+    const [isComponentRendered, setIsComponentRendered] = useState(false);
+
     useEffect(() => {
         getList();
         // eslint-disable-next-line
-      }, []);
+    }, [props.errors]);
+
+    useEffect(() => {
+        if (isComponentRendered) {
+            validationErrror();
+        } else {
+            setIsComponentRendered(true);
+        }
+        // eslint-disable-next-line
+    }, [props.errors]);
 
     const handleCarSelection = (car) => {
         props.handleSelectCar(car);
+        
     };
 
     const handlePageChange = ({ selected }) => {
@@ -47,12 +58,28 @@ const CarList = (props) => {
         setShowModal(false);
     };
 
+    const validationErrror = () =>{
+        if (Object.keys(props.errors).length !== 0) {
+            Swal.fire({
+                icon: 'error',
+                text: props.errors.Car+'!',
+              })
+        } else{
+            Swal.fire({
+                position: 'top-center',
+                icon: 'success',
+                title: 'Vehículo agregado correctamente!',
+                showConfirmButton: false,
+                timer: 1500
+              })
+        }
+    }
+
     const getList = () => {
         showModalHandler();
         const token = AuthServices.getAuthToken();
         if (token) {
             carServices.setAuthToken(token);
-            console.log('Token :', token);
         } else {
             console.error("No se encontró un token válido");
             closeModalHandler();
@@ -107,67 +134,67 @@ const CarList = (props) => {
     const remove = (idCar) => {
         const token = AuthServices.getAuthToken();
         if (token) {
-          carServices.setAuthToken(token);
+            carServices.setAuthToken(token);
         } else {
-          console.error("No se encontró un token válido");
-          closeModalHandler();
-          return;
+            console.error("No se encontró un token válido");
+            closeModalHandler();
+            return;
         }
         const swalWithBootstrapButtons = Swal.mixin({
-          customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger'
-          },
-          buttonsStyling: false
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
         });
-    
+
         swalWithBootstrapButtons.fire({
-          title: 'Deseas eliminar este archivo?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Si, eliminar!',
-          cancelButtonText: 'No, cancelar!',
-          reverseButtons: true
+            title: 'Deseas eliminar este archivo?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, eliminar!',
+            cancelButtonText: 'No, cancelar!',
+            reverseButtons: true
         }).then((result) => {
-          showModalHandler();
-          if (result.isConfirmed) {
-            carServices.remove(idCar)
-              .then(response => {
-                console.log(response.data);
+            showModalHandler();
+            if (result.isConfirmed) {
+                carServices.remove(idCar)
+                    .then(response => {
+                        console.log(response.data);
+                        closeModalHandler();
+                        getList();
+                        swalWithBootstrapButtons.fire(
+                            'Eliminado!',
+                            'Tu archivo ha sido eliminado',
+                            'Correctamente'
+                        );
+                    })
+                    .catch(error => {
+                        closeModalHandler();
+                        swalWithBootstrapButtons.fire(
+                            'Error',
+                            'Tu archivo está ligado a otro. Primero elimina el archivo ligado a este correctamente',
+                            'error'
+                        );
+                    });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
                 closeModalHandler();
-                getList();
                 swalWithBootstrapButtons.fire(
-                  'Eliminado!',
-                  'Tu archivo ha sido eliminado',
-                  'Correctamente'
+                    'Cancelado',
+                    'No se ha eliminado ningún archivo'
                 );
-              })
-              .catch(error => {
-                closeModalHandler();
-                swalWithBootstrapButtons.fire(
-                  'Error',
-                  'Tu archivo está ligado a otro. Primero elimina el archivo ligado a este correctamente',
-                  'error'
-                );
-              });
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-            closeModalHandler();
-            swalWithBootstrapButtons.fire(
-              'Cancelado',
-              'No se ha eliminado ningún archivo'
-            );
-          }
+            }
         });
-      };
+    };
     return (
         <div className="container ">
-            {Car.length === 0 && showModal === false? (
+            {Car.length === 0 && showModal === false ? (
                 <>
                     {!props.hideButtons ? (
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <Loading />
-                            <i class="bi bi-info-circle" style={{color:"red" , marginBottom :"1%"}}> No se encuentra ningún Vehículo Registrado</i>
-                            <Link className="btn btn-primary"  to={"/CarCreate"}>
+                            <i class="bi bi-info-circle" style={{ color: "red", marginBottom: "1%" }}> No se encuentra ningún Vehículo Registrado</i>
+                            <Link className="btn btn-primary" to={"/CarCreate"}>
                                 <i className="bi bi-plus-circle"> Registrar un Vehículo </i>
                             </Link>
                         </div>
@@ -192,7 +219,7 @@ const CarList = (props) => {
 
                     <div className="card-header d-flex justify-content-between">
                         {!props.hideButtons && (
-                            <Link className="btn btn-primary"  to={"/CarCreate"}>
+                            <Link className="btn btn-primary" to={"/CarCreate"}>
                                 <i className="bi bi-plus-circle"> Registrar un Vehículo </i>
                             </Link>
                         )}

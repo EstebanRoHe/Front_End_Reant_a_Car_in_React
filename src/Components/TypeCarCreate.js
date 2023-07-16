@@ -70,7 +70,7 @@ const TypeCarCreate = () => {
             <div className="card  ">
 
                 <div className="card-body ">
-                    <h4>Registrar Tipo de Vehículo</h4>
+                    <h4><i class="bi bi-plus-circle"> Registrar Tipo de Vehículo</i></h4>
                     <blockquote className="blockquote mb-0 ">
 
                         <form onSubmit={e => {
