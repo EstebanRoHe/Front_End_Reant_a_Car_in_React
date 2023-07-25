@@ -8,7 +8,7 @@ import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const RentUpdate = props => {
     const { idRent } = useParams();
-
+    const roleToken = AuthServices.getAuthRole();
     const initialRentState = {
         idRent: null,
         username: {},
@@ -18,7 +18,7 @@ const RentUpdate = props => {
 
     const [Rent, setRent] = useState(initialRentState);
     const [car, setCar] = useState([]);
-    const [role, setRole] = useState(null);
+    const [role, setRole] = useState(roleToken);
     const [errors, setErrors] = useState({});
     const [errorsDateAndUser, setErrorsDateAndUser] = useState({});
     const [RentArray, setRentRentArray] = useState([]);

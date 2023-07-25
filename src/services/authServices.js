@@ -30,10 +30,20 @@ const getUsername = () => {
   return localStorage.getItem('username');
 };
 
+const setAuthisLoggedIn = estado => {
+  localStorage.setItem('isLoggedIn', estado);
+};
+
+const getAuthisLoggedIn = () => {
+  return localStorage.getItem('isLoggedIn');
+};
+
 const removeAuthToken = () => {
 
   localStorage.removeItem('authToken');
   localStorage.removeItem('userRole');
+  localStorage.removeItem('username');
+  localStorage.removeItem('isLoggedIn');
 };
 
 
@@ -46,6 +56,9 @@ const AuthServices = {
   setUsername,
   getUsername,
   removeAuthToken,
+  setAuthisLoggedIn,
+  getAuthisLoggedIn
+
 };
 
 export default AuthServices;

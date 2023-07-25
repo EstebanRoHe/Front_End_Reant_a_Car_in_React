@@ -30,8 +30,10 @@ import PasswordUpdate from './Components/PasswordUpdate';
 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [role, setRole] = useState("");
+  const isLoggedInAuth = AuthServices.getAuthisLoggedIn();
+  const roleToken = AuthServices.getAuthRole();
+  const [isLoggedIn, setIsLoggedIn] = useState(isLoggedInAuth);
+  const [role, setRole] = useState(roleToken);
   const [username, setUsername] = useState("");
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [user, setUser] = useState([]);
@@ -48,20 +50,21 @@ function App() {
 
   const handleLogout = () => {
     AuthServices.removeAuthToken();
-    setIsLoggedIn(false);
-    setRole("");
+    setIsLoggedIn(null)
+    setRole(null)
     setUsername("");
     handleOffcanvasClose();
   };
 
 
   useEffect(() => {
-    const token = AuthServices.getAuthToken();
     const userRole = AuthServices.getRole();
     const userToken = AuthServices.getUsername();
+    const isLoggedInAuth = AuthServices.getAuthisLoggedIn();
     setUsername(userToken);
     setRole(userRole);
-    setIsLoggedIn(!!token);
+    //setIsLoggedIn(!!token);
+    setIsLoggedIn(isLoggedInAuth);
     if (userToken != null)
       getByUsername(userToken);
   }, []);

@@ -20,6 +20,7 @@ function Login({ setIsLoggedIn }) {
       AuthServices.setAuthToken(token);
       AuthServices.setRole(Role);
       AuthServices.setUsername(Username);
+      AuthServices.setAuthisLoggedIn("true");
       setIsLoggedIn(true);
       setErrors(false);
       closeModalHandler();
