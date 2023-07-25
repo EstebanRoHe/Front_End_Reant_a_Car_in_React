@@ -13,7 +13,7 @@ import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const RentCreate = () => {
     const { idCar } = useParams();
-    const roleToken = AuthServices.getAuthRole();
+    const roleToken = AuthServices.getRole();
     const initialRentState = {
         idRent: null,
         username: null,

@@ -31,7 +31,7 @@ import PasswordUpdate from './Components/PasswordUpdate';
 
 function App() {
   const isLoggedInAuth = AuthServices.getAuthisLoggedIn();
-  const roleToken = AuthServices.getAuthRole();
+  const roleToken = AuthServices.getRole();
   const [isLoggedIn, setIsLoggedIn] = useState(isLoggedInAuth);
   const [role, setRole] = useState(roleToken);
   const [username, setUsername] = useState("");

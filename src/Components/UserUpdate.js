@@ -7,7 +7,7 @@ import ModalLoadingContacto from "./ModalLoadingContacto";
 
 const UserUpdate = () => {
     const { idUser } = useParams();
-    const roleToken = AuthServices.getAuthRole();
+    const roleToken = AuthServices.getRole();
     const initialUserState = {
         idUser: null,
         name: "",
