@@ -79,16 +79,16 @@ const ContactoFooter = () => {
               </p>
               <div className="social-icons">
                 <a href="https://www.facebook.com/kayak/" target="_blank" rel="noopener noreferrer">
-                  <i className="bi bi-facebook" style={{ fontSize: "30px", color: "#1877F2", marginRight: "3%" }}></i>
+                  <i className="bi bi-facebook logo-face logo-info "  ></i>
                 </a>
                 <a href="https://twitter.com/KAYAK" target="_blank" rel="noopener noreferrer">
-                  <i className="bi bi-twitter" style={{ fontSize: "30px", color: "#1D9BF0", marginRight: "3%" }}></i>
+                  <i className="bi bi-twitter logo-twitter logo-info" ></i>
                 </a>
                 <a href="https://www.instagram.com/kayak/" target="_blank" rel="noopener noreferrer">
-                  <i className="bi bi-instagram" style={{ fontSize: "30px", color: "#C13584", marginRight: "3%" }}></i>
+                  <i className="bi bi-instagram logo-instagram logo-info"></i>
                 </a>
                 <a href="https://www.youtube.com/channel/UCs36_o9B5NadGYfiHwT-ekQ" target="_blank" rel="noopener noreferrer">
-                  <i className="bi bi-youtube" style={{ fontSize: "30px", color: "#FF0000", marginRight: "3%" }}></i>
+                  <i className="bi bi-youtube logo-youtube logo-info"></i>
                 </a>
               </div>
             </div>

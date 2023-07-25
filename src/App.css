@@ -19,6 +19,56 @@ body {
   }
 }
 
+.logo-face {
+  color: #129BF7;
+  transition: color 0.4s, transform 0.4s;
+}
+
+.logo-twitter {
+  color:#1D9BF0;
+  transition: color 0.4s, transform 0.4s;
+}
+
+.logo-instagram{
+  color:#C13584;
+  transition: color 0.4s, transform 0.4s;
+}
+
+.logo-youtube {
+  color: #FF0000;
+  transition: color 0.4s, transform 0.4s;
+}
+
+.logo-info {
+  margin-right: 0.5em;
+  font-size: 30px;
+  transition: color 0.4s, transform 0.4s;
+}
+
+@keyframes colorChange {
+  0% { color: black }
+
+  50% { color: black; }
+
+  100% {  color: black;}
+}
+
+@keyframes shadowPulse {
+  0% { text-shadow: 0 0 5px #f8f8f8d7; }
+
+  50% {text-shadow: 0 0 15px #fcfbf9d7; }
+
+  100% { text-shadow: 0 0 5px #ffffffd7; }
+}
+
+.logo-info:hover {
+  animation: colorChange 1.5s infinite alternate, shadowPulse 1s infinite;
+}
+
+p {
+  word-wrap: break-word;
+}
+
 
 
 
