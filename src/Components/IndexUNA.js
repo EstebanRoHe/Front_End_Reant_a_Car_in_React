@@ -1,8 +1,9 @@
 import React from "react";
-import logo from '../assets/img/Logo.PNG';
+import logo from '../assets/img/Logo.png';
 import prado from '../assets/img/prado.jpg';
-import hyundai from '../assets/img/hyundai.jpg';
-import jimmy from '../assets/img/jimny.jpg';
+import rush from '../assets/img/rush.jpg';
+import hilux from '../assets/img/hilux.jpg';
+import jimy from '../assets/img/jimny.jpg';
 import './IndexUNA.css';
 import { Link} from "react-router-dom";
 import ContactoFooter from './ContactoFooter';
@@ -12,24 +13,28 @@ const IndexUNA = () => {
 
         <div className="index">
             <h1 className="title">Go-Tico Car Rentals</h1>
-            <div className="containerCarousel ">
+            <div className="containerCarousel">
                 <div >
                     <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel" >
-                        <div className="carousel-inner">
+                        <div className="carousel-inner tamano">
                             <div className="carousel-item active">
                                 <img src={logo} className="d-block w-100" alt="logo" />
                             </div>
 
                             <div className="carousel-item">
-                                <img src={prado} className="d-block w-100" alt="prado" />
+                                <img src={prado} className= "d-block w-100 imagen-carousel" alt="..." />
                             </div>
 
                             <div className="carousel-item">
-                                <img src={hyundai} className="d-block w-100" alt="hyundai" />
+                                <img src={jimy} className="d-block w-100 imagen-carousel" alt="..." />
                             </div>
 
                             <div className="carousel-item">
-                                <img src={jimmy} className="d-block w-100" alt="jimmy" />
+                                <img src={hilux}className="d-block w-100 imagen-carousel" alt="..." />
+                            </div>
+
+                            <div className="carousel-item">
+                                <img src={rush} className="d-block w-100 imagen-carousel" alt="..." />
                             </div>
                         </div>
 
