@@ -1,5 +1,5 @@
 import React from "react";
-import logo from '../assets/img/Logo.png';
+import logo from '../assets/img/logo.png';
 import prado from '../assets/img/prado.jpg';
 import rush from '../assets/img/rush.jpg';
 import hilux from '../assets/img/hilux.jpg';
