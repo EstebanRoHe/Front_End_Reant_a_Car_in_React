@@ -17,11 +17,11 @@ const IndexUNA = () => {
                 <div >
                     <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel" >
                         <div className="carousel-inner tamano">
-                            <div className="carousel-item active">
-                                <img src={logo} className="d-block w-100" alt="logo" />
+                        <div className="carousel-item active ">
+                                <img src={logo} className="d-block w-100" alt="..." />
                             </div>
-
-                            <div className="carousel-item">
+                          
+                            <div className="carousel-item ">
                                 <img src={prado} className= "d-block w-100 imagen-carousel" alt="..." />
                             </div>
 

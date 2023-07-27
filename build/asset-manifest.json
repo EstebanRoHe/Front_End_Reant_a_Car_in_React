@@ -1,19 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.b56e5e05.css",
-    "main.js": "/static/js/main.6c3d7d3b.js",
-    "static/media/Logo.PNG": "/static/media/Logo.4f7547387875e7eecc71.PNG",
-    "static/media/jimny.jpg": "/static/media/jimny.eba1d576bd57b8ba05ef.jpg",
-    "static/media/hyundai.jpg": "/static/media/hyundai.c6439c5f0ca6cbc3aa0c.jpg",
+    "main.css": "/static/css/main.54023fb0.css",
+    "main.js": "/static/js/main.0e5cd8c5.js",
+    "static/media/logo.png": "/static/media/logo.b666f3b18c40dfe2696d.png",
+    "static/media/jimny.jpg": "/static/media/jimny.636785da0473457eef0d.jpg",
+    "static/media/prado.jpg": "/static/media/prado.e55389898e650b919760.jpg",
+    "static/media/rush.jpg": "/static/media/rush.76db66c252d19bd89026.jpg",
+    "static/media/hilux.jpg": "/static/media/hilux.8ba88773e7bcceb703bf.jpg",
     "static/media/bootstrap-icons.woff?": "/static/media/bootstrap-icons.6959d0d983ee318f8880.woff",
-    "static/media/prado.jpg": "/static/media/prado.d9c85c9eeb9f62d4079c.jpg",
     "static/media/bootstrap-icons.woff2?": "/static/media/bootstrap-icons.b2e5aab643c6f0fd2da6.woff2",
     "index.html": "/index.html",
-    "main.b56e5e05.css.map": "/static/css/main.b56e5e05.css.map",
-    "main.6c3d7d3b.js.map": "/static/js/main.6c3d7d3b.js.map"
+    "main.54023fb0.css.map": "/static/css/main.54023fb0.css.map",
+    "main.0e5cd8c5.js.map": "/static/js/main.0e5cd8c5.js.map"
   },
   "entrypoints": [
-    "static/css/main.b56e5e05.css",
-    "static/js/main.6c3d7d3b.js"
+    "static/css/main.54023fb0.css",
+    "static/js/main.0e5cd8c5.js"
   ]
 }
