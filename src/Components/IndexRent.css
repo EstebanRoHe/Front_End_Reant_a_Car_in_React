@@ -1,0 +1,58 @@
+.card-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 3%;
+}
+
+.card-rent {
+    margin: 1%;
+    width: 20rem;
+    background-color: rgba(49, 49, 49, 0.438);
+    transform: scale(1);
+    border-radius: 2%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    overflow: hidden; 
+}
+
+@media screen and (max-width: 250px) {
+    .card-rent {
+        margin: 1%;
+        margin-bottom: 5%;
+        width: 20rem;
+        background-color: rgba(49, 49, 49, 0.438);
+        transform: scale(1);
+        border-radius: 2%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        overflow: hidden; 
+    }
+  }
+
+.imagen-rent {
+    max-height: 12.6rem;  
+    transition: transform 0.3s ease;
+}
+
+.card-rent:hover {
+    transform: scale(1.05) ; 
+    box-shadow: 0 5px 14px rgba(255, 253, 253, 0.329);
+ 
+}
+.card-rent:hover .imagen-rent {
+    filter: brightness(75%); 
+  }
+
+.list-group-item {
+    background-color: rgba(179, 179, 179, 0.062);
+    color: rgba(196, 196, 196, 0.808);
+    border: 1px rgba(255, 255, 255, 0.062) solid;
+    
+}
+
+  
+
+
+  
+
+

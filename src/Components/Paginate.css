@@ -8,10 +8,7 @@
   .paginate-right {
     color: rgb(26, 25, 25);
     font-size: 24px; 
-   
-    
   }
-
   .page-count {
     color: #333;
     padding: 8px;
@@ -19,6 +16,11 @@
    
   }
 
+.paginate-left:hover,
+.paginate-right:hover,
+.page-count:hover{
+  color: #8C939A;
+}
 /*Los de indexRent */
   .left-paginate-arrow-indexrent{
     font-size: 24px; 
@@ -36,4 +38,12 @@
     padding: 8px;
     border-radius: 4px;
   }
+
+  .left-paginate-arrow-indexrent:hover,
+  .rigth-paginate:hover,
+  .indexrent-page-count:hover{
+    color:#000000;
+   
+  }
+  
   

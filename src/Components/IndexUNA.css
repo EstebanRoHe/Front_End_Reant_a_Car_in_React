@@ -42,6 +42,7 @@
   filter: brightness(100%) saturate(100%);
 }
 
+
 @media screen and (max-width: 350px) {
   .carousel-item img {
     filter: brightness(70%) saturate(100%);

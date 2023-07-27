@@ -6,6 +6,7 @@ import AuthServices from "../services/authServices";
 import ReactPaginate from 'react-paginate';
 import './Paginate.css';
 import ContactoFooter from './ContactoFooter';
+import './IndexRent.css'
 
 const IndexRent = () => {
     const [Car, setCar] = useState([]);
@@ -102,27 +103,24 @@ const IndexRent = () => {
             </div>
 
             
-                    <div className="d-flex flex-wrap">
+                    <div className="d-flex flex-wrap card-container">
                         {paginatedCars && paginatedCars.map((car) => (
-                            <div key={car.idCar} className="card col-md-3 col-lg-3 mb-3" style={{ margin: "1%", marginLeft: "6%" }}>
-                                <img src={car.image} className="card-img-top" alt="..." />
-                                <div className="card-body">
-                                    <h5 className="card-title" key={car.idCar}><i className="bi bi-car-front-fill"> </i>{car.description}</h5>
-                                    {car.typeCar.description === "4x4" ? (
-                                        <p><i className="bi bi-pencil-square"> Descripción: Vehículo {car.typeCar.description}, para uso off-road, uso familiar para llevar a toda la familia con la mayor comodidad</i></p>
-                                    ) : (
-                                        <p><i className="bi bi-pencil-square"> Descripción: Vehículo {car.typeCar.description}, para uso familiar para llevar a toda la familia con la mayor comodidad</i></p>
-                                    )}
-                                </div>
-                                <ul className="list-group list-group-flush bg-dark">
+                            <div key={car.idCar} className="card col-md-3 col-lg-3 mb-3 card-rent" >
+                                <img src={car.image} className="card-img-top imagen-rent " alt="..." />
+                         
+                                
+                                <ul className="list-group descripcion-rent ">
+                                <li className="list-group-item"> <h5 className="card-title" key={car.idCar} style={{color:"white"}}>
+                                    <i className="bi bi-car-front-fill"> </i>{car.description}</h5></li>
                                     <li className="list-group-item"><i className="bi bi-gear-wide-connected"> </i>Cilindraje: {car.cylinder_capacity}</li>
                                     <li className="list-group-item"><i className="bi bi-car-front"> </i>Capacidad: {car.capacity} Personas</li>
                                     <li className="list-group-item"><i className="bi bi-calendar-date"> </i>Modelo: {car.model_year}</li>
                                     <li className="list-group-item"><i className="bi bi-car-front-fill"> </i>Tipo: {car.typeCar.description}</li>
                                     <li className="list-group-item"><i className="bi bi-card-text"> </i>Placa: {car.licencePlate}</li>
                                 </ul>
+                               
                                 <div className="card-body">
-                                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <div className="d-flex justify-content-center">
                                         {isLoggedIn ? (
                                             <Link className="btn btn-success" to={"/RentCreate/" + car.idCar}>
                                                 <i className="bi bi-plus-circle"> Alquilar</i>

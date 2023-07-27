@@ -214,15 +214,15 @@ const RentCreate = () => {
     };
 
     return (
-        <div className="container" >
-            <div className="submit-form"
+        <div className="container"  >
+            <div className="submit-form  "
                 onMouseUp={handleInputUserAndDate}
                 onMouseOut={handleInputUserAndDate}
             >
-                <div className="card" >
-                    <div className="card-body " >
+                <div className="card"  >
+                    <div className="card-body  "  >
                         <h4><i class="bi bi-car-front"> Alquiler de vehículos</i></h4>
-                        <form onSubmit={createRent} className="row g-3 needs-validation my-3  border = 1"
+                        <form onSubmit={createRent} className="row  needs-validation my-3  border = 1"
                         
                         >
 
@@ -267,7 +267,7 @@ const RentCreate = () => {
                                 <>
                                     <div className="form-group">
                                         <label type="text"
-                                            className={((errors.Car) ? "is-invalid" : "") + " form-label  custom-select-width"}
+                                            className={((errors.Car) ? "is-invalid" : "") + " form-label  "}
                                             value={Car}
                                         >
                                             <i className="bi bi-car-front-fill"> </i>
@@ -281,19 +281,19 @@ const RentCreate = () => {
                                 </>
                             )}
 
-                            <div className="form-group">
+                        
                                 <Link className="btn btn-primary custom-select-width"
                                     onClick={showModalCarHandler}
                                 >
                                     <i className="bi bi-search"> Seleccionar un Vehículo</i>
                                 </Link>
 
-                            </div>
-                            <div className="col-md-3 position-relative">
+                        
+                        
                                 <label htmlFor="dateRent" className="form-label">
                                     <i className="bi bi-calendar-date"></i> Fecha
                                 </label>
-                                <div className={`input-group has-validation ${Rent.dateRent !== '' && !errorsDateAndUser.User ? 'input-success' : ''}`}>
+                                <div className={`custom-select-width input-group has-validation ${Rent.dateRent !== '' && !errorsDateAndUser.User ? 'input-success' : ''}`}>
                                     <span className="input-grouil-p-text">
                                         <i className="bi bi-pencsquare"></i>
                                     </span>
@@ -313,22 +313,22 @@ const RentCreate = () => {
                                         }}
                                     />
 
-                                    <small className="invalid-feedback" id="helpId">
-                                        <i className="bi bi-exclamation-circle"> {errorsDateAndUser.User}</i>
+                                    <small className="invalid-feedback custom-select-width" id="helpId">
+                                        <i className="bi bi-exclamation-circle custom-select-width"> {errorsDateAndUser.User}</i>
                                     </small>
                                 </div>
                                 {Rent.dateRent === '' ? (
-                                    <div>
-                                        <i className="text-success fs-10">No se puede alquilar más de un vehículo por persona en las mismas fechas!</i>
+                                    <div >
+                                        <i className="text-success fs-10 custom-select-width">No se puede alquilar más de un vehículo<br/> por persona en las mismas fechas!</i>
                                     </div>
                                 ) : (
                                     <div>
                                     </div>
                                 )}
-                            </div>
+                           
 
-                            <div className="col-12">
-                                <button className="btn btn-success my-3  mx-2 " type="submit">
+                            <div >
+                                <button className="btn btn-success my-2  mx-1 " type="submit">
                                     <i className="bi bi-person-plus"> Alquilar</i>
                                 </button>
                                 {role === 'ROLE_ADMIN' ? (
