@@ -1,5 +1,5 @@
 import React from "react";
-
+import rentLogo from '../assets/img/rentLogo.png'
 import prado from '../assets/img/prado.jpg';
 import rush from '../assets/img/rush.jpg';
 import hilux from '../assets/img/hilux.jpg';
@@ -17,9 +17,12 @@ const IndexUNA = () => {
                 <div >
                     <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel" >
                         <div className="carousel-inner tamano">
-                       
-                          
+
                             <div className="carousel-item active ">
+                                <img src={rentLogo} className="d-block w-100 imagen-carousel" alt="..." />
+                            </div>
+                          
+                            <div className="carousel-item  ">
                                 <img src={prado} className= "d-block w-100 imagen-carousel" alt="..." />
                             </div>
 
