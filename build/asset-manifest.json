@@ -1,7 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.54023fb0.css",
-    "main.js": "/static/js/main.bfe8f4f5.js",
+    "main.css": "/static/css/main.638a4ede.css",
+    "main.js": "/static/js/main.fd0792fd.js",
+    "static/media/rentLogo.png": "/static/media/rentLogo.b666f3b18c40dfe2696d.png",
     "static/media/jimny.jpg": "/static/media/jimny.636785da0473457eef0d.jpg",
     "static/media/prado.jpg": "/static/media/prado.e55389898e650b919760.jpg",
     "static/media/rush.jpg": "/static/media/rush.76db66c252d19bd89026.jpg",
@@ -9,11 +10,11 @@
     "static/media/bootstrap-icons.woff?": "/static/media/bootstrap-icons.6959d0d983ee318f8880.woff",
     "static/media/bootstrap-icons.woff2?": "/static/media/bootstrap-icons.b2e5aab643c6f0fd2da6.woff2",
     "index.html": "/index.html",
-    "main.54023fb0.css.map": "/static/css/main.54023fb0.css.map",
-    "main.bfe8f4f5.js.map": "/static/js/main.bfe8f4f5.js.map"
+    "main.638a4ede.css.map": "/static/css/main.638a4ede.css.map",
+    "main.fd0792fd.js.map": "/static/js/main.fd0792fd.js.map"
   },
   "entrypoints": [
-    "static/css/main.54023fb0.css",
-    "static/js/main.bfe8f4f5.js"
+    "static/css/main.638a4ede.css",
+    "static/js/main.fd0792fd.js"
   ]
 }

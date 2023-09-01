@@ -23,7 +23,22 @@ const UserList = (props) => {
     const [User, setUser] = useState([]);
 
     const handleUserSelection = (username) => {
-        props.handleSelectUser(username);
+        try {
+            props.handleSelectUser(username);
+            Swal.fire({
+                position: 'top-center',
+                icon: 'success',
+                title: 'Usuario agregado correctamente!',
+                showConfirmButton: false,
+                timer: 1500
+              })
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                text: props.errors.Car+'!',
+              })
+        }
+      
     };
 
 
@@ -144,7 +159,7 @@ const UserList = (props) => {
                             "Tu archivo ha sido eliminado",
                             "Correctamente"
                         )
-                    })
+                    }) 
                     .catch(error => {
                         console.log(error);
                         closeModalHandler();
@@ -240,7 +255,8 @@ const UserList = (props) => {
                                                         ) : (
                                                             <>
                                                                 <button className="btn btn-success"
-                                                                    onClick={() => { handleUserSelection(username,onclose) }}
+                                                                    onClick={() => { 
+                                                                        handleUserSelection(username) }}
                                                                     style={{ height: "10vh" }}
                                                                 >
                                                                     <i className="bi bi-plus-circle"> Agregar</i>
