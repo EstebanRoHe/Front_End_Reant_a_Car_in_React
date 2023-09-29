@@ -164,6 +164,7 @@ const RentCreate = () => {
                 })
                 .catch(e => {
                     console.log(e);
+                    setRentPriceTotal(0);
                     closeModalHandlerLoading();
                 })
         } else {
