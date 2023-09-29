@@ -17,7 +17,6 @@ import CarCreate from './Components/CarCreate';
 import CarUpdate from './Components/CarUpdate';
 import RentList from './Components/RentList';
 import RentCreate from './Components/RentCreate';
-import RentUpdate from './Components/RentUpdate';
 import IndexRent from './Components/IndexRent';
 import IndexUNA from './Components/IndexUNA';
 import Footer from './Components/Footer';
@@ -106,7 +105,7 @@ function App() {
 
   const SHOWModalPassword = () => {
     Swal.fire({
-      title: '<i class="bi bi-exclamation-triangle-fill"></i>',
+      title: '<i className="bi bi-exclamation-triangle-fill"></i>',
       text:'¡La función de cambio de contraseña para este usuario se ha desactivado temporalmente por precaución! '+ 
       'Esta medida se ha tomado para evitar que otras personas intenten utilizar este usuario para probar la función ' +
       'y evitar posibles inconvenientes. Si deseas probar esta función, te sugiero hacerlo con otro usuario. '+
@@ -329,7 +328,6 @@ function App() {
               <Route path="/PasswordUpdate/:idUser" element={<PasswordUpdate />} />
               <Route path="/RentList" element={<RentList />} />
               <Route path="/RentCreate/:idCar" element={<RentCreate />} />
-              <Route path="/RentUpdate/:idRent" element={<RentUpdate />} />
             </>
           ) : (
             <>
@@ -337,7 +335,6 @@ function App() {
               <Route path="/PasswordUpdate/:idUser" element={<Navigate to="/Login" />} />
               <Route path="/RentList" element={<Navigate to="/Login" />} />
               <Route path="/RentCreate/:idCar" lement={<Navigate to="/Login" />} />
-              <Route path="/RentUpdate" element={<Navigate to="/Login" />} />
             </>
           )}
 

@@ -9,6 +9,7 @@ import './RentCreate.css'
 import Modal from "./ModalListUser";
 import ModalListCar from "./ModalListCar";
 import ModalLoadingContacto from "./ModalLoadingContacto";
+import { differenceInDays, parseISO } from 'date-fns';
 
 
 const RentCreate = () => {
@@ -18,37 +19,53 @@ const RentCreate = () => {
         idRent: null,
         username: null,
         car: null,
-        dateRent: ""
+        dateRent: "",
+        dateRentFinal: "",
+        rentPrice: ""
     }
 
     const [Rent, setRent] = useState(initialRentState);
-    const [RentArray, setRentRentArray] = useState([]);
     const [Validat, setValidat] = useState(false);
     const [errors, setErrors] = useState({});
-    const [errorsDateAndUser, setErrorsDateAndUser] = useState({});
     const [role, setRole] = useState(roleToken);
     const [showModal, setShowModal] = useState(false);
     const [showModalCar, setShowModalCar] = useState(false);
     const [Car, setCar] = useState(null);
     const [User, setUser] = useState(null);
     const [showModalLoading, setShowModalLoading] = useState(false);
+    const [arryRent, setArryRent] = useState([]);
+    const [rentPriceTotal, setRentPriceTotal] = useState(0);
 
     const handleInputUserAndDate = event => {
         const { name, value } = event.target;
         setRent({ ...Rent, [name]: value });
-        setErrorsDateAndUser(validationErrorsDateAndUser(User, { ...Rent, [name]: value }));
+        setErrors(validationDate(Car, { ...Rent, [name]: value }));
+
+        const days = calcularDiferenciaEnDias();
+        if (Car && Car.price != null) {
+            if (days === 0) {
+                setRentPriceTotal(Car.price)
+            } else {
+                setRentPriceTotal(Car.price * days)
+            }
+        }
+
     };
+
+    const handleInputblur = event => {
+        handleInputUserAndDate(event);
+        setErrors(validationDate(Car));
+
+    }
 
     useEffect(() => {
         const loggedInUsername = AuthServices.getUsername();
         const roles = AuthServices.getRole();
         setUser(loggedInUsername);
         setRole(roles);
-
+        getRent();
         if (idCar)
             getCar(idCar)
-
-        getListRent();
 
         if (Validat)
             newRent();
@@ -56,6 +73,7 @@ const RentCreate = () => {
         if (roles !== 'ROLE_ADMIN') {
             getByUsername(loggedInUsername)
         }
+
         // eslint-disable-next-line
     }, [idCar, Validat]);
 
@@ -94,23 +112,22 @@ const RentCreate = () => {
             });
     }
 
-    const getListRent = () => {
+    const getRent = () => {
         const token = AuthServices.getAuthToken();
         if (token) {
             rentServices.setAuthToken(token);
-
         } else {
             return;
         }
         rentServices.getAll()
             .then(response => {
-                setRentRentArray(response.data);
-                console.log(response.data);
+                setArryRent(response.data);
+                console.log(response.data)
             })
             .catch(e => {
                 console.log(e);
             });
-    };
+    }
 
     const createRent = (e) => {
         showModalHandlerLoading();
@@ -122,18 +139,23 @@ const RentCreate = () => {
             return;
         }
         e.preventDefault();
-        var data = { idRent: Rent.idRent, username: User, car: Car, dateRent: Rent.dateRent }
-        setErrorsDateAndUser(validationErrorsDateAndUser(User))
-        setErrors(validationErrror(Car));
-        if (Object.keys(errors).length === 0 && Object.keys(errorsDateAndUser).length === 0) {
+
+        setErrors(validationDate(Car));
+        if (Object.keys(errors).length === 0) {
+            var data = { idRent: Rent.idRent, username: User, car: Car, dateRent: Rent.dateRent, dateRentFinal: Rent.dateRentFinal, rentPrice: rentPriceTotal }
+            validationDate(Car);
             rentServices.create(data)
                 .then(response => {
-                    setRent({ username: response.data.User, car: response.data.Car, dateRent: response.data.dateRent });
+                    setRent({
+                        username: response.data.User, car: response.data.Car,
+                        dateRent: response.data.dateRent, dateRentFinal: response.dateRentFinal,
+                        rentPrice: response.data.rentPrice
+                    });
                     setValidat(true);
                     console.log(response.data);
                     closeModalHandlerLoading();
                     Swal.fire({
-                        position: 'top-center',
+                        position: 'center',
                         icon: 'success',
                         title: 'Se Alquiló el Vehículo Correctamente',
                         showConfirmButton: false,
@@ -155,24 +177,37 @@ const RentCreate = () => {
         setValidat(false);
     }
 
-    const validationErrror = (Car) => {
+    const validationDate = (Car) => {
         let errors = {};
-        RentArray.forEach(rent => {
-            if (rent.car.idCar === Car.idCar) {
-                errors.Car = "Vehículo ya alquilado";
+        arryRent.forEach((rent) => {
+            if (rent.car != null && Car != null) {
+                const rentDate = new Date(rent.dateRent);
+                const rentDateFinal = new Date(rent.dateRentFinal);
+                const inputrentDate = new Date(Rent.dateRent);
+                const inputrentDateFinal = new Date(Rent.dateRentFinal);
+                if (rent.car.idCar == Car.idCar) {
+                    if (
+                        (inputrentDate >= rentDate && inputrentDate <= rentDateFinal) ||
+                        (inputrentDateFinal >= rentDate && inputrentDateFinal <= rentDateFinal)
+                    ) {
+                        errors.dateRent = "¡Carro alquilado para estas fechas!";
+                    }
+                }
             }
-        })
+        });
         return errors;
-    }
+    };
 
-    const validationErrorsDateAndUser = (User) => {
-        let errorsDateAndUser = {};
-        RentArray.forEach(rent => {
-            if (rent.username.idUser === User.idUser && rent.dateRent === Rent.dateRent) {
-                errorsDateAndUser.User = "El usuario ya alquiló un vehículo para esta fecha";
-            }
-        })
-        return errorsDateAndUser;
+    const calcularDiferenciaEnDias = () => {
+        const fechaInicial = parseISO(Rent.dateRent);
+        const fechaFinal = parseISO(Rent.dateRentFinal);
+        if (fechaInicial != "Invalid Date" && fechaFinal != "Invalid Date") {
+            const diferenciaDias = differenceInDays(fechaFinal, fechaInicial);
+            return 1 + diferenciaDias;
+        }
+        else {
+            return 0;
+        }
     }
 
 
@@ -180,13 +215,11 @@ const RentCreate = () => {
         setShowModal(true);
     };
 
-
     const closeModalHandler = () => {
         setShowModal(false);
     };
 
     const handleSelectUser = (username) => {
-        setErrorsDateAndUser(validationErrorsDateAndUser(username, Rent))
         setUser(username);
     };
 
@@ -200,10 +233,8 @@ const RentCreate = () => {
     };
 
     const handleSelectCar = (car) => {
-        setErrors(validationErrror(car, Rent));
         setCar(car);
     };
-
 
     const showModalHandlerLoading = () => {
         setShowModalLoading(true);
@@ -213,6 +244,8 @@ const RentCreate = () => {
         setShowModalLoading(false);
     };
 
+
+
     return (
         <div className="container"  >
             <div className="submit-form  "
@@ -221,9 +254,9 @@ const RentCreate = () => {
             >
                 <div className="card"  >
                     <div className="card-body  "  >
-                        <h4><i class="bi bi-car-front"> Alquiler de vehículos</i></h4>
+                        <h4><i className="bi bi-car-front"> Alquiler de vehículos</i></h4>
                         <form onSubmit={createRent} className="row  needs-validation my-3  border = 1"
-                        
+
                         >
 
                             {role === 'ROLE_ADMIN' ? (
@@ -234,12 +267,12 @@ const RentCreate = () => {
                                         </label>
                                     ) : (
                                         <label type="text" id="username" className="form-label">
-                                            <i className="bi bi-person-add"> </i>Usuario : {User.username}
+                                            <i className="bi bi-person-add"> </i>Usuario : <strong>{User.username}</strong>
                                         </label>
                                     )}
 
                                     <Link className="btn btn-primary custom-select-width"
-                                        style={{ marginTop: "1%" }}
+                                        style={{ marginTop: "1%", marginLeft: "1%" }}
                                         onClick={showModalHandler}
                                     >
                                         <i className="bi bi-search"> Seleccionar un Usuario</i>
@@ -254,7 +287,7 @@ const RentCreate = () => {
                                         </label>
                                     ) : (
                                         <label type="text" id="username" className="form-label">
-                                            <i className="bi bi-person-add"></i> Usuario : {User.username}
+                                            <i className="bi bi-person-add"></i> Usuario : <strong>{User.username}</strong>
                                         </label>
                                     )}
                                 </>
@@ -267,65 +300,92 @@ const RentCreate = () => {
                                 <>
                                     <div className="form-group">
                                         <label type="text"
-                                            className={((errors.Car) ? "is-invalid" : "") + " form-label  "}
+                                            className="is-invalid form-label  "
                                             value={Car}
                                         >
                                             <i className="bi bi-car-front-fill"> </i>
-                                            Vehículo : {Car.licencePlate}
+                                            Vehículo : <strong>{Car.licencePlate}</strong>
                                         </label>
-                                        <small className="invalid-feedback" id="helpId" >
-                                            <i className="bi bi-exclamation-circle"> {errors.Car}</i>
-                                        </small>
+
                                     </div>
 
                                 </>
                             )}
 
-                        
-                                <Link className="btn btn-primary custom-select-width"
-                                    onClick={showModalCarHandler}
-                                >
-                                    <i className="bi bi-search"> Seleccionar un Vehículo</i>
-                                </Link>
 
-                        
-                        
-                                <label htmlFor="dateRent" className="form-label">
-                                    <i className="bi bi-calendar-date"></i> Fecha
-                                </label>
-                                <div className={`custom-select-width input-group has-validation ${Rent.dateRent !== '' && !errorsDateAndUser.User ? 'input-success' : ''}`}>
-                                    <span className="input-grouil-p-text">
-                                        <i className="bi bi-pencsquare"></i>
-                                    </span>
-                                    <input
-                                        type="date"
-                                        className={((errorsDateAndUser.User) ? "is-invalid" : "") + " form-control"}
-                                        id="dateRent"
-                                        value={Rent.dateRent}
-                                        onMouseUp={handleInputUserAndDate}
-                                        onMouseOut={handleInputUserAndDate}
-                                        onChange={handleInputUserAndDate}
-                                        onBlur={handleInputUserAndDate}
-                                        name="dateRent"
-                                        required
-                                        style={{
-                                            borderColor: Rent.dateRent !== '' && !errorsDateAndUser.User ? 'green' : '',
-                                        }}
-                                    />
+                            <Link className="btn btn-primary custom-select-width "
+                                style={{ marginLeft: "1%" }}
+                                onClick={showModalCarHandler}
+                            >
+                                <i className="bi bi-search"> Seleccionar un Vehículo</i>
+                            </Link>
 
-                                    <small className="invalid-feedback custom-select-width" id="helpId">
-                                        <i className="bi bi-exclamation-circle custom-select-width"> {errorsDateAndUser.User}</i>
-                                    </small>
+                            <div className=" form-group">
+                                <div className="row">
+                                    <div className="col-md-3">
+
+                                        <label htmlFor="dateRent" className="form-label">
+                                            <i className="bi bi-calendar-date"></i> Inicio del Alquiler
+                                        </label>
+                                        <div className="custom-select-date input-group ">
+                                            <span className="input-grouil-p-text">
+                                                <i className="bi bi-pencsquare"></i>
+                                            </span>
+
+                                            <input type="date" className={((errors.dateRent) ? "is-invalid" : "") + " form-control"}
+                                                id="dateRent"
+                                                value={Rent.dateRent}
+                                                onMouseUp={handleInputUserAndDate}
+                                                onMouseOut={handleInputUserAndDate}
+                                                onChange={handleInputUserAndDate}
+                                                onBlur={handleInputblur}
+                                                name="dateRent"
+                                                required
+                                            />
+
+                                            <small className="invalid-feedback" id="helpId" >
+                                                <i className="bi bi-exclamation-circle"> {errors.dateRent}</i>
+                                            </small>
+                                        </div>
+                                    </div>
+
+
+                                    <div className="col-md-3">
+
+                                        <label htmlFor="dateRent" className="form-label">
+                                            <i className="bi bi-calendar-date"></i> Fecha de devolución
+                                        </label>
+                                        <div className="custom-select-date input-group ">
+                                            <span className="input-grouil-p-text">
+                                                <i className="bi bi-pencsquare"></i>
+                                            </span>
+                                            <input type="date" className={((errors.dateRent) ? "is-invalid" : "") + " form-control"}
+                                                id="dateRentFinal"
+                                                value={Rent.dateRentFinal}
+                                                onMouseUp={handleInputUserAndDate}
+                                                onMouseOut={handleInputUserAndDate}
+                                                onChange={handleInputUserAndDate}
+                                                onBlur={handleInputblur}
+                                                onKeyUp={handleInputblur}
+                                                name="dateRentFinal"
+                                                required
+                                            />
+
+
+                                        </div>
+                                    </div>
                                 </div>
-                                {Rent.dateRent === '' ? (
-                                    <div >
-                                        <i className="text-success fs-10 custom-select-width">No se puede alquilar más de un vehículo<br/> por persona en las mismas fechas!</i>
-                                    </div>
-                                ) : (
-                                    <div>
-                                    </div>
-                                )}
-                           
+
+                            </div>
+
+                            <small style={{ fontSize: "18px", marginTop: "1%" }}
+                                id="rentPrice"
+                            >
+                                <i className="bi bi-exclamation-circle"> </i>
+                                Total a pagar por {calcularDiferenciaEnDias()} días
+                                <i className="bi bi-currency-dollar"> </i> <strong>{rentPriceTotal}</strong>
+                            </small>
+
 
                             <div >
                                 <button className="btn btn-success my-2  mx-1 " type="submit">
@@ -358,7 +418,7 @@ const RentCreate = () => {
                                 errors={errors}
                             />
                         )}
- 
+
                         {showModalLoading && (
                             <ModalLoadingContacto />
                         )}
@@ -371,3 +431,4 @@ const RentCreate = () => {
 };
 
 export default RentCreate;
+

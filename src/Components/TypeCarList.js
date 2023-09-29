@@ -163,7 +163,7 @@ const TypeCarList = () => {
             {TypeCar.length === 0 && showModal === false ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Loading />
-                    <i class="bi bi-info-circle" style={{color:"red" , marginBottom :"1%"}}> No se encuentra ningún Tipo de Vehículo Registrado</i>
+                    <i className="bi bi-info-circle" style={{color:"red" , marginBottom :"1%"}}> No se encuentra ningún Tipo de Vehículo Registrado</i>
                     <Link className="btn btn-primary" to={"/TypeCarCreate"}>
                         <i className="bi bi-plus-circle"> Registrar un Tipo de Vehículo </i>
                     </Link>

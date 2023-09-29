@@ -9,7 +9,7 @@ const ModalListUser = (props) => {
                 <div className="modal-content">
                 
                     <div className="modal-header">
-                        <h4><i class="bi bi-card-list"> Usuarios</i></h4>
+                        <h4><i className="bi bi-card-list"> Usuarios</i></h4>
                         <button
                             type="button"
                             className="close"
@@ -18,7 +18,7 @@ const ModalListUser = (props) => {
                             onClick={onClose}
                         >
                             
-                            <i class="bi bi-x-lg"></i>
+                            <i className="bi bi-x-lg"></i>
                         </button>
                     </div>
                     <div className="modal-body">

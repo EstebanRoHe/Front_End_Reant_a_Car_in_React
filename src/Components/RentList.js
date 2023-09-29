@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import AuthServices from '../services/authServices';
 import Paginate from './Paginate';
 import ModalLoadingContacto from "./ModalLoadingContacto";
+import { format } from 'date-fns';
 
 const RentList = () => {
     const [Rent, setRent] = useState([]);
@@ -15,10 +16,10 @@ const RentList = () => {
     const [error, setError] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
-   
+
     useEffect(() => {
         getList();
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, []);
 
     const handlePageChange = ({ selected }) => {
@@ -159,8 +160,8 @@ const RentList = () => {
             {Rent.length === 0 && showModal === false ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Loading />
-                    <i class="bi bi-info-circle" style={{color:"red" , marginBottom :"1%"}}>No se encuentra ningún Alquiler Registrado</i>
-                    <Link className="btn btn-primary" to={"/RentCreate/"+null}>
+                    <i className="bi bi-info-circle" style={{ color: "red", marginBottom: "1%" }}>No se encuentra ningún Alquiler Registrado</i>
+                    <Link className="btn btn-primary" to={"/RentCreate/" + null}>
                         <i className="bi bi-card-checklist"> Rentar un Vehículo</i>
                     </Link>
 
@@ -170,7 +171,7 @@ const RentList = () => {
                 <div className="card text bg-light mb-3">
 
                     <div className="card-header d-flex justify-content-between">
-                        <Link className="btn btn-primary" to={"/RentCreate/"+null}>
+                        <Link className="btn btn-primary" to={"/RentCreate/" + null}>
                             <i className="bi bi-card-checklist"> Rentar un Vehículo</i>
                         </Link>
                         <div className="ml-auto d-flex flex-column">
@@ -183,11 +184,11 @@ const RentList = () => {
                                     onBlur={handleFiltroChange}
                                     onKeyUp={handleFiltroChange}
                                     placeholder="Seach for Username"
-                                   
+
                                 />
                             </div>
                             {error && (
-                                <small className="errorSmall" id="helpId" style={{marginTop:"1%"}} >
+                                <small className="errorSmall" id="helpId" style={{ marginTop: "1%" }} >
                                     <i className="bi bi-exclamation-circle"> Usuario no encontrado</i>
                                 </small>
                             )}
@@ -201,8 +202,10 @@ const RentList = () => {
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Usuario</th>
-                                        <th scope="col">Vehiculo</th>
-                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Vehículo</th>
+                                        <th scope="col">Inicio del Alquiler</th>
+                                        <th scope="col">Fecha de devolución</th>
+                                        <th scope="col">Total a pagar</th>
 
                                     </tr>
 
@@ -216,13 +219,19 @@ const RentList = () => {
                                                     <th scope="row">{rent.idRent}</th>
                                                     <td>{rent.username.username}</td>
                                                     <td>{rent.car.licencePlate}</td>
-                                                    <td>{rent.dateRent}</td>
+                                                    <td>{format(new Date(rent.dateRent), 'yyyy-MM-dd')}</td>
+                                                    <td>{format(new Date(rent.dateRentFinal), 'yyyy-MM-dd')}</td>
+                                                    <td> <i className="bi bi-currency-dollar"> </i>{rent.rentPrice}</td>
 
                                                     <td>
                                                         <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                            {
+                                                                /*
                                                             <Link className="btn btn-secondary" to={"/RentUpdate/" + rent.idRent}>
                                                                 <i className="bi bi-gear"> Actualizar</i>
                                                             </Link>
+                                                            */
+                                                            }
 
                                                             <button className="btn btn-danger" onClick={() => remove(rent.idRent)}>
                                                                 <i className="bi bi-trash3"> Eliminar</i>

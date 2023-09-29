@@ -45,7 +45,7 @@ const TypeCarCreate = () => {
                 console.log(response.data);
                 closeModalHandler();
                 Swal.fire({
-                    position: 'top-center',
+                    position: 'center',
                     icon: 'success',
                     title: 'Tipo de Vehículo Registrado Correctamente',
                     showConfirmButton: false,
@@ -70,7 +70,7 @@ const TypeCarCreate = () => {
             <div className="card  ">
 
                 <div className="card-body ">
-                    <h4><i class="bi bi-plus-circle"> Registrar Tipo de Vehículo</i></h4>
+                    <h4><i className="bi bi-plus-circle"> Registrar Tipo de Vehículo</i></h4>
                     <blockquote className="blockquote mb-0 ">
 
                         <form onSubmit={e => {

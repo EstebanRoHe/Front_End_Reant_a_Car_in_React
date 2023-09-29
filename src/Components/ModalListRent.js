@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import rentServices from "../services/rentServices";
 import Swal from "sweetalert2";
 import Loading from "./Loading"
@@ -7,6 +7,7 @@ import AuthServices from '../services/authServices';
 import './Modal.css'
 import Paginate from './Paginate';
 import ModalLoadingContacto from "./ModalLoadingContacto";
+import { format } from 'date-fns';
 
 const ModalListRent = (props) => {
     const { onClose } = props;
@@ -76,7 +77,7 @@ const ModalListRent = (props) => {
         })
 
         swalWithBootstrapButtons.fire({
-            title: 'Deseas eliminar este archivo?',
+            title: 'Deseas eliminar este alquiler?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Si, eliminar!',
@@ -96,7 +97,7 @@ const ModalListRent = (props) => {
                 swalWithBootstrapButtons.fire(
 
                     'Eliminado!',
-                    'Tu archivo ha sido eliminado',
+                    'Tu alquiler ha sido eliminado',
                     'Correctamente'
                 )
 
@@ -104,7 +105,7 @@ const ModalListRent = (props) => {
                 closeModalHandler();
                 swalWithBootstrapButtons.fire(
                     'Cancelado',
-                    'No se ha eliminado nungun archivo'
+                    'No se ha eliminado nungun alquiler'
                 )
             }
         })
@@ -115,7 +116,7 @@ const ModalListRent = (props) => {
             <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h4 style={{color:"black"}}><i class="bi bi-card-checklist"> Vehículos Alquilados</i> </h4>
+                        <h4 style={{ color: "black" }}><i className="bi bi-card-checklist"> Vehículos Alquilados</i> </h4>
                         <button
                             type="button"
                             className="close"
@@ -123,7 +124,7 @@ const ModalListRent = (props) => {
                             aria-label="Close"
                             onClick={onClose}
                         >
-                            <i class="bi bi-x-lg"></i>
+                            <i className="bi bi-x-lg"></i>
                         </button>
                     </div>
                     <div className="modal-body">
@@ -151,7 +152,9 @@ const ModalListRent = (props) => {
                                                     <tr>
                                                         <th scope="col">Usuario</th>
                                                         <th scope="col">Vehiculo</th>
-                                                        <th scope="col">Fecha</th>
+                                                        <th scope="col">Inicio del Alquiler</th>
+                                                        <th scope="col">Fecha de devolución</th>
+                                                        <th scope="col">Total a pagar</th>
 
                                                     </tr>
 
@@ -164,17 +167,21 @@ const ModalListRent = (props) => {
                                                                 <tr key={rent.idRent}>
                                                                     <td>{rent.username.username}</td>
                                                                     <td>{rent.car.licencePlate}</td>
-                                                                    <td>{rent.dateRent}</td>
+                                                                    <td>{format(new Date(rent.dateRent), 'yyyy-MM-dd')}</td>
+                                                                    <td>{format(new Date(rent.dateRentFinal), 'yyyy-MM-dd')}</td>
+                                                                    <td> <i className="bi bi-currency-dollar"> </i>{rent.rentPrice}</td>
 
                                                                     <td>
                                                                         <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                                            {/*
                                                                             <Link className="btn btn-secondary"
                                                                                 to={"/RentUpdate/" + rent.idRent}
                                                                                 onClick={onClose}
                                                                             >
                                                                                 <i className="bi bi-gear"> Actualizar</i>
                                                                             </Link>
-
+                                                                            */
+                                                                            }
                                                                             <button className="btn btn-danger" onClick={() => remove(rent.idRent)}>
                                                                                 <i className="bi bi-trash3"> Eliminar</i>
                                                                             </button>

@@ -73,7 +73,7 @@ const PasswordUpdate = () => {
                     console.log(response.data);
                     closeModalHandler();
                     Swal.fire({
-                        position: 'top-center',
+                        position: 'center',
                         icon: 'success',
                         title: 'contraseña Actualizada Correctamente',
                         showConfirmButton: false,
@@ -98,7 +98,7 @@ const PasswordUpdate = () => {
             <div className="card">
                 <div className="card-body ">
                     <div className="content">
-                        <h3> <i class="bi bi-exclamation-triangle"> Cambiar Contraseña</i></h3>
+                        <h3> <i className="bi bi-exclamation-triangle"> Cambiar Contraseña</i></h3>
                         <hr className="dropdown-divider" />
                         <form onSubmit={passwordUpdate}>
                             <div className="mb-3">
@@ -143,7 +143,7 @@ const PasswordUpdate = () => {
                                 {validPassword.password &&
                                     <div className="container mb-3" style={{ maxWidth: '300px' }}>
                                         <label className="form-label errorSmall">
-                                        <i class="bi bi-exclamation-circle"> {validPassword.password} </i></label>
+                                        <i className="bi bi-exclamation-circle"> {validPassword.password} </i></label>
                                     </div>
                                 }
                             </div>

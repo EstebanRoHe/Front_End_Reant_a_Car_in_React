@@ -15,25 +15,16 @@ const CarList = (props) => {
     const [filtro, setFiltro] = useState("");
     const [error, setError] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [isComponentRendered, setIsComponentRendered] = useState(false);
 
     useEffect(() => {
         getList();
         // eslint-disable-next-line
-    }, [props.errors]);
+    }, []);
 
-    useEffect(() => {
-        if (isComponentRendered) {
-            validationErrror();
-        } else {
-            setIsComponentRendered(true);
-        }
-        // eslint-disable-next-line
-    }, [props.errors]);
 
     const handleCarSelection = (car) => {
-        props.handleSelectCar(car);
-        
+        props.handleSelectCar(car)
+        modalAgregar()
     };
 
     const handlePageChange = ({ selected }) => {
@@ -58,21 +49,16 @@ const CarList = (props) => {
         setShowModal(false);
     };
 
-    const validationErrror = () =>{
-        if (Object.keys(props.errors).length !== 0) {
+    const modalAgregar = () =>{
+      
             Swal.fire({
-                icon: 'error',
-                text: props.errors.Car+'!',
-              })
-        } else{
-            Swal.fire({
-                position: 'top-center',
+                position: 'center',
                 icon: 'success',
                 title: 'Vehículo agregado correctamente!',
                 showConfirmButton: false,
                 timer: 1500
               })
-        }
+        
     }
 
     const getList = () => {
@@ -81,7 +67,6 @@ const CarList = (props) => {
         if (token) {
             carServices.setAuthToken(token);
         } else {
-            console.error("No se encontró un token válido");
             closeModalHandler();
             return;
         }
@@ -193,7 +178,7 @@ const CarList = (props) => {
                     {!props.hideButtons ? (
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <Loading />
-                            <i class="bi bi-info-circle" style={{ color: "red", marginBottom: "1%" }}> No se encuentra ningún Vehículo Registrado</i>
+                            <i className="bi bi-info-circle" style={{ color: "red", marginBottom: "1%" }}> No se encuentra ningún Vehículo Registrado</i>
                             <Link className="btn btn-primary" to={"/CarCreate"}>
                                 <i className="bi bi-plus-circle"> Registrar un Vehículo </i>
                             </Link>
@@ -253,10 +238,11 @@ const CarList = (props) => {
                                         <th scope="col">Cilindraje</th>
                                         <th scope="col">Capacidad</th>
                                         <th scope="col">Modelo</th>
+                                        <th scope="col">Precio</th>
                                         <th scope="col">Tipo</th>
-                                        {!props.hideButtons ? (
+                                        {/*!props.hideButtons ? (
                                             <th scope="col">Link de Imagen</th>
-                                        ) : (<></>)}
+                                        ) : (<></>)*/}
                                     </tr>
 
                                 </thead>
@@ -271,10 +257,11 @@ const CarList = (props) => {
                                                     <td>{car.cylinder_capacity}</td>
                                                     <td>{car.capacity}</td>
                                                     <td>{car.model_year}</td>
+                                                    <td>$ {car.price}</td>
                                                     <td>{car.typeCar.description}</td>
-                                                    {!props.hideButtons ? (
+                                                    {/*!props.hideButtons ? (
                                                         <td>{car.image}</td>
-                                                    ) : (<></>)}
+                                                    ) : (<></>)*/}
                                                     <td>
                                                         <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                                                             {!props.hideButtons ? (

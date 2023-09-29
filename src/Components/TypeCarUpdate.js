@@ -75,7 +75,7 @@ const TypeCarUpdate = () => {
                 console.log(response.data);
                 closeModalHandler();
                 Swal.fire({
-                    position: 'top-center',
+                    position: 'center',
                     icon: 'success',
                     title: 'Tipo de Vehiculo Actualizado Correctamente',
                     showConfirmButton: false,
@@ -92,7 +92,7 @@ const TypeCarUpdate = () => {
         <div className="container ">
         <div className="card  ">
             <div className="card-body ">
-                <h5><i class="bi bi-gear"> Actualizar Tipo de Vehículo : {TypeCar.id_typeCar}</i></h5>
+                <h5><i className="bi bi-gear"> Actualizar Tipo de Vehículo : {TypeCar.id_typeCar}</i></h5>
                 <blockquote className="blockquote mb-0 ">
 
                     <form novalidate onSubmit={e=>{

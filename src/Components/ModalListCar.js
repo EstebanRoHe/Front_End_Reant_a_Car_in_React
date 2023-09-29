@@ -9,7 +9,7 @@ const ModalListCar = (props) => {
             <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
-                 <h4><i class="bi bi-card-checklist negrita"> Vehículos</i></h4>
+                 <h4><i className="bi bi-card-checklist negrita"> Vehículos</i></h4>
                         <button
                             type="button"
                             className="close"
@@ -17,7 +17,7 @@ const ModalListCar = (props) => {
                             aria-label="Close"
                             onClick={onClose}
                         >
-                          <i class="bi bi-x-lg"></i>
+                          <i className="bi bi-x-lg"></i>
                         </button>
                     </div>
                     <div className="modal-body">

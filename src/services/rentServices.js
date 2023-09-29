@@ -31,15 +31,6 @@ const create = data =>{
     return http.post("/Rent",data, config);
 };
 
-const update = (idRent,data) =>{
-    const config = {
-        headers: {
-          Authorization: `Bearer ${authToken}`, 
-        },
-      };
-    return http.put(`/Rent`,data, config);
-};
-
 const remove = idRent => {
     const config = {
         headers: {
@@ -71,7 +62,6 @@ const RentServices = {
     getAll,
     get,
     create,
-    update,
     remove,
     setAuthToken,
     getFiltro,

@@ -34,7 +34,7 @@ const ContactoFooter = () => {
         console.log(response.data);
         closeModalHandler();
         Swal.fire({
-          position: 'top-center',
+          position: 'center',
           icon: 'success',
           title: 'Email enviado Correctamente',
           showConfirmButton: false,

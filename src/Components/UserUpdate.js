@@ -99,7 +99,7 @@ const UserUpdate = () => {
                     console.log(response.data);
                     closeModalHandler();
                     Swal.fire({
-                        position: 'top-center',
+                        position: 'center',
                         icon: 'success',
                         title: 'Usuario Actualizado Correctamente',
                         showConfirmButton: false,
@@ -134,9 +134,9 @@ const UserUpdate = () => {
 
                 <div className="card-body ">
                     {role === 'ROLE_ADMIN' ? (
-                        <h5> <i class="bi bi-person-fill-gear"> Actualizar Usuario : {User.idUser} </i></h5>
+                        <h5> <i className="bi bi-person-fill-gear"> Actualizar Usuario : {User.idUser} </i></h5>
                     ) : (
-                        <h5> <i class="bi bi-person-fill-gear"> Perfil de : {User.username}</i></h5>
+                        <h5> <i className="bi bi-person-fill-gear"> Perfil de : {User.username}</i></h5>
                     )}
                     <blockquote className="blockquote mb-0 ">
 

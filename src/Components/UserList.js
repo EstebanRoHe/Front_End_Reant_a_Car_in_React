@@ -26,7 +26,7 @@ const UserList = (props) => {
         try {
             props.handleSelectUser(username);
             Swal.fire({
-                position: 'top-center',
+                position: 'center',
                 icon: 'success',
                 title: 'Usuario agregado correctamente!',
                 showConfirmButton: false,
@@ -186,7 +186,7 @@ const UserList = (props) => {
             {User.length === 0 && showModal === false ? (
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <Loading />
-                    <i class="bi bi-info-circle" style={{color:"red" , marginBottom :"1%"}}> No se encuentra ningún Usuario Registrado</i>
+                    <i className="bi bi-info-circle" style={{color:"red" , marginBottom :"1%"}}> No se encuentra ningún Usuario Registrado</i>
                     <Link className="btn btn-primary" to={"/UserCreate"}>
                         <i className="bi bi-person-plus"> Registrar</i>
                     </Link>

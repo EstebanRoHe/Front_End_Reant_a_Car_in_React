@@ -25,7 +25,7 @@ const get = idCar => {
 
 
 
-const create = (licencePlate, description, cylinder_capacity, capacity, model_year,imagen, typeCar) => {
+const create = (licencePlate, description, cylinder_capacity, capacity, model_year,imagen, price, typeCar) => {
   const formData = new FormData();
 
   formData.append("licencePlate", licencePlate);
@@ -34,6 +34,7 @@ const create = (licencePlate, description, cylinder_capacity, capacity, model_ye
   formData.append("capacity", capacity);
   formData.append("model_year", model_year);
   formData.append("imagen", imagen); 
+  formData.append("price", price); 
   formData.append("typeCar", typeCar);
 
   const config = {

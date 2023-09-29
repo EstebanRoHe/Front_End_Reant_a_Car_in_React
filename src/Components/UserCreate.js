@@ -89,7 +89,7 @@ const UserCreate = () => {
                     console.log(response.data);
                     closeModalHandler();
                     Swal.fire({
-                        position: 'top-center',
+                        position: 'center',
                         icon: 'success',
                         title: 'Usuario Registrado Correctamente',
                         showConfirmButton: false,
@@ -157,7 +157,7 @@ const UserCreate = () => {
                 <div className="card  ">
 
                     <div className="card-body ">
-                        <h4><i class="bi bi-person-fill-add"> Registrar</i></h4>
+                        <h4><i className="bi bi-person-fill-add"> Registrar</i></h4>
                         <blockquote className="blockquote mb-0 ">
 
                             <form onSubmit={createUser}

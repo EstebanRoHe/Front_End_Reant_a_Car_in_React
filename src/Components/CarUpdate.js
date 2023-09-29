@@ -17,6 +17,7 @@ const CarUpdate = props => {
         cylinder_capacity: "",
         capacity: "",
         model_year: "",
+        price:"",
         typeCar: {}
 
     }
@@ -76,7 +77,7 @@ const CarUpdate = props => {
     const handleInputblur = event => {
         handleInputChange(event);
         setErrors(validationError(Car));
-    }  
+    }
 
     const getList = () => {
         const token = AuthServices.getAuthToken();
@@ -110,14 +111,14 @@ const CarUpdate = props => {
             closeModalHandler();
             return;
         }
-        
+
         if (Object.keys(errors).length === 0) {
             carServices.update(Car.idCar, Car)
                 .then(response => {
                     console.log(response.data);
                     closeModalHandler();
                     Swal.fire({
-                        position: 'top-center',
+                        position: 'center',
                         icon: 'success',
                         title: 'Vehiculo Actualizado Correctamente',
                         showConfirmButton: false,
@@ -136,38 +137,38 @@ const CarUpdate = props => {
     const getListCar = () => {
         const token = AuthServices.getAuthToken();
         if (token) {
-          carServices.setAuthToken(token);
-          console.log('Token :', token);
+            carServices.setAuthToken(token);
+            console.log('Token :', token);
         } else {
-          console.error("No se encontró un token válido");
-          return;
+            console.error("No se encontró un token válido");
+            return;
         }
         carServices.getAll()
-          .then(response => {
-            setCarArray(response.data);
-            console(response.data);
-          }).catch(e => {
-            console.log(e);
-          })
-      }
+            .then(response => {
+                setCarArray(response.data);
+                console(response.data);
+            }).catch(e => {
+                console.log(e);
+            })
+    }
 
     const validationError = (Car) => {
         let errors = {}
         CarArray.forEach(car => {
-          if (car.licencePlate === Car.licencePlate) {
-            errors.licencePlate = "Este numero de placa ya existe";
-          }
+            if (car.licencePlate === Car.licencePlate) {
+                errors.licencePlate = "Este numero de placa ya existe";
+            }
         })
-    
+
         return errors;
-      }
+    }
 
 
     return (
         <div className="container ">
             <div className="card  ">
                 <div className="card-body ">
-                    <h4><i class="bi bi-gear"> Actualizar Vehículo : {Car.idCar}</i></h4>
+                    <h4><i className="bi bi-gear"> Actualizar Vehículo : {Car.idCar}</i></h4>
                     <blockquote className="blockquote mb-0 ">
 
                         <form onSubmit={
@@ -181,8 +182,8 @@ const CarUpdate = props => {
                                     <span className="input-group-text">
                                         <i className="bi bi-pencil-square"></i>
                                     </span>
-                                    <input type="text" className={((errors.licencePlate) ? "is-invalid" : "") + " form-control"} 
-                                     id="licencePlate" value={Car.licencePlate}
+                                    <input type="text" className={((errors.licencePlate) ? "is-invalid" : "") + " form-control"}
+                                        id="licencePlate" value={Car.licencePlate}
                                         onChange={handleInputChange}
                                         onBlur={handleInputblur}
                                         onKeyUp={handleInputblur}
@@ -225,7 +226,7 @@ const CarUpdate = props => {
                                         <i className="bi bi-car-front"></i>
                                     </span>
                                     <input type="number" className="form-control" id="capacity" value={Car.capacity}
-                                        onChange={handleInputChange} 
+                                        onChange={handleInputChange}
                                         name="capacity" required />
 
                                 </div>
@@ -239,6 +240,21 @@ const CarUpdate = props => {
                                     </span>
                                     <input type="text" className="form-control" id="model_year" value={Car.model_year}
                                         onChange={handleInputChange} name="model_year" required />
+
+                                </div>
+                            </div>
+
+                            <div className="col-md-3 position-relative">
+                                <label for="price" className="form-label">Precio de Alquiler</label>
+                                <div className="input-group has-validation">
+                                    <span className="input-group-text">
+                                        <i className="bi bi-currency-dollar"></i>
+                                    </span>
+                                    <input type="number" className="form-control" id="price"
+                                        value={Car.price}
+                                        onChange={handleInputChange}
+                                        name="price"
+                                        required />
 
                                 </div>
                             </div>

@@ -15,6 +15,7 @@ const CarCreate = () => {
     cylinder_capacity: "",
     capacity: "",
     model_year: "",
+    price:"",
     typeCar: "",
   };
 
@@ -77,7 +78,6 @@ const CarCreate = () => {
     const token = AuthServices.getAuthToken();
     if (token) {
       typeCarServices.setAuthToken(token);
-      console.log('Token :', token);
     } else {
       console.error("No se encontró un token válido");
       return;
@@ -97,7 +97,6 @@ const CarCreate = () => {
     const token = AuthServices.getAuthToken();
     if (token) {
       carServices.setAuthToken(token);
-      console.log('Token :', token);
     } else {
       console.error("No se encontró un token válido");
       return;
@@ -125,18 +124,19 @@ const CarCreate = () => {
     setErrors(validationError(Car));
     setErrorType(validationTypeCar(Car));
     if (Object.keys(errors).length === 0 && Object.keys(errorType).length === 0) {
-      carServices.create(Car.licencePlate, Car.description, Car.cylinder_capacity, Car.capacity, Car.model_year, Car.imagen, Type.id_typeCar)
+      carServices.create(Car.licencePlate, Car.description, Car.cylinder_capacity, Car.capacity, Car.model_year, Car.imagen, Car.price, Type.id_typeCar)
         .then(response => {
           setCar({
             licencePlate: response.data.licencePlate, description: response.data.description,
             image: response.data.image, cylinder_capacity: response.data.cylinder_capacity,
-            capacity: response.data.capacity, model_year: response.data.model_year, typeCar: response.data.Type
+            capacity: response.data.capacity, model_year: response.data.model_year, 
+            price:response.data.price ,typeCar: response.data.Type
           });
           setValidat(true);
           console.log(response.data);
           closeModalHandler();
           Swal.fire({
-            position: 'top-center',
+            position: 'center',
             icon: 'success',
             title: 'Vehículo Registrado Correctamente',
             showConfirmButton: false,
@@ -182,7 +182,7 @@ const CarCreate = () => {
 
 
           <div className="card-body ">
-            <h4><i class="bi bi-plus-circle"> Registrar Vehículo</i></h4>
+            <h4><i className="bi bi-plus-circle"> Registrar Vehículo</i></h4>
             <blockquote className="blockquote mb-0 ">
 
               <form onSubmit={createCar}
@@ -285,6 +285,22 @@ const CarCreate = () => {
                       placeholder="Año 2020, 2022, 2018,etc..."
                       onChange={handleInputChange}
                       name="model_year"
+                      required />
+
+                  </div>
+                </div>
+
+                <div className="col-md-3 position-relative">
+                  <label for="price" className="form-label">Precio de Alquiler</label>
+                  <div className="input-group has-validation">
+                    <span className="input-group-text">
+                    <i className="bi bi-currency-dollar"></i>
+                    </span>
+                    <input type="number" className="form-control" id="price"
+                      value={Car.price}
+                      placeholder="$50"
+                      onChange={handleInputChange}
+                      name="price"
                       required />
 
                   </div>

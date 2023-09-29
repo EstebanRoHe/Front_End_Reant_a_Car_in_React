@@ -117,6 +117,7 @@ const IndexRent = () => {
                                     <li className="list-group-item"><i className="bi bi-calendar-date"> </i>Modelo: {car.model_year}</li>
                                     <li className="list-group-item"><i className="bi bi-car-front-fill"> </i>Tipo: {car.typeCar.description}</li>
                                     <li className="list-group-item"><i className="bi bi-card-text"> </i>Placa: {car.licencePlate}</li>
+                                    <li className="list-group-item"><i class="bi bi-cash-coin"> </i>Precio: <strong><i className="bi bi-currency-dollar"> </i>{car.price}</strong></li>
                                 </ul>
                                
                                 <div className="card-body">
