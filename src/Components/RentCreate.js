@@ -153,6 +153,7 @@ const RentCreate = () => {
                     });
                     setValidat(true);
                     console.log(response.data);
+                    setRentPriceTotal(0);
                     closeModalHandlerLoading();
                     Swal.fire({
                         position: 'center',
@@ -164,7 +165,6 @@ const RentCreate = () => {
                 })
                 .catch(e => {
                     console.log(e);
-                    setRentPriceTotal(0);
                     closeModalHandlerLoading();
                 })
         } else {
